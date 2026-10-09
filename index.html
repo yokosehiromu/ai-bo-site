@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠ 確認用URL（GitHub Pages）のための一時設定。本番公開の前に必ず消すこと。
+     引き継ぎ書「ホームページと独自ドメイン」§4-5 を参照。 -->
+<meta name="robots" content="noindex, nofollow">
+<title>ai-bo｜TikTok LIVE事務所のためのAI伴走サービス</title>
+<meta name="description" content="所属クリエイター一人ひとりの配信データを見て、その人だけの声かけをLINEで毎朝お届けします。放置をゼロに、辞める前に気づく。TikTok LIVE事務所向けのAI伴走サービス。">
+<meta property="og:title" content="ai-bo｜TikTok LIVE事務所のためのAI伴走サービス">
+<meta property="og:description" content="所属クリエイター全員の隣に、AIの相棒を。配信が止まる兆しに、手遅れになる前に気づきます。">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="ai-bo">
+<meta property="og:url" content="https://ai-bo-lab.jp/">
+<meta property="og:image" content="https://ai-bo-lab.jp/images/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="人の形をした図形それぞれの隣に、小さなロボットが並んで立っている図">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://ai-bo-lab.jp/">
+<meta name="theme-color" content="#2f66d0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f131a" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='8'%20fill='%232f66d0'/%3E%3Cg%20transform='translate(4%204)'%20fill='none'%20stroke='%23fff'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Crect%20x='4'%20y='8'%20width='16'%20height='12'%20rx='3'/%3E%3Cpath%20d='M12%208V4.5'/%3E%3Ccircle%20cx='12'%20cy='3'%20r='1.4'/%3E%3Ccircle%20cx='9'%20cy='13.5'%20r='1.3'%20fill='%23fff'%20stroke='none'/%3E%3Ccircle%20cx='15'%20cy='13.5'%20r='1.3'%20fill='%23fff'%20stroke='none'/%3E%3Cpath%20d='M9.5%2017h5'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<!-- ══ icon sprite ══ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <g id="i-bot" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 8V4.5"/><circle cx="12" cy="3" r="1.4"/>
+    <circle cx="9" cy="13.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="15" cy="13.5" r="1.1" fill="currentColor" stroke="none"/>
+    <path d="M9.5 17h5"/>
+  </g>
+  <g id="i-users" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M16 19v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 4 17.5V19"/><circle cx="10" cy="8" r="3.2"/>
+    <path d="M20 19v-1.5a3.5 3.5 0 0 0-2.6-3.4M15.5 5.2a3.2 3.2 0 0 1 0 5.6"/>
+  </g>
+  <g id="i-clock" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="8.4"/><path d="M12 7.4V12l3 1.8"/>
+  </g>
+  <g id="i-mega" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 10v4a1.5 1.5 0 0 0 1.5 1.5H8l6 4V6l-6 4H5.5A1.5 1.5 0 0 0 4 11.5Z"/><path d="M17.5 9.5a4 4 0 0 1 0 5"/>
+  </g>
+  <g id="i-chat" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 12.5c0 3.9-3.6 7-8 7a9 9 0 0 1-2.6-.4L5 21l1.2-3.3A6.6 6.6 0 0 1 4 12.5c0-3.9 3.6-7 8-7s8 3.1 8 7Z"/>
+  </g>
+  <g id="i-radar" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M19.8 10a8.3 8.3 0 1 0-3.3 8.4"/><path d="M16.6 11.2A4.8 4.8 0 1 0 13 16.6"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/><path d="M12 12l6.5-5.2"/>
+  </g>
+  <g id="i-chart" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 19.5h16"/><path d="M7 16V11"/><path d="M12 16V6.5"/><path d="M17 16v-6.5"/>
+  </g>
+  <g id="i-shield" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3.5l7 2.6v5.2c0 4.3-2.9 7.6-7 9.2-4.1-1.6-7-4.9-7-9.2V6.1Z"/><path d="M9.3 12.2l1.9 1.9 3.6-3.8"/>
+  </g>
+  <g id="i-lock" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="5" y="10.5" width="14" height="9.5" rx="2.4"/><path d="M8.3 10.5V7.8a3.7 3.7 0 1 1 7.4 0v2.7"/>
+  </g>
+  <g id="i-eye" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M2.8 12S6.4 6.2 12 6.2 21.2 12 21.2 12 17.6 17.8 12 17.8 2.8 12 2.8 12Z"/><circle cx="12" cy="12" r="2.7"/>
+  </g>
+  <g id="i-check" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4.5 12.5l5 5 10-11"/>
+  </g>
+  <g id="i-arr" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 12h14"/><path d="M14 7l5 5-5 5"/>
+  </g>
+</defs>
+</svg>
+
+<header>
+  <div class="wrap hd">
+    <a href="#top" class="logo">
+      <span class="dot"><svg width="16" height="16" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+      ai-bo
+    </a>
+    <nav>
+      <a href="#about" class="nav-link">ai-boとは</a>
+      <a href="#samples" class="nav-link">届く文面</a>
+      <a href="#engine" class="nav-link">仕組み</a>
+      <a href="#dashboard" class="nav-link">管理画面</a>
+      <a href="#price" class="nav-link">料金</a>
+      <a href="#contact" class="btn btn-primary">相談する</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+
+  <!-- ポスター風コラージュ。文面はすべて既存の承認済みのもの（新規に作文していない）。 -->
+  <!-- ai-bo とクリエイターの、架空のやりとり。配信のアドバイス／誉め言葉／モチベーション／
+       離脱の引き戻し／雑談 の5種。dialogue.py のシステムプロンプトの規則に沿わせてある。 -->
+  <div class="collage" aria-hidden="true">
+    <div class="s s1"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>昨日のコメント、後半から増えていましたね。話題を1つに絞ったのが効いたのかもしれません。</p></div></div>
+    <div class="s s2"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>おめでとうございます！今月、シルバーに届きましたね。</p></div></div>
+    <div class="s s3"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>数字が動かない日でも、来てくれた人にとっては、その日が初めての配信です。</p></div></div>
+    <div class="s s4"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>今日は何か、おいしいもの食べました？</p></div><div class="row me"><p>家系ラーメン！こってり派です</p></div></div>
+    <div class="s s5"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>こってり派なんですね。トッピングは何を乗せますか？</p></div></div>
+    <div class="s s6"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>しばらくぶりですね。何かあったのかなと、少し気になっていました。</p></div><div class="row me"><p>ちょっとバイトが忙しくて…</p></div></div>
+    <div class="s s7"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>次の配信、最初の10分で「今日やること」を先に言ってみませんか。</p></div></div>
+    <div class="s s8"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>先月より配信の時間が伸びていました。コメントしてくれる方も増えています。</p></div><div class="row me"><p>ほんとだ！うれしい</p></div></div>
+    <div class="s s9"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>3ヶ月前のみさきさんなら、今日の配信はできていなかったと思います。</p></div><div class="row me"><p>そう言われると、ちょっと自信出てきた</p></div></div>
+    <div class="s s10"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>戻ってこなくても大丈夫です。元気にしているかだけ、聞かせてください。</p></div></div>
+    <div class="s s11"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>最近ハマっているもの、ありますか？</p></div></div>
+    <div class="s s12"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>時間帯の近い方が何人かいます。コラボ、探してみましょうか。</p></div></div>
+    <div class="s s13"><div class="row me"><p>サウナにハマってる</p></div><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>サウナいいですね。整ったあとは、何をしている時間が好きですか？</p></div></div>
+    <div class="s s14"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>今日は無理に長くしなくて大丈夫です。顔を出すだけでも、待っている人には届きます。</p></div></div>
+    <div class="s s15"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>そうだったんですね。お疲れさまです。無理のないときに、また話しましょう。</p></div></div>
+    <div class="s s16"><div class="row me"><p>最初に言うと、自分も楽かも</p></div><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>そうなんです。途中から来た方も、入りやすくなります。</p></div></div>
+    <div class="s s17"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>新しく来てくれた方が、先月より増えていました。名前を覚えている人も多いですね。</p></div></div>
+    <div class="s s18"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>続けていること自体が、いちばん難しいことなんだと思います。</p></div></div>
+    <div class="s s19"><div class="row me"><p>今日ちょっと寝坊した</p></div></div>
+    <div class="s s20"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>昨日の配信、最後まで残ってくれた人が多かったですね。</p></div></div>
+  </div>
+
+  <div class="wrap hero-grid">
+    <div class="headline">
+      <h1>所属クリエイター全員の隣に、<br>AIの相棒を。</h1>
+      <p class="sub">TikTok LIVE事務所のためのAI伴走サービスです。一人ひとりの配信データを見て、<b>その人だけの声かけ</b>をLINEで毎朝お届けします。配信が止まる兆しに、手遅れになる前に気づきます。</p>
+      <div class="cta">
+        <a href="#contact" class="btn btn-primary btn-lg">ai-bo に聞いてみる</a>
+        <a href="#samples" class="btn btn-ghost btn-lg">届く文面を見る</a>
+      </div>
+      <p class="note">クリエイターの日課はありません。運営の日課は、データを1回アップロードするだけです。</p>
+    </div>
+
+    <div class="phone">
+      <div class="screen">
+        <div class="bar">
+          <span class="av"><svg width="17" height="17" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+          <span><b>ai-bo</b><div class="st">あなたの伴走者</div></span>
+        </div>
+        <div class="chat">
+          <div class="day">今日 8:59</div>
+          <div class="msg">
+            <span class="av"><svg width="15" height="15" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+            <div class="bub">おはようございます！<br>今月、あと1日配信できたら“配信した日”が7日になります。時間もあと1時間ちょっとです。</div>
+            <span class="tm">9:00</span>
+          </div>
+          <div class="msg">
+            <span class="av"><svg width="15" height="15" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+            <div class="bub">今週のどこか、いけそうな日ってありますか？</div>
+            <span class="tm">9:00</span>
+          </div>
+          <div class="msg me">
+            <span class="tm">9:14</span>
+            <div class="bub">木曜ならいけそう！</div>
+          </div>
+          <div class="msg">
+            <span class="av"><svg width="15" height="15" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+            <div class="bub">いいですね。木曜に1時間いけたら、今月の“配信した日”は7日に届きます。<br>当日の朝にまた声をかけますね。</div>
+            <span class="tm">9:14</span>
+          </div>
+          <div class="qr"><span>配信メモを書く</span><span>コラボを探す</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROBLEM ══ -->
+<section id="problem">
+  <div class="wrap">
+    <div class="split">
+      <div class="txt">
+      <span class="eyebrow">事務所で起きていること</span>
+      <h2>TikTok LIVEエージェンシー事業には<br>構造上の問題があります。</h2>
+      <p class="lead">所属クリエイターが増えるほど、担当者一人あたりの人数も増えます。これは担当者の努力の問題ではなく、人数の構造の問題です。</p>
+      </div>
+      <figure class="fig">
+        <img src="images/01-problem.webp" width="1168" height="880" loading="lazy" decoding="async" alt="大勢の人の中で一人だけが色づいている図。担当者の目が全員には届かないことを表しています">
+      </figure>
+    </div>
+    <div class="grid g3">
+      <div class="card">
+        <div class="ico red"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-users"/></svg></div>
+        <h3>全員には手が回らない</h3>
+        <p>担当者は、成果の出ている人と、明らかに問題のある人から見ます。その間にいる「静かに止まりかけている人」が、いちばん後回しになります。</p>
+      </div>
+      <div class="card">
+        <div class="ico orange"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-clock"/></svg></div>
+        <h3>気づいたときには、もう遅い</h3>
+        <p>配信が止まってから日が経つほど、戻ってきてもらえる確率は下がります。気づく早さが、そのまま結果に出ます。</p>
+      </div>
+      <div class="card">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-mega"/></svg></div>
+        <h3>一斉配信は読まれない</h3>
+        <p>全員に同じ文面を送っても、自分宛てだと思ってもらえません。だからといって、一人ずつ書く時間はありません。</p>
+      </div>
+    </div>
+    <div class="more">
+      <a href="problem.html" class="btn-pill">構造上の問題をくわしく見る<span class="ar"><svg width="16" height="16" viewBox="0 0 24 24"><use href="#i-arr"/></svg></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ABOUT ══ -->
+<section id="about">
+  <div class="wrap">
+    <div class="split rev">
+      <div class="txt">
+      <span class="eyebrow">ai-boとは</span>
+      <h2>数十人に一人ずつ担当をつける代わりに、<br>AIが全員の隣に立ちます。</h2>
+      <p class="lead">新しいアプリは不要です。クリエイターはLINEを使うだけで始められます。</p>
+      </div>
+      <figure class="fig">
+        <img src="images/03-about.webp" width="1168" height="880" loading="lazy" decoding="async" alt="人の形をした図形それぞれの隣に、小さなロボットが並んで立っている図">
+      </figure>
+    </div>
+    <div class="grid g3">
+      <div class="card">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-chat"/></svg></div>
+        <h3>毎日、寄り添う</h3>
+        <p>一人ひとりのデータを見て、その人だけの言葉で声をかけます。誰にでも当てはまる文章は送りません。</p>
+      </div>
+      <div class="card">
+        <div class="ico purple"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-radar"/></svg></div>
+        <h3>離れる前に、気づく</h3>
+        <p>配信が止まる兆しを見つけて、手遅れになる前に動きます。運営には「今日、誰に何をすべきか」だけをお見せします。</p>
+      </div>
+      <div class="card">
+        <div class="ico green"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-check"/></svg></div>
+        <h3>手間を、増やさない</h3>
+        <p>運営の日課は、日次データを1回アップロードするだけ。シナリオを書いて仕込む作業はありません。</p>
+      </div>
+    </div>
+    <div class="more">
+      <a href="service.html" class="btn-pill">ai-boのサービス詳細を見る<span class="ar"><svg width="16" height="16" viewBox="0 0 24 24"><use href="#i-arr"/></svg></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SAMPLES ══ -->
+<section id="samples">
+  <div class="wrap">
+    <div class="split">
+      <div class="txt">
+      <span class="eyebrow">実際に届く文面</span>
+      <h2>こういう言葉が、毎朝届きます。</h2>
+      <p class="lead">3人とも状況が違うので、文面も違います。テンプレートを差し替えているのではなく、その日のデータを見て、その場で書いています。</p>
+      </div>
+      <figure class="fig">
+        <img src="images/02-samples.webp" width="1168" height="880" loading="lazy" decoding="async" alt="スマートフォンの上に3つの吹き出しが浮かぶ図。一人ずつ違う文面が届くことを表しています">
+      </figure>
+    </div>
+    <div class="samples">
+      <div class="sample">
+        <div class="who">
+          <span class="av"><svg width="15" height="15" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+          <span><b>あと一歩の人へ</b><br><span>今月の到達まで、あと1日</span></span>
+        </div>
+        <div class="bub">今月、あと1日配信できたら“配信した日”が7日になります。時間もあと1時間ちょっとです。
+今週のどこか、いけそうな日ってありますか？</div>
+        <span class="tag" style="background:var(--accent-soft); color:var(--accent)">到達が近い</span>
+      </div>
+      <div class="sample">
+        <div class="who">
+          <span class="av"><svg width="15" height="15" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+          <span><b>惜しかった人へ</b><br><span>昨日の配信が45分</span></span>
+        </div>
+        <div class="bub">昨日の配信、45分でしたね。あと15分で“配信した日”に入ってました。惜しい！
+次はキリのいいところで1時間、狙ってみませんか？</div>
+        <span class="tag" style="background:var(--orange-soft); color:var(--orange)">惜しい配信</span>
+      </div>
+      <div class="sample">
+        <div class="who">
+          <span class="av"><svg width="15" height="15" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+          <span><b>間が空いた人へ</b><br><span>しばらく配信がない</span></span>
+        </div>
+        <div class="bub">最近ちょっと間が空きましたね。無理しなくていいので、調子だけ聞かせてください。
+最近どうですか？</div>
+        <span class="tag" style="background:var(--red-soft); color:var(--red)">離脱の兆し</span>
+      </div>
+    </div>
+    <p class="lead" style="margin:26px 0 0; color:var(--text); font-weight:600; font-size:16px">
+      この3人に、担当者は何もしていません。ai-boが自動で判断して送っています。
+    </p>
+  </div>
+</section>
+
+<!-- ══ ENGINE ══ -->
+<section id="engine">
+  <div class="wrap">
+    <div class="split rev">
+      <div class="txt">
+      <span class="eyebrow">仕組み</span>
+      <h2>全員に同じ言葉は送りません。<br>2つのエンジンが、その人に合った声かけを組み立てます。</h2>
+      <p class="lead">所属クリエイターを自動で仕分けし、それぞれに合ったエンジンへ振り分けます。<b>「対象者リストを作る」という作業自体が、そもそも発生しません。</b></p>
+      </div>
+      <figure class="fig">
+        <img src="images/04-engine.webp" width="1168" height="880" loading="lazy" decoding="async" alt="多数の粒が2つの装置を通り、それぞれ違う吹き出しになって出てくる図">
+      </figure>
+    </div>
+    <div class="flow">
+      <div class="node">
+        <div class="k">INPUT</div>
+        <div class="v">所属クリエイター<br>全員</div>
+      </div>
+      <div class="arr"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-arr"/></svg></div>
+      <div class="mid">
+        <div class="eng">
+          <div class="t">① 90日プログラムエンジン</div>
+          <div class="d">新人の対象者を自動で仕分け。90日以内のプロ昇格に向けて、あと何が足りないかを実績から計算します。</div>
+        </div>
+        <div class="eng b">
+          <div class="t">② 恒常エンジン</div>
+          <div class="d">新人対象外の全員へ。その人にとっての「次の一段」を見つけ、在籍しているあいだ働き続けます。</div>
+        </div>
+      </div>
+      <div class="arr"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-arr"/></svg></div>
+      <div class="node out">
+        <div class="k">OUTPUT</div>
+        <div class="v">その人専用の<br>メッセージ</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FEATURES ══ -->
+<section id="features">
+  <div class="wrap">
+    <div class="split">
+      <div class="txt">
+      <span class="eyebrow">できること</span>
+      <h2>クリエイターにも、運営にも。</h2>
+      <p class="lead">クリエイターが見る画面と、運営の方が見る画面は別です。それぞれにできることを、1つのサービスでまかないます。</p>
+      </div>
+      <figure class="fig">
+        <img src="images/05-features.webp" width="1168" height="880" loading="lazy" decoding="async" alt="スマートフォンとパソコンが光の弧でつながっている図。クリエイター側と運営側を表しています">
+      </figure>
+    </div>
+    <div class="grid g2">
+      <div class="card">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-chat"/></svg></div>
+        <h3>クリエイターから見たai-bo</h3>
+        <ul class="plain">
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>毎朝の声かけ</b>　その日の状況に合わせた、自分宛ての言葉が届きます</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>24時間の相談対応</b>　いつでも話せます。答えられないことは運営に取り次ぎます</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>配信メモ</b>　その日の配信をふり返って記録できます</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>コラボ相手の紹介</b>　相性のよい相手を見つけて、顔合わせまで橋渡しします</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>事務所への質問の取り次ぎ</b>　聞きづらいことも、ai-bo経由なら聞けます</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>音声通話</b>　声で話せます。声の種類と性格を選べます</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="ico green"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-chart"/></svg></div>
+        <h3>運営から見たai-bo</h3>
+        <ul class="plain">
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>要対応者の抽出</b>　離脱しかけている人、あと一歩の人を自動で並べます</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>成果の推移</b>　稼働率・復帰率・前月比を、月ごとに追えます</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>クリエイター一覧と個票</b>　一人ずつの状況と履歴を確認できます</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>声かけ配信</b>　内容を確認してから送れます</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>稼働状況の確認</b>　ai-boが何を送り、どう反応があったかが見えます</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>コラボの管理</b>　マッチングの進行状況を把握できます</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DASHBOARD ══ -->
+<section id="dashboard">
+  <div class="wrap">
+    <div class="split rev">
+      <div class="txt">
+      <span class="eyebrow">運営ダッシュボード</span>
+      <h2>開いて最初に出るのは、<br>「今日、誰に声をかけるか」だけです。</h2>
+      <p class="lead">数字の一覧ではありません。動くべき相手と、その理由が並びます。理由は一人ずつ違います。</p>
+      </div>
+      <figure class="fig">
+        <img src="images/06-dashboard.webp" width="1168" height="880" loading="lazy" decoding="async" alt="半透明のダッシュボード画面の図。いくつかの行が青く強調されています">
+      </figure>
+    </div>
+    <div class="dash">
+      <div class="top">
+        <i></i><i></i><i></i>
+        <span class="u">ai-bo 運営ダッシュボード ／ ホーム</span>
+      </div>
+      <div class="body">
+        <div class="kpis">
+          <div class="kpi"><div class="l">今月の稼働</div><div class="n">25<small>/ 45名</small></div></div>
+          <div class="kpi"><div class="l">要対応</div><div class="n" style="color:var(--red)">19<small>件</small></div></div>
+          <div class="kpi"><div class="l">今日の送信</div><div class="n">41<small>件</small></div></div>
+          <div class="kpi"><div class="l">返信</div><div class="n" style="color:var(--green)">12<small>件</small></div></div>
+        </div>
+
+        <h4>今日、声をかけたい人</h4>
+        <div class="row">
+          <span class="av r">HK</span>
+          <span><div class="nm">@demo_hikari</div><div class="rs">21日間 配信なし／前回の反応あり</div></span>
+          <span class="bd r">離脱の兆し</span>
+        </div>
+        <div class="row">
+          <span class="av o">NG</span>
+          <span><div class="nm">@demo_nagisa</div><div class="rs">昨日45分／あと15分で“配信した日”に到達</div></span>
+          <span class="bd o">あと一歩</span>
+        </div>
+        <div class="row">
+          <span class="av p">SU</span>
+          <span><div class="nm">@demo_subaru</div><div class="rs">運営への質問が1件、未回答のまま</div></span>
+          <span class="bd r">要人間対応</span>
+        </div>
+        <div class="row">
+          <span class="av g">MK</span>
+          <span><div class="nm">@demo_mikoto</div><div class="rs">先月比 −38%／配信時間が落ちている</div></span>
+          <span class="bd o">前月割れ</span>
+        </div>
+
+        <div class="samplenote">
+          <b>サンプル</b> 画面はデモ環境のものです。表示している45名はすべて架空のデータで、実在のクリエイターは含まれません。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ STATUS ══ -->
+<section id="status">
+  <div class="wrap">
+    <div class="split">
+      <div class="txt">
+      <span class="eyebrow">クリエイターから見た画面</span>
+      <h2>本人に見えるのは、自分の成長だけ。</h2>
+      <p class="lead">事務所様の報酬やインセンティブの仕組みは、クリエイター側には一切表示されません。ai-boがご本人に語るのは、その方自身の成長だけです。</p>
+      </div>
+      <figure class="fig">
+        <img src="images/07-status.webp" width="1168" height="880" loading="lazy" decoding="async" alt="スマートフォンの画面から階段が伸び、頂上に記章が置かれている図">
+      </figure>
+    </div>
+    <div class="grid g2">
+      <div class="card">
+        <div class="rankcard">
+          <div class="k">今月のあなたのランク</div>
+          <div class="v">シルバー</div>
+          <div class="n">先月はブロンズでした</div>
+        </div>
+        <div class="bars">
+          <div class="barrow">
+            <div class="bl"><span>配信した日</span><span>8 / 8日</span></div>
+            <div class="track"><i class="g" style="width:100%"></i></div>
+          </div>
+          <div class="barrow">
+            <div class="bl"><span>配信時間</span><span>25 / 25時間</span></div>
+            <div class="track"><i class="g" style="width:100%"></i></div>
+          </div>
+          <div class="barrow">
+            <div class="bl"><span>次のゴールドまで</span><span>あと4日</span></div>
+            <div class="track"><i class="o" style="width:66%"></i></div>
+          </div>
+        </div>
+        <p style="margin-top:16px; font-size:13px">マイステータス。今月どこまで来たか、次の段まで何が足りないかが見えます。</p>
+      </div>
+      <div class="card">
+        <div class="ico purple"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-lock"/></svg></div>
+        <h3>見せないものを、決めてあります</h3>
+        <ul class="plain">
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>事務所の報酬は表示しません</b>　インセンティブの仕組みも含め、一切出しません</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>他の人の実績は見えません</b>　順位や比較は本人には出しません</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>ランクが下がったことは伝えません</b>　上がったときだけお祝いします</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>共有範囲は本人に明示しています</b>　「やり取りは事務所が確認することもあります」と利用開始時に伝えます</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SAFETY ══ -->
+<section id="safety">
+  <div class="wrap">
+    <div class="split rev">
+      <div class="txt">
+      <span class="eyebrow">安全性とプライバシー</span>
+      <h2>見守りと、プライバシーの設計。</h2>
+      <p class="lead">AIに任せきりにはしません。人が出るべき場面と、本人に見せないものを、あらかじめ決めてあります。</p>
+      </div>
+      <figure class="fig">
+        <img src="images/09-safety.webp" width="1168" height="880" loading="lazy" decoding="async" alt="鍵穴のついた盾が、すりガラスの向こうのデータを守っている図">
+      </figure>
+    </div>
+    <div class="grid g3">
+      <div class="card">
+        <div class="ico red"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-shield"/></svg></div>
+        <h3>深刻な相談は、見逃しません</h3>
+        <p>AIが深刻な悩みの兆候を検知したら、ご本人の同意を得たうえで運営の方に共有します。音声通話でも同じ確認を行っています。</p>
+      </div>
+      <div class="card">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-eye"/></svg></div>
+        <h3>共有範囲は、本人に伝えています</h3>
+        <p>「やり取りは所属事務所が確認することもあります」と、利用開始時にご本人へ明示しています。隠して集めることはしません。</p>
+      </div>
+      <div class="card">
+        <div class="ico green"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-lock"/></svg></div>
+        <h3>データは事務所ごとに分離</h3>
+        <p>事務所ごとに独立した環境をご用意します。他の事務所とデータが混ざることはありません。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ VS ══ -->
+<section id="vs">
+  <div class="wrap">
+    <div class="split">
+      <div class="txt">
+      <span class="eyebrow">他ツールとの違い</span>
+      <h2>「公式LINEの自動配信は、もう入れている」という方へ。</h2>
+      <p class="lead">Lステップなどの配信ツールを導入済みの事務所は多くあります。ai-boは、その延長線上にはありません。</p>
+      </div>
+      <figure class="fig">
+        <img src="images/08-vs.webp" width="1168" height="880" loading="lazy" decoding="async" alt="左は拡声器が同じ形を一斉に送る図、右は一人ひとりに違う吹き出しが届く図">
+      </figure>
+    </div>
+    <div class="tblwrap">
+      <table>
+        <thead>
+          <tr><th style="width:22%"></th><th style="width:39%">これまでの公式LINE運用</th><th style="width:39%" class="hi">ai-bo</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="hl">メッセージの作り方</td><td>人がシナリオを書いて仕込む</td><td class="hl">その場で組み立てる。仕込みは不要</td></tr>
+          <tr><td class="hl">送る内容</td><td>分類ごとの定型文</td><td class="hl">一人ひとりに合わせた個別の文面</td></tr>
+          <tr><td class="hl">分類の粒度</td><td>あらかじめ決めたパターンの数だけ</td><td class="hl">クリエイターの人数だけ</td></tr>
+          <tr><td class="hl">前提にするデータ</td><td>登録時の属性・行動タグ</td><td class="hl">毎日の配信実績（時間・日数・ダイヤ）</td></tr>
+          <tr><td class="hl">運用の手間</td><td>シナリオを作り、育て、直し続ける</td><td class="hl">日次データを1回アップロードするだけ</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="lead" style="margin-top:26px; color:var(--text); font-weight:600; font-size:16px">
+      ai-boは「事前に仕込んだメッセージを送る仕組み」ではありません。<br>
+      その日のデータを見て、その人のための文章を、その場で書いています。
+    </p>
+  </div>
+</section>
+
+<!-- ══ PRICE ══ -->
+<section id="price">
+  <div class="wrap">
+    <span class="eyebrow">料金</span>
+    <h2>初期費用はいただきません。</h2>
+    <p class="lead">ai-boはすでに完成して稼働しているシステムです。御社のためにゼロから開発するのではなく、御社専用の環境を新しく立ち上げるため、開発費が発生しません。</p>
+    <div class="grid g2">
+      <div class="card price">
+        <div style="color:var(--sub); font-size:14px; font-weight:600">初期費用</div>
+        <div class="amt zero">¥0</div>
+      </div>
+      <div class="card price">
+        <div style="color:var(--sub); font-size:14px; font-weight:600">月額</div>
+        <div class="amt">¥150,000<small>／税別</small></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:18px">
+      <div class="inc">
+        <div>
+          <span class="mark y"><svg width="11" height="11" viewBox="0 0 24 24"><use href="#i-check"/></svg></span>
+          <span><b>月額に含まれるもの</b>　AIの利用料（対話・音声通話）／サーバー・データベースの費用／日々の運用・保守／全社共通の機能改善</span>
+        </div>
+        <div>
+          <span class="mark n">!</span>
+          <span><b>別途かかるもの</b>　LINE公式アカウントの配信料のみ（配信数によって変わるため、御社の規模をお伺いして概算をお出しします）</span>
+        </div>
+      </div>
+      <p style="margin-top:20px; padding-top:18px; border-top:1px solid var(--border); font-size:14px; color:var(--sub)">
+        <b style="color:var(--text)">契約期間</b>　最低3か月、以降は1か月単位です。解約は1か月前までにお知らせいただければ結構で、<b style="color:var(--text)">途中でおやめになっても追加のお支払いは発生しません。</b>
+      </p>
+      <p style="margin:10px 0 0; font-size:13.5px; color:var(--sub)">
+        価格を抑えてご提供しているのは、まだ導入実績がないためです。効果をお約束するのではなく、「導入前と比べて測れます」というかたちでご提案しています。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ STEPS ══ -->
+<section id="steps">
+  <div class="wrap">
+    <div class="split rev">
+      <div class="txt">
+      <span class="eyebrow">導入の流れ</span>
+      <h2>最短1週間で始められます。</h2>
+      <p class="lead">ゼロから開発するのではなく、御社専用の環境を新しく立ち上げる形です。だから短期間で始められます。</p>
+      </div>
+      <figure class="fig">
+        <img src="images/10-steps.webp" width="1168" height="880" loading="lazy" decoding="async" alt="5段の階段が上り、頂上に旗が立っている図">
+      </figure>
+    </div>
+    <div class="card">
+      <div class="step"><div class="n">1</div><div><h3>ヒアリング</h3><p>御社の運営の進め方と、困っていることをお伺いします。必要な機能を見極めたうえで構成を決めます。</p></div></div>
+      <div class="step"><div class="n">2</div><div><h3>専用環境の構築（1〜2時間）</h3><p>事務所ごとに独立した環境をご用意します。他の事務所とデータが混ざることはありません。</p></div></div>
+      <div class="step"><div class="n">3</div><div><h3>LINE公式アカウントのご準備</h3><p>クリエイター用と運営用の2つをご用意いただきます。手順はこちらでご案内します。</p></div></div>
+      <div class="step"><div class="n">4</div><div><h3>クリエイターの登録</h3><p>LINEで友だち追加して、TikTokのIDを送っていただくだけです。</p></div></div>
+      <div class="step"><div class="n">5</div><div><h3>運用開始</h3><p>日課は、日次データを1回アップロードするだけ。あとはai-boが自動で判断して声をかけます。</p></div></div>
+    </div>
+    <p class="lead" style="margin-top:22px; font-size:14px">
+      ai-boはパッケージ製品として売り切るものではありません。「この機能は使わない」「この場面で声をかけてほしい」——どちらも反映できます。拡張に機能上の縛りはありません。
+    </p>
+  </div>
+</section>
+
+<!-- ══ FAQ ══ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="split">
+      <div class="txt">
+      <span class="eyebrow">よくある質問</span>
+      <h2>よくいただくご質問</h2>
+      <p class="lead">商談でよくいただくご質問を、そのまま載せています。ここにないことは、LINEでai-bo自身にお聞きください。</p>
+      </div>
+      <figure class="fig">
+        <img src="images/11-faq.webp" width="1168" height="880" loading="lazy" decoding="async" alt="大きなはてなマークの横に、小さなロボットが立っている図">
+      </figure>
+    </div>
+    <div class="faqlist">
+    <details>
+      <summary>導入実績はどのくらいありますか？</summary>
+      <div class="ans">正直にお伝えすると、まだございません。これからお使いいただく段階です。
+だからこそ、効果を約束するのではなく「導入前と比べて測れます」というかたちでご提案しています。実績がない代わりに、価格を抑えてご提供しています。</div>
+    </details>
+    <details>
+      <summary>クリエイターはアプリを入れる必要がありますか？</summary>
+      <div class="ans">いいえ。LINEを使うだけです。友だち追加して、TikTokのIDを送っていただければ始められます。</div>
+    </details>
+    <details>
+      <summary>毎日、運営は何をすればいいですか？</summary>
+      <div class="ans">日次データを1回アップロードしていただくだけです。それが唯一の日課です。
+あとはai-boが自動で判断して声をかけます。管理画面は「今日、誰に何をすべきか」を確認するためにご覧ください。</div>
+    </details>
+    <details>
+      <summary>AIが変なことを言ってしまいませんか？</summary>
+      <div class="ans">確信が持てないことには答えない設計にしています。「確認してお返しします」とお伝えして、運営の方に取り次ぎます。</div>
+    </details>
+    <details>
+      <summary>クリエイターに事務所の報酬は見えますか？</summary>
+      <div class="ans">一切見えません。事務所様の報酬やインセンティブの仕組みは、クリエイター側には出さない設計です。
+ai-boがご本人に語るのは、その方自身の成長だけです。</div>
+    </details>
+    <details>
+      <summary>いまLステップを使っていますが、併用できますか？</summary>
+      <div class="ans">はい、併用いただけます。ai-boは公式LINEアカウントを別に立てますので、いまお使いのものはそのまま残せます。</div>
+    </details>
+    <details>
+      <summary>途中でやめられますか？</summary>
+      <div class="ans">最低3か月、それ以降は1か月単位です。解約は1か月前までにお知らせいただければ結構です。
+途中でおやめになっても、追加のお支払いは発生しません。</div>
+    </details>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section id="contact">
+  <div class="wrap">
+    <div class="band">
+      <span class="eyebrow">お問い合わせ</span>
+      <h2>ai-bo 自身が、ai-bo について答えます。</h2>
+      <p>LINEで友だち追加していただくと、ai-boとそのまま会話できます。実際の受け答えを見ていただくのが、いちばん早いと思います。音声通話もお試しいただけます。</p>
+      <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap">
+        <a href="https://lin.ee/x7dkQQq" target="_blank" rel="noopener" class="btn btn-primary btn-lg">LINEで ai-bo と話す</a>
+        <a href="mailto:info@ai-bo-lab.jp" class="btn btn-ghost btn-lg">メールで問い合わせる</a>
+      </div>
+      <p style="margin:24px 0 0; font-size:13px">しつこい追客はいたしません。ご質問にだけお答えします。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ COMPANY ══ -->
+<section id="company">
+  <div class="wrap info">
+    <span class="eyebrow">運営者情報</span>
+    <h2>運営者情報</h2>
+    <dl>
+      <dt>屋号</dt><dd>ai-bo</dd>
+      <dt>代表者</dt><dd>横瀬 天夢</dd>
+      <dt>所在地</dt><dd>東京都墨田区緑4-4-5　パークアクシス錦糸町WEST 705</dd>
+      <dt>連絡先</dt><dd><a href="mailto:info@ai-bo-lab.jp">info@ai-bo-lab.jp</a></dd>
+      <dt>事業内容</dt><dd>TikTok LIVE事務所向けAI伴走サービス「ai-bo」の提供・運用・保守</dd>
+    </dl>
+    <p style="margin-top:20px; font-size:13.5px; color:var(--sub)">
+      現在は個人事業として提供しております。法人化の準備を進めており、設立後はご契約をそのまま法人へ引き継ぎます。
+    </p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap fin">
+    <a href="#top" class="logo" style="font-size:15px">
+      <span class="dot" style="width:22px;height:22px;border-radius:7px"><svg width="14" height="14" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+      ai-bo
+    </a>
+    <a href="problem.html">構造上の問題</a>
+    <a href="service.html">サービス詳細</a>
+    <a href="#price">料金</a>
+    <a href="#faq">よくある質問</a>
+    <a href="#company">運営者情報</a>
+    <span class="c">© 2026 ai-bo</span>
+  </div>
+</footer>
+
+</body>
+</html>

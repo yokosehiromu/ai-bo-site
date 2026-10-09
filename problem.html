@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠ 確認用URL（GitHub Pages）のための一時設定。本番公開の前に必ず消すこと。
+     引き継ぎ書「ホームページと独自ドメイン」§4-5 を参照。 -->
+<meta name="robots" content="noindex, nofollow">
+<title>TikTok LIVEエージェンシー事業の構造上の問題｜ai-bo</title>
+<meta name="description" content="所属クリエイターが増えるほど、一人あたりに割ける時間は減ります。目が届かない人が生まれるのは担当者の努力ではなく、人数と時間の構造によるものです。その5つの構造と、解き方を整理しました。">
+<meta property="og:title" content="TikTok LIVEエージェンシー事業の構造上の問題｜ai-bo">
+<meta property="og:description" content="目が届かない人が生まれるのは、努力ではなく構造の問題です。5つの構造と、その解き方を整理しました。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="ai-bo">
+<meta property="og:url" content="https://ai-bo-lab.jp/problem.html">
+<meta property="og:image" content="https://ai-bo-lab.jp/images/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://ai-bo-lab.jp/problem.html">
+<meta name="theme-color" content="#2f66d0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f131a" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='8'%20fill='%232f66d0'/%3E%3Cg%20transform='translate(4%204)'%20fill='none'%20stroke='%23fff'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Crect%20x='4'%20y='8'%20width='16'%20height='12'%20rx='3'/%3E%3Cpath%20d='M12%208V4.5'/%3E%3Ccircle%20cx='12'%20cy='3'%20r='1.4'/%3E%3Ccircle%20cx='9'%20cy='13.5'%20r='1.3'%20fill='%23fff'%20stroke='none'/%3E%3Ccircle%20cx='15'%20cy='13.5'%20r='1.3'%20fill='%23fff'%20stroke='none'/%3E%3Cpath%20d='M9.5%2017h5'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<!-- ══ icon sprite ══
+     index.html と同じ定義。CSSと違って静的なので、各ページに複製している。
+     片方だけ直さないこと。正本は assets/_sprite.html。 -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <g id="i-bot" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 8V4.5"/><circle cx="12" cy="3" r="1.4"/>
+    <circle cx="9" cy="13.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="15" cy="13.5" r="1.1" fill="currentColor" stroke="none"/>
+    <path d="M9.5 17h5"/>
+  </g>
+  <g id="i-users" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M16 19v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 4 17.5V19"/><circle cx="10" cy="8" r="3.2"/>
+    <path d="M20 19v-1.5a3.5 3.5 0 0 0-2.6-3.4M15.5 5.2a3.2 3.2 0 0 1 0 5.6"/>
+  </g>
+  <g id="i-clock" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="8.4"/><path d="M12 7.4V12l3 1.8"/>
+  </g>
+  <g id="i-mega" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 10v4a1.5 1.5 0 0 0 1.5 1.5H8l6 4V6l-6 4H5.5A1.5 1.5 0 0 0 4 11.5Z"/><path d="M17.5 9.5a4 4 0 0 1 0 5"/>
+  </g>
+  <g id="i-chat" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 12.5c0 3.9-3.6 7-8 7a9 9 0 0 1-2.6-.4L5 21l1.2-3.3A6.6 6.6 0 0 1 4 12.5c0-3.9 3.6-7 8-7s8 3.1 8 7Z"/>
+  </g>
+  <g id="i-radar" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M19.8 10a8.3 8.3 0 1 0-3.3 8.4"/><path d="M16.6 11.2A4.8 4.8 0 1 0 13 16.6"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/><path d="M12 12l6.5-5.2"/>
+  </g>
+  <g id="i-chart" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 19.5h16"/><path d="M7 16V11"/><path d="M12 16V6.5"/><path d="M17 16v-6.5"/>
+  </g>
+  <g id="i-shield" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3.5l7 2.6v5.2c0 4.3-2.9 7.6-7 9.2-4.1-1.6-7-4.9-7-9.2V6.1Z"/><path d="M9.3 12.2l1.9 1.9 3.6-3.8"/>
+  </g>
+  <g id="i-lock" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="5" y="10.5" width="14" height="9.5" rx="2.4"/><path d="M8.3 10.5V7.8a3.7 3.7 0 1 1 7.4 0v2.7"/>
+  </g>
+  <g id="i-eye" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M2.8 12S6.4 6.2 12 6.2 21.2 12 21.2 12 17.6 17.8 12 17.8 2.8 12 2.8 12Z"/><circle cx="12" cy="12" r="2.7"/>
+  </g>
+  <g id="i-check" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4.5 12.5l5 5 10-11"/>
+  </g>
+  <g id="i-arr" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 12h14"/><path d="M14 7l5 5-5 5"/>
+  </g>
+</defs>
+</svg>
+
+<header>
+  <div class="wrap hd">
+    <a href="index.html" class="logo">
+      <span class="dot"><svg width="16" height="16" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+      ai-bo
+    </a>
+    <nav>
+      <a href="index.html#about" class="nav-link">ai-boとは</a>
+      <a href="index.html#samples" class="nav-link">届く文面</a>
+      <a href="index.html#engine" class="nav-link">仕組み</a>
+      <a href="index.html#dashboard" class="nav-link">管理画面</a>
+      <a href="index.html#price" class="nav-link">料金</a>
+      <a href="index.html#contact" class="btn btn-primary">相談する</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ══ PAGE HEAD ══ -->
+<section class="pagehead">
+  <div class="wrap">
+    <p class="crumb"><a href="index.html">ai-bo</a>　›　構造上の問題</p>
+    <span class="eyebrow">事務所で起きていること</span>
+    <h1>TikTok LIVEエージェンシー事業には<br>構造上の問題があります。</h1>
+    <p class="lead">これは、特定の事務所の話ではありません。所属するクリエイターが増えるほど、仕組みとして必ず起きることです。担当者の努力や能力の問題ではないので、「もっと頑張る」では解けません。ここでは、その構造を5つに分けて整理します。</p>
+  </div>
+</section>
+
+<!-- ══ 5つの構造 ══ -->
+<section>
+  <div class="wrap">
+    <div class="split">
+      <div class="txt">
+        <span class="eyebrow">問題の本質</span>
+        <h2>目が届かない人は、<br>成長すればするほど増えます。</h2>
+        <p class="lead">所属が増えることは、サービスが伸びている証拠です。しかし同じだけ、一人あたりに割ける時間は減ります。この2つは切り離せません。</p>
+      </div>
+      <figure class="fig">
+        <img src="images/01-problem.webp" width="1168" height="880" loading="lazy" decoding="async" alt="大勢の人の中で一人だけが色づいている図。担当者の目が全員には届かないことを表しています">
+      </figure>
+    </div>
+
+    <div class="pts">
+      <div class="pt">
+        <div class="no"></div>
+        <div>
+          <h3>人数が増えるほど、一人あたりに割ける時間は減る</h3>
+          <p>担当者1人が見られる人数には限りがあります。毎日、全員の配信状況を確認し、変化に気づき、一人ひとりに合った言葉で声をかける——これを数十人ぶん続けることは、時間の制約として成り立ちません。</p>
+          <p><b>所属が増えるほどサービスは伸びますが、同時に一人あたりに割ける時間は確実に減ります。</b>成長そのものが、目の届かない人を生みます。</p>
+        </div>
+          <figure class="shot">
+            <img src="images/p1-time.webp" width="1168" height="880" loading="lazy" decoding="async" alt="1枚の時計の文字盤が細かく分割され、その周りを大勢の人が囲んでいる図。限られた時間を多人数で分け合うことを表しています">
+          </figure>
+      </div>
+
+      <div class="pt">
+        <div class="no"></div>
+        <div>
+          <h3>見られるのは「上」と「下」だけで、真ん中が落ちる</h3>
+          <p>担当者は、まず成果の出ている人を見ます。次に、明らかに問題が起きている人を見ます。限られた時間を配分すれば、自然とそうなります。</p>
+          <p>いちばん後回しになるのは、その間にいる人たちです。<b>静かに止まりかけている人は、目立たないので気づかれません。</b>そして、早く手を打てれば戻ってきてもらいやすいのも、この人たちです。</p>
+        </div>
+          <figure class="shot">
+            <img src="images/p2-middle.webp" width="1168" height="880" loading="lazy" decoding="async" alt="3段に並んだ人の列のうち、上下の段だけが青く照らされ、真ん中の段が灰色に沈んでいる図">
+          </figure>
+      </div>
+
+      <div class="pt">
+        <div class="no"></div>
+        <div>
+          <h3>気づいた時点で、すでに遅れている</h3>
+          <p>「最近見ないな」と思ったときには、たいてい数週間が経っています。日々の業務の合間に気づくには、それだけの時間がかかるからです。</p>
+          <p>配信が止まってからの日数が延びるほど、戻ってきてもらえる確率は下がります。<b>同じ一声でも、早いか遅いかで結果が変わります。</b>問題は声のかけ方ではなく、気づくまでの時間のほうにあります。</p>
+        </div>
+          <figure class="shot">
+            <img src="images/p3-late.webp" width="1168" height="880" loading="lazy" decoding="async" alt="右へ行くほど人の姿が薄くなって消えていき、いちばん薄くなった最後の人にだけ光が当たっている図">
+          </figure>
+      </div>
+
+      <div class="pt">
+        <div class="no"></div>
+        <div>
+          <h3>辞める人は「辞めます」と言わない</h3>
+          <p>退会の連絡が来ることは、ほとんどありません。配信が止まり、連絡が減り、そのまま戻らない。それだけです。</p>
+          <p><b>区切りがないので、いつ離れたのかが分かりません。</b>気づくのは、月末に数字を見たときになります。その時点では、手を打てる時期がすでに過ぎています。</p>
+        </div>
+          <figure class="shot">
+            <img src="images/p4-silent.webp" width="1168" height="880" loading="lazy" decoding="async" alt="等間隔に並んだ人の列の真ん中が1人分だけ空いていて、影だけが残っている図">
+          </figure>
+      </div>
+
+      <div class="pt">
+        <div class="no"></div>
+        <div>
+          <h3>一斉配信は、自分宛てだと思ってもらえない</h3>
+          <p>全員に同じ文面を送っても、自分に向けられた言葉としては読まれません。かといって、一人ずつ書き分ける時間はありません。</p>
+          <p><b>「読まれる言葉」と「続けられる手間」が両立しないこと自体が、構造の問題です。</b>どちらかを選べば、もう片方が必ず犠牲になります。</p>
+        </div>
+          <figure class="shot">
+            <img src="images/p5-blast.webp" width="1168" height="880" loading="lazy" decoding="async" alt="同じ形の封筒が大量に降り注ぎ、開けられないまま足元に積み上がっている図">
+          </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 誤解されやすいこと ══ -->
+<section>
+  <div class="wrap">
+    <div class="split rev">
+      <div class="txt">
+        <span class="eyebrow">誤解されやすいこと</span>
+        <h2>これは、やる気の問題ではありません。</h2>
+        <p class="lead">5つとも、担当者の努力や能力とは関係なく起きます。人数と時間の制約から出てくるものだからです。だから、研修や声かけの徹底では解けません。解こうとすると、たいてい担当者のほうが先に消耗します。</p>
+      </div>
+      <figure class="fig">
+        <img src="images/08-vs.webp" width="1168" height="880" loading="lazy" decoding="async" alt="左は拡声器が同じ形を一斉に送る図、右は一人ひとりに違う吹き出しが届く図">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 解き方 ══ -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">解き方</span>
+    <h2>やり方は、2つしかありません。</h2>
+    <p class="lead">構造の問題なので、構造を変えるしかありません。選べる道は2つです。</p>
+    <div class="ways">
+      <div class="way">
+        <div class="cap">方法 1</div>
+        <h3>人を増やして解決</h3>
+        <p>担当者を増やせば、見られる人数は増えます。確実な方法です。</p>
+        <p style="margin-top:12px">ただし、コストが人数に比例して増えます。所属が増えるほど採用と教育が必要になり、一人あたりにかかるコストは下がりません。<b style="color:var(--text)">目を増やすために、見るべき人数も一緒に増えていきます。</b></p>
+      </div>
+      <div class="way hi">
+        <span class="tag">ai-boのやり方</span>
+        <div class="cap">方法 2</div>
+        <h3>仕組みで解決</h3>
+        <p>毎日、全員のデータを見て、変化に気づき、その人に合った言葉で声をかける——<b>人がやると続かない部分だけ</b>を、仕組みに任せます。人は「人が出るべき場面」に集中できます。</p>
+        <ul>
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><span>所属が何人に増えても、運営の手間は変わりません</span></li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><span>見落としが「忙しさ」で起きなくなります</span></li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><span>人は、人にしかできない対応に時間を使えます</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="more">
+      <a href="service.html" class="btn-pill">ai-boがこれをどう解くか<span class="ar"><svg width="16" height="16" viewBox="0 0 24 24"><use href="#i-arr"/></svg></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section id="contact">
+  <div class="wrap">
+    <div class="band">
+      <span class="eyebrow">お問い合わせ</span>
+      <h2>ai-bo 自身が、ai-bo について答えます。</h2>
+      <p>LINEで友だち追加していただくと、ai-boとそのまま会話できます。実際の受け答えを見ていただくのが、いちばん早いと思います。音声通話もお試しいただけます。</p>
+      <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap">
+        <a href="https://lin.ee/x7dkQQq" target="_blank" rel="noopener" class="btn btn-primary btn-lg">LINEで ai-bo と話す</a>
+        <a href="mailto:info@ai-bo-lab.jp" class="btn btn-ghost btn-lg">メールで問い合わせる</a>
+      </div>
+      <p style="margin:24px 0 0; font-size:13px">しつこい追客はいたしません。ご質問にだけお答えします。</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap fin">
+    <a href="index.html" class="logo" style="font-size:15px">
+      <span class="dot" style="width:22px;height:22px;border-radius:7px"><svg width="14" height="14" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+      ai-bo
+    </a>
+    <a href="service.html">サービス詳細</a>
+    <a href="index.html#price">料金</a>
+    <a href="index.html#faq">よくある質問</a>
+    <a href="index.html#company">運営者情報</a>
+    <span class="c">© 2026 ai-bo</span>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,527 @@
+/* ai-bo ホームページ 共通スタイル
+   index.html と problem.html の両方が読み込む。
+   トークンは Claudデザインダッシュボード/README.md が正本。 */
+
+:root{
+  --bg:#f4f6f9; --surface:#fff; --surface2:#eef1f5; --text:#141c2b; --sub:#66707f;
+  --border:#e2e7ee; --accent:#2f66d0; --accent-strong:#2554b4; --accent-soft:#e8effc;
+  --red:#d6455d; --red-soft:#fdecef; --orange:#d9821f; --orange-soft:#fdf1e3;
+  --green:#199b6e; --green-soft:#e4f6ee; --purple:#7a5bd6; --purple-soft:#efeafc;
+  --chat-bg:#e9eef5; --chat-them:#ffffff; --frame:#232a36;
+  --radius:12px; --maxw:1480px; --measure:820px;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0f131a; --surface:#171d27; --surface2:#1f2732; --text:#e9edf4; --sub:#8b96a8;
+    --border:#28313f; --accent:#6b96e8; --accent-strong:#89abee; --accent-soft:#1d2a45;
+    --red:#e57085; --red-soft:#3a2029; --orange:#e39b4d; --orange-soft:#3a2c1a;
+    --green:#3fc492; --green-soft:#133026; --purple:#a98ff0; --purple-soft:#241d3d;
+    --chat-bg:#10151d; --chat-them:#222a36; --frame:#000;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:72px}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:"IBM Plex Sans JP",-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif;
+  font-size:15px; line-height:1.85; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+a{color:var(--accent); text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 clamp(20px,3.2vw,44px)}
+svg{display:block}
+
+/* ── header ───────────────────────────── */
+header{
+  position:sticky; top:0; z-index:50; background:color-mix(in srgb, var(--bg) 86%, transparent);
+  backdrop-filter:saturate(180%) blur(12px); border-bottom:1px solid var(--border);
+}
+.hd{display:flex; align-items:center; gap:24px; height:64px}
+.logo{display:flex; align-items:center; gap:9px; font-weight:700; font-size:19px; color:var(--text)}
+.logo:hover{text-decoration:none}
+.logo .dot{
+  width:26px; height:26px; border-radius:8px; background:var(--accent);
+  display:grid; place-items:center; flex:none;
+}
+nav{margin-left:auto; display:flex; gap:22px; align-items:center}
+nav a{color:var(--sub); font-size:13.5px; font-weight:500}
+nav a:hover{color:var(--text); text-decoration:none}
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  height:40px; padding:0 20px; border-radius:8px; font-size:14px; font-weight:600;
+  border:1px solid transparent; cursor:pointer; font-family:inherit; white-space:nowrap;
+}
+.btn-primary{background:var(--accent); color:#fff}
+.btn-primary:hover{background:var(--accent-strong); text-decoration:none}
+.btn-ghost{background:var(--surface); color:var(--text); border-color:var(--border)}
+.btn-ghost:hover{background:var(--surface2); text-decoration:none}
+.btn-lg{height:48px; padding:0 26px; font-size:15px}
+@media (max-width:900px){ nav .nav-link{display:none} }
+
+/* ── section ──────────────────────────── */
+section{padding:88px 0}
+section + section{padding-top:0}
+.eyebrow{
+  display:inline-block; font-size:12px; font-weight:600; letter-spacing:.08em;
+  color:var(--accent); background:var(--accent-soft); padding:5px 12px; border-radius:999px; margin-bottom:18px;
+}
+h2{font-size:28px; line-height:1.5; margin:0 0 14px; letter-spacing:-.01em; font-weight:700;
+   text-wrap:balance; word-break:auto-phrase}
+h3{font-size:17px; margin:0 0 8px; font-weight:600}
+.lead{color:var(--sub); font-size:15.5px; margin:0 0 36px; max-width:var(--measure)}
+.card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:26px}
+.grid{display:grid; gap:18px}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+@media (max-width:860px){ .g3,.g2{grid-template-columns:1fr} h2{font-size:23px} section{padding:62px 0} }
+@media (min-width:1280px){
+  section{padding:104px 0}
+  h2{font-size:33px}
+  .lead{font-size:16.5px}
+  .grid{gap:22px}
+  .card{padding:30px}
+  /* hero fills the wider canvas */
+  .hero{padding:104px 0 108px}
+  .hero .sub{font-size:17.5px}
+  .hero-grid{gap:72px}
+  .phone{width:340px}
+  .phone .bub{max-width:250px}
+  /* long prose keeps a readable line length even in a full-width card */
+  .step p, details .ans{max-width:var(--measure)}
+  /* FAQ reads as two columns rather than one very wide list */
+  .faqlist{grid-template-columns:1fr 1fr; gap:0 22px; align-items:start}
+}
+
+/* --- section illustration (text / image, alternating) --- */
+.split{
+  display:grid; grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);
+  gap:clamp(30px,4vw,66px); align-items:center; margin-bottom:clamp(32px,3.6vw,50px);
+}
+.split .txt{min-width:0}
+.split .txt .lead{margin-bottom:0}
+.split .fig{order:2}
+.split.rev .fig{order:-1}
+.fig{
+  margin:0; border-radius:16px; overflow:hidden; border:1px solid var(--border);
+  background:var(--surface); box-shadow:0 24px 54px -26px rgba(12,20,38,.38);
+}
+.fig img{width:100%; height:auto; display:block; aspect-ratio:16/10; object-fit:cover; object-position:center}
+@media (prefers-color-scheme:dark){
+  .fig img{filter:brightness(.85) contrast(1.02)}
+}
+@media (max-width:980px){
+  .split{grid-template-columns:1fr; gap:24px; margin-bottom:30px}
+  .split .fig, .split.rev .fig{order:2}
+}
+
+/* icon tile */
+.ico{
+  width:42px; height:42px; border-radius:11px; display:grid; place-items:center;
+  margin-bottom:15px; background:var(--accent-soft); color:var(--accent); flex:none;
+}
+.ico.red{background:var(--red-soft); color:var(--red)}
+.ico.orange{background:var(--orange-soft); color:var(--orange)}
+.ico.green{background:var(--green-soft); color:var(--green)}
+.ico.purple{background:var(--purple-soft); color:var(--purple)}
+.card p{margin:0; color:var(--sub); font-size:14px}
+
+/* ── hero ─────────────────────────────── */
+.hero{padding:84px 0 88px; position:relative}
+.hero::before{
+  content:""; position:absolute; inset:0; pointer-events:none; z-index:-1;
+  background:
+    radial-gradient(680px 320px at 76% 12%, color-mix(in srgb, var(--accent) 13%, transparent), transparent 70%),
+    radial-gradient(520px 300px at 8% 86%, color-mix(in srgb, var(--purple) 11%, transparent), transparent 70%);
+}
+.hero-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:56px; align-items:center}
+.hero h1{font-size:clamp(29px,3.0vw,46px); line-height:1.44; margin:0 0 22px; letter-spacing:-.02em; font-weight:700; word-break:auto-phrase}
+.hero .sub{font-size:16.5px; color:var(--sub); margin:0 0 32px}
+.hero .cta{display:flex; gap:12px; flex-wrap:wrap}
+.hero .note{margin-top:22px; font-size:13px; color:var(--sub)}
+
+/* ヒーローのコラージュ（ai-boとクリエイターのLINEのやりとりを紙片として散らす）
+   装飾なので aria-hidden。狭い画面では出さない（現状の2カラムに戻る）。
+   ★文面はすべてこの場所専用の架空のやりとり。ページの他の場所とは重複させない。 */
+.collage{position:absolute; inset:0; overflow:hidden; z-index:0; pointer-events:none; display:none}
+.collage .s{position:absolute; width:max-content; max-width:290px}
+.collage .row{display:flex; gap:7px; align-items:flex-end}
+.collage .row + .row{margin-top:7px}
+.collage .row.me{justify-content:flex-end}
+.collage .a{
+  width:24px; height:24px; border-radius:50%; background:var(--accent);
+  display:grid; place-items:center; flex:none;
+}
+.collage p{
+  margin:0; background:var(--chat-them); border:1px solid var(--border);
+  border-radius:4px 16px 16px 16px; padding:10px 13px;
+  font-size:12.4px; line-height:1.74; color:var(--text);
+  box-shadow:0 10px 24px -16px rgba(12,20,38,.34), 0 1px 3px rgba(12,20,38,.05);
+}
+.collage .row.me p{
+  background:#c4edca; color:#1b3a24; border-color:transparent;
+  border-radius:16px 4px 16px 16px;
+}
+/* 見出しと電話に視線が行くよう、紙片は中央で後退させる */
+.collage::after{
+  content:""; position:absolute; inset:0;
+  background:radial-gradient(54% 52% at 50% 50%,
+    color-mix(in srgb,var(--bg) 86%, transparent) 0%,
+    color-mix(in srgb,var(--bg) 42%, transparent) 52%, transparent 76%);
+}
+.hero .headline{position:relative; z-index:2}
+.hero .phone{position:relative; z-index:2}
+
+@media (min-width:1100px){
+  .collage{display:block}
+  .hero{padding:140px 0 178px}
+  /* 紙片の上に載るので、見出しも1枚の紙片として扱う */
+  .hero .headline{
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+    box-shadow:0 30px 64px -30px rgba(12,20,38,.42), 0 3px 8px rgba(12,20,38,.05);
+    padding:clamp(28px,2.6vw,40px);
+  }
+  .hero-grid{grid-template-columns:1.12fr .88fr}
+}
+/* collage slip positions
+   上段(y0-4%)と下段(y9-10%)、底の上段(y74%)と下段(y86%)の4列に千鳥で置く。
+   x は約18%刻み（吹き出しの最大幅が290px＝1600px時の約18%）。
+   2往復ぶんの紙片(.s2 .s6 .s9 .s13)だけ背が高いので、必ず各帯の「下段」に置くこと。 */
+.s1 {left:-3%;   top:2%;   transform:rotate(-3deg)}
+.s3 {left:30%;   top:0.5%; transform:rotate(2deg)}
+.s5 {left:62%;   top:1%;   transform:rotate(-2.5deg)}
+.s7 {left:92%;   top:0%;   transform:rotate(3deg)}
+.s2 {left:15%;   top:10%;  transform:rotate(2.5deg)}
+.s6 {left:78%;   top:9%;   transform:rotate(-2deg)}
+.s4 {left:46%;   top:9.5%; transform:rotate(-4deg)}
+
+.s15{left:-5%;   top:30%;  transform:rotate(3deg)}
+.s16{left:-5%;   top:52%;  transform:rotate(-2.5deg)}
+.s17{left:95%;   top:29%;  transform:rotate(-3deg)}
+.s18{left:95%;   top:54%;  transform:rotate(2deg)}
+.s19{left:56%;   top:26%;  transform:rotate(4deg)}
+.s20{left:56%;   top:57%;  transform:rotate(-3.5deg)}
+
+.s8 {left:-3%;   top:71%;  transform:rotate(2deg)}
+.s10{left:29%;   top:70%;  transform:rotate(-3deg)}
+.s12{left:60%;   top:71%;  transform:rotate(2.5deg)}
+.s14{left:91%;   top:70%;  transform:rotate(-2deg)}
+.s9 {left:14%;   top:81%;  transform:rotate(-2.5deg)}
+.s11{left:45%;   top:81.5%;transform:rotate(3deg)}
+.s13{left:76%;   top:81%;  transform:rotate(-3deg)}
+@media (max-width:980px){
+  .hero-grid{grid-template-columns:1fr; gap:46px}
+  .hero{padding:56px 0 60px}
+  .hero h1{font-size:29px}
+  .hero .sub{font-size:15.5px}
+}
+
+/* ── phone mock ───────────────────────── */
+.phone{
+  width:300px; max-width:100%; margin:0 auto; background:var(--frame); border-radius:38px;
+  padding:11px; box-shadow:0 26px 60px -18px rgba(12,20,38,.42), 0 4px 14px rgba(12,20,38,.14);
+}
+.phone .screen{background:var(--chat-bg); border-radius:28px; overflow:hidden}
+.phone .bar{
+  background:var(--surface); padding:11px 15px; display:flex; align-items:center; gap:10px;
+  border-bottom:1px solid var(--border);
+}
+.phone .bar .av{
+  width:30px; height:30px; border-radius:50%; background:var(--accent);
+  display:grid; place-items:center; flex:none;
+}
+.phone .bar b{font-size:13.5px; font-weight:600}
+.phone .bar .st{font-size:10.5px; color:var(--sub); line-height:1.3}
+.chat{padding:16px 13px 20px; display:flex; flex-direction:column; gap:12px}
+.day{text-align:center; font-size:10.5px; color:var(--sub)}
+.msg{display:flex; gap:8px; align-items:flex-end}
+.msg .av{
+  width:26px; height:26px; border-radius:50%; background:var(--accent); flex:none;
+  display:grid; place-items:center;
+}
+.bub{
+  background:var(--chat-them); border-radius:4px 16px 16px 16px; padding:10px 13px;
+  font-size:12.6px; line-height:1.72; max-width:215px; color:var(--text);
+  box-shadow:0 1px 2px rgba(12,20,38,.07);
+}
+.msg .tm{font-size:9.5px; color:var(--sub); flex:none; margin-bottom:2px}
+.msg.me{justify-content:flex-end}
+.msg.me .bub{background:#c4edca; color:#1b3a24; border-radius:16px 4px 16px 16px; box-shadow:none}
+@media (prefers-color-scheme: dark){
+  .msg.me .bub, .collage .row.me p{background:#2b5e3c; color:#dff3e4}
+}
+.qr{display:flex; gap:6px; flex-wrap:wrap; padding:2px 0 0 34px}
+.qr span{
+  font-size:10.5px; border:1px solid var(--accent); color:var(--accent);
+  background:var(--surface); border-radius:999px; padding:3px 11px;
+}
+
+/* ── sample messages ──────────────────── */
+.samples{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+.sample{
+  background:var(--chat-bg); border:1px solid var(--border); border-radius:var(--radius); padding:20px;
+}
+.sample .who{display:flex; align-items:center; gap:9px; margin-bottom:13px}
+.sample .who .av{width:26px; height:26px; border-radius:50%; background:var(--accent); display:grid; place-items:center; flex:none}
+.sample .who b{font-size:12.5px; font-weight:600}
+.sample .who span{font-size:11px; color:var(--sub)}
+.sample .bub{
+  background:var(--chat-them); border-radius:4px 14px 14px 14px; padding:13px 15px;
+  font-size:13.2px; line-height:1.8; max-width:none; white-space:pre-line;
+  box-shadow:0 1px 2px rgba(12,20,38,.07);
+}
+.sample .tag{
+  display:inline-block; margin-top:12px; font-size:11px; font-weight:600;
+  padding:3px 9px; border-radius:6px;
+}
+@media (max-width:860px){ .samples{grid-template-columns:1fr} }
+
+/* ── engine flow ──────────────────────── */
+.flow{display:grid; grid-template-columns:150px 44px 1fr 44px 170px; align-items:center; gap:0}
+.flow .node{
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+  padding:18px 16px; text-align:center;
+}
+.flow .node .k{font-size:11.5px; color:var(--sub); font-weight:600; letter-spacing:.04em}
+.flow .node .v{font-size:14.5px; font-weight:600; margin-top:3px; line-height:1.5}
+.flow .arr{display:grid; place-items:center; color:var(--border)}
+.flow .mid{display:grid; gap:12px}
+.flow .eng{
+  background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--accent);
+  border-radius:var(--radius); padding:15px 18px;
+}
+.flow .eng.b{border-left-color:var(--purple)}
+.flow .eng .t{font-size:14px; font-weight:600}
+.flow .eng .d{font-size:12.5px; color:var(--sub); margin-top:2px; line-height:1.65}
+.flow .out{border-color:var(--accent); background:var(--accent-soft)}
+.flow .out .v{color:var(--accent)}
+@media (max-width:980px){
+  .flow{grid-template-columns:1fr; gap:10px}
+  .flow .arr{transform:rotate(90deg); height:26px}
+}
+
+/* ── dashboard mock ───────────────────── */
+.dash{
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+  overflow:hidden; box-shadow:0 18px 44px -20px rgba(12,20,38,.3);
+}
+.dash .top{
+  display:flex; align-items:center; gap:8px; padding:11px 15px;
+  background:var(--surface2); border-bottom:1px solid var(--border);
+}
+.dash .top i{width:9px; height:9px; border-radius:50%; background:var(--border); display:block}
+.dash .top .u{
+  margin-left:10px; font-size:11.5px; color:var(--sub); background:var(--surface);
+  border:1px solid var(--border); border-radius:6px; padding:2px 12px;
+}
+.dash .body{padding:20px}
+.kpis{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:20px}
+.kpi{background:var(--surface2); border-radius:10px; padding:13px 15px}
+.kpi .l{font-size:11px; color:var(--sub); font-weight:500}
+.kpi .n{font-size:23px; font-weight:700; line-height:1.3; letter-spacing:-.01em}
+.kpi .n small{font-size:12px; font-weight:500; color:var(--sub); margin-left:3px}
+.dash h4{font-size:13.5px; margin:0 0 11px; font-weight:600}
+.row{
+  display:flex; align-items:center; gap:12px; padding:11px 13px;
+  border:1px solid var(--border); border-radius:9px; margin-bottom:8px; background:var(--surface);
+}
+.row .av{width:30px; height:30px; border-radius:50%; flex:none; display:grid; place-items:center; font-size:11.5px; font-weight:700}
+.row .nm{font-size:13px; font-weight:600; line-height:1.4}
+.row .rs{font-size:11.5px; color:var(--sub); line-height:1.4}
+.row .bd{margin-left:auto; font-size:11px; font-weight:600; padding:3px 10px; border-radius:999px; white-space:nowrap}
+.bd.r{background:var(--red-soft); color:var(--red)}
+.bd.o{background:var(--orange-soft); color:var(--orange)}
+.bd.g{background:var(--green-soft); color:var(--green)}
+.av.r{background:var(--red-soft); color:var(--red)}
+.av.o{background:var(--orange-soft); color:var(--orange)}
+.av.g{background:var(--green-soft); color:var(--green)}
+.av.p{background:var(--purple-soft); color:var(--purple)}
+.samplenote{
+  margin-top:14px; font-size:12px; color:var(--sub); display:flex; align-items:center; gap:7px;
+}
+.samplenote b{
+  background:var(--surface2); color:var(--sub); font-size:10.5px; font-weight:600;
+  padding:2px 8px; border-radius:5px;
+}
+@media (max-width:860px){ .kpis{grid-template-columns:repeat(2,1fr)} }
+
+/* ── status mock ──────────────────────── */
+.rankcard{
+  background:linear-gradient(135deg, var(--accent) 0%, var(--purple) 100%);
+  border-radius:14px; padding:20px; color:#fff; text-align:center;
+}
+.rankcard .k{font-size:11.5px; opacity:.85; font-weight:500}
+.rankcard .v{font-size:25px; font-weight:700; line-height:1.35}
+.rankcard .n{font-size:11.5px; opacity:.85; margin-top:3px}
+.bars{display:grid; gap:11px; margin-top:16px}
+.barrow .bl{display:flex; font-size:12px; margin-bottom:5px}
+.barrow .bl span:last-child{margin-left:auto; color:var(--sub)}
+.track{height:7px; background:var(--surface2); border-radius:99px; overflow:hidden}
+.track i{display:block; height:100%; border-radius:99px; background:var(--accent)}
+.track i.g{background:var(--green)}
+.track i.o{background:var(--orange)}
+
+/* ── misc ─────────────────────────────── */
+ul.plain{margin:14px 0 0; padding:0; list-style:none}
+ul.plain li{position:relative; padding-left:24px; margin-bottom:10px; font-size:14px; color:var(--sub)}
+ul.plain li svg{position:absolute; left:0; top:5px; color:var(--accent)}
+ul.plain li b{color:var(--text); font-weight:600}
+
+table{width:100%; border-collapse:collapse; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden}
+th,td{padding:14px 16px; text-align:left; font-size:14px; border-bottom:1px solid var(--border); vertical-align:top}
+thead th{background:var(--surface2); font-weight:600; font-size:13px; color:var(--sub)}
+thead th.hi{color:var(--accent)}
+tbody tr:last-child td{border-bottom:none}
+td.hl{color:var(--text); font-weight:600}
+.tblwrap{overflow-x:auto}
+@media (max-width:860px){ table{min-width:620px} }
+
+.price{text-align:center; padding:38px 26px}
+.price .amt{font-size:43px; font-weight:700; letter-spacing:-.02em; line-height:1.2}
+.price .amt small{font-size:16px; font-weight:500; color:var(--sub); margin-left:6px}
+.price .zero{color:var(--green)}
+.inc{display:grid; gap:11px; text-align:left}
+.inc div{display:flex; gap:11px; align-items:flex-start; font-size:14px; color:var(--sub)}
+.inc b{color:var(--text); font-weight:600}
+.mark{flex:none; width:19px; height:19px; border-radius:50%; display:grid; place-items:center; margin-top:3px}
+.mark.y{background:var(--green-soft); color:var(--green)}
+.mark.n{background:var(--orange-soft); color:var(--orange)}
+
+.step{display:flex; gap:16px; padding:18px 0; border-bottom:1px solid var(--border)}
+.step:last-child{border-bottom:none}
+.step .n{
+  flex:none; width:30px; height:30px; border-radius:50%; background:var(--accent-soft); color:var(--accent);
+  display:grid; place-items:center; font-size:13px; font-weight:700; margin-top:1px;
+}
+.step h3{margin:0 0 3px}
+.step p{margin:0; color:var(--sub); font-size:14px}
+
+details{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); margin-bottom:10px}
+.faqlist{display:grid; gap:0}
+summary{padding:17px 20px; cursor:pointer; font-weight:600; font-size:14.5px; list-style:none; display:flex; align-items:center; gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+"; margin-left:auto; color:var(--sub); font-size:19px; font-weight:400; line-height:1}
+details[open] summary::after{content:"−"}
+details .ans{padding:0 20px 19px; color:var(--sub); font-size:14px; white-space:pre-line}
+
+.info dl{display:grid; grid-template-columns:150px 1fr; margin:0}
+.info dt{padding:13px 0; font-size:13.5px; color:var(--sub); border-bottom:1px solid var(--border); font-weight:500}
+.info dd{padding:13px 0; margin:0; font-size:14px; border-bottom:1px solid var(--border)}
+@media (max-width:620px){
+  .info dl{grid-template-columns:1fr}
+  .info dt{padding-bottom:0; border-bottom:none}
+  .info dd{padding-top:4px}
+}
+
+.band{
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+  padding:48px 34px; text-align:center; position:relative; overflow:hidden;
+}
+.band::before{
+  content:""; position:absolute; inset:0;
+  background:radial-gradient(620px 240px at 50% 0%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 72%);
+}
+.band > *{position:relative}
+.band p{color:var(--sub); margin:0 auto 28px; max-width:34em}
+
+footer{border-top:1px solid var(--border); margin-top:88px; padding:30px 0; color:var(--sub); font-size:13px}
+.fin{display:flex; gap:18px; flex-wrap:wrap; align-items:center}
+.fin .c{margin-left:auto}
+
+
+/* ── 詳細ページへ誘導する丸ボタン ──────────── */
+.btn-pill{
+  display:inline-flex; align-items:center; gap:14px;
+  background:var(--accent); color:#fff; font-weight:600; font-size:15px;
+  padding:11px 11px 11px 26px; border-radius:999px; line-height:1.4;
+  box-shadow:0 16px 34px -16px color-mix(in srgb, var(--accent) 72%, transparent);
+  transition:background .15s;
+}
+.btn-pill:hover{background:var(--accent-strong); text-decoration:none}
+.btn-pill .ar{
+  width:32px; height:32px; border-radius:50%; background:#fff; color:var(--accent);
+  display:grid; place-items:center; flex:none;
+}
+.more{margin-top:26px}
+
+/* ── 詳細ページ（problem.html） ──────────────── */
+.crumb{font-size:13px; color:var(--sub); margin:0 0 18px; display:flex; align-items:center; gap:7px}
+.crumb a{color:var(--sub)}
+.pagehead{padding:60px 0 0}
+.pagehead h1{
+  font-size:clamp(27px,3.1vw,42px); line-height:1.46; margin:0 0 20px;
+  letter-spacing:-.02em; font-weight:700; word-break:auto-phrase; text-wrap:balance;
+}
+.pagehead .lead{font-size:16.5px; max-width:var(--measure)}
+.pts{counter-reset:pt; display:grid; gap:18px}
+.pt{
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+  padding:30px 32px; display:grid; gap:24px; align-items:center;
+  grid-template-columns:52px minmax(0,1fr) minmax(0,.62fr);
+}
+.pt .shot{
+  margin:0; border-radius:12px; overflow:hidden;
+  border:1px solid var(--border); background:var(--surface2);
+}
+.pt .shot img{width:100%; height:auto; display:block; aspect-ratio:16/10; object-fit:cover}
+.pt .no{
+  counter-increment:pt; width:52px; height:52px; border-radius:14px;
+  background:var(--accent-soft); color:var(--accent);
+  display:grid; place-items:center; font-size:20px; font-weight:700;
+}
+.pt .no::before{content:counter(pt)}
+.pt h3{font-size:19px; margin:7px 0 10px}
+.pt p{margin:0 0 10px; color:var(--sub); font-size:14.5px; max-width:var(--measure)}
+.pt p:last-child{margin-bottom:0}
+.pt b{color:var(--text)}
+.ways{display:grid; grid-template-columns:.82fr 1.18fr; gap:22px; align-items:stretch; margin-top:8px}
+.way{
+  background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius);
+  padding:30px 32px; position:relative;
+}
+.way .cap{font-size:11.5px; font-weight:600; letter-spacing:.08em; color:var(--sub); margin-bottom:10px}
+.way h3{font-size:19px; margin:0 0 12px; color:var(--sub)}
+.way p{margin:0; color:var(--sub); font-size:14.5px}
+/* ★ 本件の答えなので、こちらを明確に主役にする */
+.way.hi{
+  background:var(--surface); border:2px solid var(--accent); padding:36px 38px;
+  box-shadow:0 28px 58px -26px color-mix(in srgb, var(--accent) 58%, transparent);
+}
+.way.hi .cap{color:var(--accent)}
+.way.hi h3{font-size:25px; color:var(--text); letter-spacing:-.01em; margin-bottom:14px}
+.way.hi p{color:var(--text); font-size:15.5px}
+.way .tag{
+  position:absolute; top:-13px; left:36px;
+  background:var(--accent); color:#fff; font-size:11.5px; font-weight:600;
+  padding:5px 15px; border-radius:999px; letter-spacing:.04em;
+}
+.way ul{margin:20px 0 0; padding:0; list-style:none; display:grid; gap:10px}
+.way ul li{display:flex; gap:10px; font-size:14px; color:var(--sub); align-items:flex-start; line-height:1.75}
+.way ul li svg{color:var(--green); flex:none; margin-top:5px}
+@media (max-width:1100px){
+  .pt{grid-template-columns:52px minmax(0,1fr)}
+  .pt .shot{grid-column:1 / -1}
+}
+@media (max-width:860px){
+  .pt{grid-template-columns:1fr; gap:16px; padding:26px}
+  .pt .shot{grid-column:auto}
+  .ways{grid-template-columns:1fr; gap:28px}
+  .way.hi{padding:30px 26px}
+  .pagehead{padding:36px 0 0}
+}
+
+/* ── サービス詳細ページ（service.html） ──────── */
+.qa{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden}
+.qa .r{display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); gap:26px; padding:20px 26px; border-top:1px solid var(--border)}
+.qa .r:first-child{border-top:none}
+.qa .q{font-weight:600; font-size:14.5px}
+.qa .a{color:var(--sub); font-size:14.5px; line-height:1.8}
+.qa .a b{color:var(--text)}
+.tags4{display:grid; grid-template-columns:repeat(4,1fr); gap:16px}
+.tag4{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:22px}
+.tag4 .b{display:inline-block; font-size:11.5px; font-weight:600; padding:4px 12px; border-radius:999px; margin-bottom:11px}
+.tag4 p{margin:0; font-size:13.5px; color:var(--sub)}
+.note-s{margin:16px 0 0; font-size:13.5px; color:var(--sub)}
+.sec-sub{margin:52px 0 18px; font-size:17px; font-weight:600}
+@media (max-width:980px){ .tags4{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:860px){ .qa .r{grid-template-columns:1fr; gap:8px} }
+@media (max-width:620px){ .tags4{grid-template-columns:1fr} }
