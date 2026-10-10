@@ -526,14 +526,32 @@ footer{border-top:1px solid var(--border); margin-top:88px; padding:30px 0; colo
 @media (max-width:860px){ .qa .r{grid-template-columns:1fr; gap:8px} }
 @media (max-width:620px){ .tags4{grid-template-columns:1fr} }
 
-/* ── 独自ランクの10段階（index.html #rank） ──── */
-.ranks{display:flex; flex-wrap:wrap; gap:9px; margin-top:4px}
-.ranks b{
-  font-size:12.5px; font-weight:600; padding:7px 15px; border-radius:999px; white-space:nowrap;
-  background:var(--surface); border:1px solid var(--border); color:var(--sub);
+/* ── 独自ランクの10段階（index.html #rank） ────
+   値は server/app/services/aibo/domain_constants.py の AIBO_RANKS が正本。
+   ★Feeポリシーとの対応（制度R3相当 等）は絶対に書かない。 */
+.rankwrap{overflow-x:auto; padding-bottom:6px; margin-top:4px}
+/* 狭い画面では10列が収まらず横スクロールになるので、気づけるよう一言出す */
+.rankhint{display:none; margin:10px 0 0; font-size:12.5px; color:var(--sub)}
+@media (max-width:1100px){ .rankhint{display:block} }
+.rankchart{
+  display:grid; grid-template-columns:repeat(10, minmax(98px, 1fr));
+  gap:12px; align-items:end; min-width:1020px;
 }
-.ranks b:nth-child(n+4){background:var(--accent-soft); border-color:transparent; color:var(--accent)}
-.ranks b:nth-child(n+8){background:var(--accent); border-color:transparent; color:#fff}
-.ranks .n{
-  align-self:center; font-size:12.5px; color:var(--sub); margin-left:4px; font-weight:400;
+.rk{display:flex; flex-direction:column}
+.rk .barbox{height:116px; display:flex; align-items:flex-end}
+.rk .bar{
+  width:100%; height:var(--h); min-height:9px; border-radius:6px 6px 0 0;
+  background:var(--accent); opacity:var(--o);
+}
+.rk .nm{
+  margin-top:11px; padding-top:10px; border-top:2px solid var(--border);
+  font-size:13px; font-weight:700; line-height:1.4; min-height:2.8em;
+}
+.rk .v{margin-top:6px; font-size:12.5px; color:var(--sub); line-height:1.78}
+.rk .v b{color:var(--text); font-weight:600}
+@media (max-width:860px){
+  .rankchart{min-width:900px; grid-template-columns:repeat(10, minmax(86px, 1fr)); gap:9px}
+  .rk .barbox{height:88px}
+  .rk .nm{font-size:12.5px}
+  .rk .v{font-size:12px}
 }
