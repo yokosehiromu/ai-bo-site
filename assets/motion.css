@@ -1,0 +1,78 @@
+/* ══════════════════════════════════════════════════════════════
+   イメージイラストの動き（2026-10-10 追加）
+
+   ⚠ 元に戻したいとき
+      index.html / problem.html / service.html の <head> にある
+      「イラストの動き」のコメントで囲まれた2行を消すだけ。
+          <link rel="stylesheet" href="assets/motion.css">
+          <script src="assets/motion.js"></script>
+      このファイルと motion.js を消してもよい。
+      本体の style.css には一切手を入れていないので、消せば完全に元どおり。
+
+   設計
+   - 動きがかかるのは html[data-motion="on"] が付いているときだけ。
+     この属性は motion.js が付ける。
+     → JSが動かない環境・読み込みに失敗した環境では**何も起きず、画像は最初から見える**。
+       「JSが死ぬと画像が消えたまま」という事故が起きない形にしてある。
+   - prefers-reduced-motion: reduce の方には動きを出さない（motion.js 側で判定）。
+   - ヘッダー（ヒーローのコラージュ）には付けない。ユーザー指示。
+   ══════════════════════════════════════════════════════════════ */
+
+/* 画面に入る前：少し下にいて、わずかに縮んでいる */
+html[data-motion="on"] .fig,
+html[data-motion="on"] .pt .shot{
+  opacity:0;
+  transform:translateY(20px) scale(.985);
+  transition:
+    opacity   .75s cubic-bezier(.22,.61,.36,1),
+    transform .75s cubic-bezier(.22,.61,.36,1);
+  will-change:opacity, transform;
+}
+
+/* 画面に入ったら：定位置へ */
+html[data-motion="on"] .fig.in,
+html[data-motion="on"] .pt .shot.in{
+  opacity:1;
+  transform:none;
+}
+
+/* 中の画像だけ、枠より少しゆっくり縮まる（枠 → 中身 の順に落ち着いて見える） */
+html[data-motion="on"] .fig img,
+html[data-motion="on"] .pt .shot img{
+  transform:scale(1.05);
+  transition:transform 1.15s cubic-bezier(.22,.61,.36,1);
+}
+html[data-motion="on"] .fig.in img,
+html[data-motion="on"] .pt .shot.in img{
+  transform:none;
+}
+
+/* マウスを乗せたときだけ、ほんの少し浮く（.in が付いたあとのみ） */
+html[data-motion="on"] .fig.in,
+html[data-motion="on"] .pt .shot.in{
+  transition:
+    opacity   .75s cubic-bezier(.22,.61,.36,1),
+    transform .45s cubic-bezier(.22,.61,.36,1),
+    box-shadow .45s cubic-bezier(.22,.61,.36,1);
+}
+@media (hover:hover) and (pointer:fine){
+  html[data-motion="on"] .fig.in:hover{
+    transform:translateY(-5px);
+    box-shadow:0 34px 68px -28px rgba(12,20,38,.46);
+  }
+  html[data-motion="on"] .pt .shot.in:hover{
+    transform:translateY(-3px);
+  }
+}
+
+/* OS側で「視差効果を減らす」にしている方には出さない（二重の保険） */
+@media (prefers-reduced-motion: reduce){
+  html[data-motion="on"] .fig,
+  html[data-motion="on"] .pt .shot,
+  html[data-motion="on"] .fig img,
+  html[data-motion="on"] .pt .shot img{
+    opacity:1 !important;
+    transform:none !important;
+    transition:none !important;
+  }
+}
