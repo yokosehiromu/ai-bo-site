@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- ⚠ 確認用URL（GitHub Pages）のための一時設定。本番公開の前に必ず消すこと。 -->
+<meta name="robots" content="noindex, nofollow">
+<title>運営ダッシュボードのサンプル｜ai-bo</title>
+<meta name="description" content="ai-boの運営ダッシュボードを、実際の画面と同じ構成でご覧いただけます。表示しているデータはすべて架空のものです。">
+<meta property="og:title" content="運営ダッシュボードのサンプル｜ai-bo">
+<meta property="og:description" content="実際の画面と同じ構成のサンプルです。表示しているデータはすべて架空のものです。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="ai-bo">
+<meta property="og:url" content="https://ai-bo-lab.jp/dashboard.html">
+<meta property="og:image" content="https://ai-bo-lab.jp/images/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://ai-bo-lab.jp/dashboard.html">
+<meta name="theme-color" content="#2f66d0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f131a" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='8'%20fill='%232f66d0'/%3E%3Cg%20transform='translate(4%204)'%20fill='none'%20stroke='%23fff'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Crect%20x='4'%20y='8'%20width='16'%20height='12'%20rx='3'/%3E%3Cpath%20d='M12%208V4.5'/%3E%3Ccircle%20cx='12'%20cy='3'%20r='1.4'/%3E%3Ccircle%20cx='9'%20cy='13.5'%20r='1.3'%20fill='%23fff'%20stroke='none'/%3E%3Ccircle%20cx='15'%20cy='13.5'%20r='1.3'%20fill='%23fff'%20stroke='none'/%3E%3Cpath%20d='M9.5%2017h5'/%3E%3C/g%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* 実物の管理ダッシュボードと同じデザイントークン（Claudeデザイン モック準拠） */
+html,body{margin:0;padding:0;background:#f4f6f9}
+:root{--bg:#f4f6f9;--surface:#fff;--surface2:#eef1f5;--text:#141c2b;--sub:#66707f;
+  --border:#e2e7ee;--accent:#2f66d0;--accent-soft:#e8effc;
+  --red:#d6455d;--red-soft:#fdecef;--orange:#d9821f;--orange-soft:#fdf1e3;
+  --green:#199b6e;--green-soft:#e4f6ee;--purple:#7a5bd6;--purple-soft:#efeafc;
+  /* チャート系列（色覚特性の検証を通した組み合わせ） */
+  --c1:#2f66d0;--c2:#199b6e;--c3:#7a5bd6;--c4:#d9821f;--grid:#e2e7ee;
+  --shadow:0 1px 2px rgba(20,28,43,.05),0 4px 14px rgba(20,28,43,.05)}
+@media (prefers-color-scheme:dark){
+  html,body{background:#0f131a}
+  :root{--bg:#0f131a;--surface:#171d27;--surface2:#1f2732;--text:#e9edf4;--sub:#8b96a8;
+    --border:#28313f;--accent:#6b96e8;--accent-soft:#1d2a45;
+    --red:#e57085;--red-soft:#3a2029;--orange:#e39b4d;--orange-soft:#3a2c1a;
+    --green:#3fc492;--green-soft:#173327;--purple:#a08ae8;--purple-soft:#2a2342;
+    --c1:#4a80d8;--c2:#199b6e;--c3:#7f61d4;--c4:#c8842f;--grid:#28313f;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25)}
+}
+*{box-sizing:border-box}
+body{color:var(--text);font-family:'IBM Plex Sans JP',sans-serif;font-size:14px;line-height:1.6}
+.wrap{max-width:960px;margin:0 auto;padding:14px 14px 56px}
+
+.demo-bar{background:var(--accent);color:#fff;padding:9px 14px;font-size:12.5px;
+  font-weight:600;text-align:center;letter-spacing:.02em;
+  display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+.demo-bar a{color:#fff;text-decoration:underline;text-underline-offset:2px;font-weight:600}
+
+/* ── ページ切替 ── */
+.nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--border);
+  overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap;padding:8px 10px}
+.nav button{font-family:inherit;font-size:12.5px;font-weight:600;padding:7px 13px;margin-right:6px;
+  border:1px solid var(--border);background:var(--surface);color:var(--sub);
+  border-radius:99px;cursor:pointer}
+.nav button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.page{display:none} .page.on{display:block}
+
+.head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:16px 0 4px}
+.head h1{font-size:19px;margin:0;font-weight:700}
+.head .month{font-size:12.5px;color:var(--sub)}
+.fresh{font-size:12px;color:var(--sub);margin-bottom:16px}
+.fresh b{color:var(--green)}
+h2{font-size:14.5px;margin:24px 0 10px;font-weight:700}
+.sub{font-size:12px;color:var(--sub);margin:-6px 0 10px}
+
+/* ── 部品 ── */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+@media(max-width:640px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:13px 14px;box-shadow:var(--shadow)}
+.kpi .k{font-size:11.5px;color:var(--sub);margin-bottom:3px}
+.kpi .v{font-size:23px;font-weight:700;letter-spacing:-.01em}
+.kpi .u{font-size:12px;font-weight:500;color:var(--sub);margin-left:2px}
+.kpi .d{font-size:11.5px;margin-top:2px}
+.up{color:var(--green)} .down{color:var(--red)}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:14px 15px;box-shadow:var(--shadow);margin-bottom:10px}
+.card.red{border-left:4px solid var(--red)}
+.card.orange{border-left:4px solid var(--orange)}
+.card.green{border-left:4px solid var(--green)}
+.card.purple{border-left:4px solid var(--purple)}
+.card .top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.tag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px}
+.tag.red{background:var(--red-soft);color:var(--red)}
+.tag.orange{background:var(--orange-soft);color:var(--orange)}
+.tag.green{background:var(--green-soft);color:var(--green)}
+.tag.purple{background:var(--purple-soft);color:var(--purple)}
+.who{font-weight:700;font-size:14.5px}
+.rank{font-size:11.5px;color:var(--sub)}
+.why{margin-top:6px;color:var(--sub);font-size:13px}
+.acts{margin-top:10px;display:flex;gap:7px;flex-wrap:wrap}
+.btn{font-size:12px;padding:6px 12px;border-radius:8px;border:1px solid var(--border);
+  background:var(--surface2);color:var(--sub);font-family:inherit;font-weight:600;cursor:not-allowed}
+.btn.main{background:var(--accent);border-color:var(--accent);color:#fff}
+
+.tbl{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--border);
+  border-radius:12px;box-shadow:var(--shadow);background:var(--surface)}
+table{width:100%;border-collapse:collapse;min-width:560px}
+th,td{padding:10px 12px;text-align:left;font-size:13px;border-bottom:1px solid var(--border);white-space:nowrap}
+th{background:var(--surface2);font-size:11.5px;color:var(--sub);font-weight:600}
+tr:last-child td{border-bottom:0}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.badge{display:inline-block;white-space:nowrap;font-size:11px;padding:2px 9px;border-radius:999px;
+  background:var(--accent-soft);color:var(--accent);font-weight:600}
+.badge.red{background:var(--red-soft);color:var(--red)}
+.badge.orange{background:var(--orange-soft);color:var(--orange)}
+.badge.green{background:var(--green-soft);color:var(--green)}
+.badge.purple{background:var(--purple-soft);color:var(--purple)}
+.hint{font-size:11.5px;color:var(--sub);margin:6px 2px 0}
+
+/* ── チャート ── */
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--sub);margin-bottom:10px}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+figure{margin:0}
+figcaption{font-size:11.5px;color:var(--sub);margin-top:8px}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.gridline{stroke:var(--grid);stroke-width:1}
+.axis{fill:var(--sub);font-size:10.5px}
+.dlabel{font-size:11px;font-weight:600}
+
+.bars{display:grid;gap:11px}
+.bar-row{display:grid;grid-template-columns:74px 1fr;gap:10px;align-items:center}
+.bar-row .lb{font-size:12px;color:var(--sub);text-align:right}
+.bar-track{display:flex;flex-direction:column;gap:4px}
+.bar{display:flex;align-items:center;gap:7px}
+.bar .fill{height:12px;border-radius:0 4px 4px 0;min-width:2px}
+.bar .val{font-size:11.5px;font-weight:600;font-variant-numeric:tabular-nums}
+.bar .nm{font-size:10.5px;color:var(--sub);min-width:50px}
+
+.prog{margin-top:11px}
+.prog .l{display:flex;justify-content:space-between;font-size:11.5px;color:var(--sub);margin-bottom:4px}
+.track{height:8px;background:var(--surface2);border-radius:99px;overflow:hidden}
+.track i{display:block;height:100%;border-radius:99px;background:var(--accent)}
+
+.chat{display:flex;flex-direction:column;gap:7px}
+.msg{max-width:80%;padding:9px 12px;border-radius:13px;font-size:13px;white-space:pre-wrap;line-height:1.6}
+.msg.in{background:var(--surface2)}
+.msg.out{background:var(--accent-soft);color:var(--accent);align-self:flex-end}
+
+.note{margin-top:24px;padding:13px 15px;background:var(--surface2);border-radius:12px;
+  font-size:12.5px;color:var(--sub)}
+.cta{display:block;margin-top:16px;padding:14px;text-align:center;background:var(--accent);
+  color:#fff;border-radius:10px;text-decoration:none;font-weight:700}
+</style>
+</head>
+<body>
+
+<div class="demo-bar"><span>サンプル画面です — 表示しているのはすべて架空のデータです</span><a href="index.html">← ai-bo のサイトに戻る</a></div>
+
+<div class="nav" id="nav">
+  <button class="on" data-p="home">ホーム</button>
+  <button data-p="results">成果・推移</button>
+  <button data-p="creators">クリエイター</button>
+  <button data-p="profile">個票</button>
+  <button data-p="push">声かけ配信</button>
+  <button data-p="ops">ai-bo稼働</button>
+  <button data-p="collab">コラボ</button>
+  <button data-p="data">データ・設定</button>
+</div>
+
+<div class="wrap">
+
+<!-- ══════ ホーム ══════ -->
+<div class="page on" id="home">
+  <div class="head"><h1>ホーム</h1><span class="month" data-ym="0"></span></div>
+  <div class="fresh">データ最終更新: <span data-ago="0"></span>分（2日前） <b>✓ 正常</b> ／ 本日の送信 14件・返信 3件・配信再開 2件</div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="k">登録クリエイター</div><div class="v">45<span class="u">名</span></div><div class="d up">先月比 +3</div></div>
+    <div class="kpi"><div class="k">今月の稼働者</div><div class="v">25<span class="u">名</span></div><div class="d down">稼働率 56%</div></div>
+    <div class="kpi"><div class="k">要対応</div><div class="v">19<span class="u">件</span></div><div class="d down">うち人間対応 3件</div></div>
+    <div class="kpi"><div class="k">今月のダイヤ</div><div class="v">1,747,396</div><div class="d down">上位5名で84%</div></div>
+  </div>
+
+  <h2>今日、対応が必要な人</h2>
+  <div class="card red">
+    <div class="top"><span class="tag red">要人間対応</span><span class="who">demo_chiaki</span>
+      <span class="rank">ai-boランク: スタート</span></div>
+    <div class="why">最後の配信（<span data-ago="31"></span>）から31日空いています。
+      この人の通常の配信間隔は2日です。
+      <b>ai-boの声かけだけでは戻っていません。担当者の出番です。</b></div>
+    <div class="acts"><button class="btn main">対応済みにする</button>
+      <button class="btn">7日スヌーズ</button><button class="btn">会話を見る</button></div>
+  </div>
+  <div class="card orange">
+    <div class="top"><span class="tag orange">離脱リスク</span><span class="who">demo_erina</span>
+      <span class="rank">ai-boランク: アイアン</span></div>
+    <div class="why">最後の配信（<span data-ago="14"></span>）から14日空いています。
+      この人の通常の配信間隔は2日です。
+      <span class="rank">ai-bo声かけ#1を<span data-ago="4"></span>に送信済み・返信あり</span></div>
+    <div class="acts"><button class="btn main">対応済みにする</button>
+      <button class="btn">7日スヌーズ</button><button class="btn">会話を見る</button></div>
+  </div>
+  <div class="card green">
+    <div class="top"><span class="tag green">あと一歩</span><span class="who">demo_mao</span>
+      <span class="rank">ai-boランク: ブロンズ</span></div>
+    <div class="why"><span data-ago="2"></span>の配信は57分でした。
+      <b>あと3分で有効LIVE日（60分以上）になっていました。</b></div>
+    <div class="acts"><button class="btn main">対応済みにする</button>
+      <button class="btn">7日スヌーズ</button><button class="btn">会話を見る</button></div>
+  </div>
+  <div class="card purple">
+    <div class="top"><span class="tag purple">前月割れが続いている</span><span class="who">demo_tsumugi</span>
+      <span class="rank">ai-boランク: ブロンズ</span></div>
+    <div class="why">配信日数が <span data-mo="3"></span>10日 → <span data-mo="2"></span>7日
+      → <span data-mo="1"></span>4日 と下がり続けています（2ヶ月で60%減）。
+      まだ配信は続いているので、離れてしまう前の声かけが効きます。</div>
+    <div class="acts"><button class="btn main">対応済みにする</button>
+      <button class="btn">7日スヌーズ</button><button class="btn">会話を見る</button></div>
+  </div>
+
+  <div class="note"><b>各カードには「なぜこの人が出ているか」が日本語の文章で書かれます。</b>
+    対応したら1クリックで消えます。これが無いと同じ人が毎日出続け、担当者は2週間でリストを見なくなります。</div>
+</div>
+
+<!-- ══════ 成果・推移 ══════ -->
+<div class="page" id="results">
+  <div class="head"><h1>成果・推移</h1><span class="month" data-ym="0"></span></div>
+  <p class="sub">「ai-boに払う価値があるか」に答えるページです。</p>
+
+  <h2>事務所報酬の見込み</h2>
+  <div class="card">
+    <div style="font-size:30px;font-weight:700;letter-spacing:-.02em">$1,240</div>
+    <div class="hint" style="margin-top:2px">3つのインセンティブの合算（当月見込み）</div>
+    <div class="bars" style="margin-top:14px">
+      <div class="bar-row"><span class="lb">ランクUP／維持</span>
+        <div class="bar"><span class="fill" style="width:52%;background:var(--c1)" title="640ドル"></span>
+          <span class="val">$640</span></div></div>
+      <div class="bar-row"><span class="lb">アクティブ度</span>
+        <div class="bar"><span class="fill" style="width:29%;background:var(--c2)" title="360ドル"></span>
+          <span class="val">$360</span></div></div>
+      <div class="bar-row"><span class="lb">売上増加</span>
+        <div class="bar"><span class="fill" style="width:19%;background:var(--c3)" title="240ドル"></span>
+          <span class="val">$240</span></div></div>
+    </div>
+    <div class="hint">※売上増加の必要ダイヤは毎月変わるため、月初に管理画面から入力します。</div>
+  </div>
+
+  <h2>登録者と稼働者の推移</h2>
+  <p class="sub">登録は増えているのに、実際に配信する人は減っている——という状態が見えます。</p>
+  <div class="card">
+    <div class="legend">
+      <span><i style="background:var(--c1)"></i>登録者</span>
+      <span><i style="background:var(--c4)"></i>稼働者</span>
+    </div>
+    <figure>
+      <svg viewBox="0 0 620 190" role="img" aria-label="登録者と稼働者の月次推移（3月から8月）">
+        <line class="gridline" x1="42" y1="20"  x2="606" y2="20"/>
+        <line class="gridline" x1="42" y1="60"  x2="606" y2="60"/>
+        <line class="gridline" x1="42" y1="100" x2="606" y2="100"/>
+        <line class="gridline" x1="42" y1="140" x2="606" y2="140"/>
+        <text class="axis" x="36" y="24"  text-anchor="end">80</text>
+        <text class="axis" x="36" y="64"  text-anchor="end">60</text>
+        <text class="axis" x="36" y="104" text-anchor="end">40</text>
+        <text class="axis" x="36" y="144" text-anchor="end">20</text>
+
+        <polyline fill="none" stroke="var(--c1)" stroke-width="2" stroke-linejoin="round"
+          points="72,76 178,70 284,64 390,58 496,52 570,44"/>
+        <circle cx="72"  cy="76" r="4.5" fill="var(--c1)"><title>3月 登録者 62名</title></circle>
+        <circle cx="178" cy="70" r="4.5" fill="var(--c1)"><title>4月 登録者 65名</title></circle>
+        <circle cx="284" cy="64" r="4.5" fill="var(--c1)"><title>5月 登録者 68名</title></circle>
+        <circle cx="390" cy="58" r="4.5" fill="var(--c1)"><title>6月 登録者 71名</title></circle>
+        <circle cx="496" cy="52" r="4.5" fill="var(--c1)"><title>7月 登録者 74名</title></circle>
+        <circle cx="570" cy="44" r="4.5" fill="var(--c1)"><title>8月 登録者 78名</title></circle>
+        <text class="dlabel" x="570" y="34" text-anchor="middle" fill="var(--c1)">78名</text>
+
+        <polyline fill="none" stroke="var(--c4)" stroke-width="2" stroke-linejoin="round"
+          points="72,124 178,122 284,126 390,132 496,134 570,138"/>
+        <circle cx="72"  cy="124" r="4.5" fill="var(--c4)"><title>3月 稼働者 38名</title></circle>
+        <circle cx="178" cy="122" r="4.5" fill="var(--c4)"><title>4月 稼働者 39名</title></circle>
+        <circle cx="284" cy="126" r="4.5" fill="var(--c4)"><title>5月 稼働者 37名</title></circle>
+        <circle cx="390" cy="132" r="4.5" fill="var(--c4)"><title>6月 稼働者 34名</title></circle>
+        <circle cx="496" cy="134" r="4.5" fill="var(--c4)"><title>7月 稼働者 33名</title></circle>
+        <circle cx="570" cy="138" r="4.5" fill="var(--c4)"><title>8月 稼働者 31名</title></circle>
+        <text class="dlabel" x="570" y="156" text-anchor="middle" fill="var(--c4)">31名</text>
+
+        <text class="axis" x="72"  y="176" text-anchor="middle">3月</text>
+        <text class="axis" x="178" y="176" text-anchor="middle">4月</text>
+        <text class="axis" x="284" y="176" text-anchor="middle">5月</text>
+        <text class="axis" x="390" y="176" text-anchor="middle">6月</text>
+        <text class="axis" x="496" y="176" text-anchor="middle">7月</text>
+        <text class="axis" x="570" y="176" text-anchor="middle">8月</text>
+      </svg>
+      <figcaption>単位: 名。稼働者＝その月に1日以上配信した方。点にふれると各月の値が出ます。</figcaption>
+    </figure>
+  </div>
+
+  <h2>復帰率の比較</h2>
+  <p class="sub">「効きます」ではなく「測れます」。導入前を基準に、同じ物差しで比べます。</p>
+  <div class="card">
+    <div class="legend">
+      <span><i style="background:var(--c1)"></i>導入前（架空の例）</span>
+      <span><i style="background:var(--c2)"></i>ai-boが声をかけた後</span>
+    </div>
+    <div class="bars">
+      <div class="bar-row"><span class="lb">7日時点</span>
+        <div class="bar-track">
+          <div class="bar"><span class="nm">導入前</span>
+            <span class="fill" style="width:70%;background:var(--c1)" title="70パーセント"></span><span class="val">70%</span></div>
+          <div class="bar"><span class="nm">ai-bo後</span>
+            <span class="fill" style="width:5%;background:var(--c2)"></span>
+            <span class="val" style="color:var(--sub);font-weight:500">計測中（3件）</span></div>
+        </div></div>
+      <div class="bar-row"><span class="lb">21日時点</span>
+        <div class="bar-track">
+          <div class="bar"><span class="nm">導入前</span>
+            <span class="fill" style="width:45%;background:var(--c1)" title="45パーセント"></span><span class="val">45%</span></div>
+          <div class="bar"><span class="nm">ai-bo後</span>
+            <span class="fill" style="width:5%;background:var(--c2)"></span>
+            <span class="val" style="color:var(--sub);font-weight:500">計測中（1件）</span></div>
+        </div></div>
+      <div class="bar-row"><span class="lb">35日時点</span>
+        <div class="bar-track">
+          <div class="bar"><span class="nm">導入前</span>
+            <span class="fill" style="width:20%;background:var(--c1)" title="20パーセント"></span><span class="val">20%</span></div>
+          <div class="bar"><span class="nm">ai-bo後</span>
+            <span class="fill" style="width:5%;background:var(--c2)"></span>
+            <span class="val" style="color:var(--sub);font-weight:500">計測中（0件）</span></div>
+        </div></div>
+    </div>
+    <div class="hint">声かけが5件たまってから比較を表示します。
+      <b>件数が少ないうちは数字を出しません。</b>たまたまの結果を成果として見せないためです。</div>
+  </div>
+
+  <div class="note"><b>このページには「月末にいくら届きそう」という予測を出しません。</b>
+    検証の結果、月半ばの着地予測は4回に1回しか当たらないと分かったためです。
+    事実（いま何ダイヤか、あと何が足りないか）だけをお見せします。</div>
+</div>
+
+<!-- ══════ クリエイター ══════ -->
+<div class="page" id="creators">
+  <div class="head"><h1>クリエイター</h1><span class="month" data-ym="0"></span></div>
+  <p class="sub">一覧・会話ログ・担当者別。会話は全文をご覧いただけます。</p>
+
+  <h2>一覧</h2>
+  <div class="tbl">
+    <table>
+      <tr><th>クリエイター</th><th>状態</th><th>担当</th><th>ai-boランク</th>
+        <th class="num">有効日</th><th class="num">配信時間</th><th class="num">ダイヤ</th></tr>
+      <tr><td>demo_chiaki</td><td><span class="badge red">要対応</span></td><td>佐藤</td><td>スタート</td><td class="num">0日</td><td class="num">0.0h</td><td class="num">0</td></tr>
+      <tr><td>demo_erina</td><td><span class="badge orange">ai-bo対応中</span></td><td>鈴木</td><td>アイアン</td><td class="num">1日</td><td class="num">2.4h</td><td class="num">4,800</td></tr>
+      <tr><td>demo_mao</td><td><span class="badge green">あと一歩</span></td><td>高橋</td><td>ブロンズ</td><td class="num">4日</td><td class="num">8.6h</td><td class="num">9,700</td></tr>
+      <tr><td>demo_tsumugi</td><td><span class="badge purple">前月割れ</span></td><td>佐藤</td><td>ブロンズ</td><td class="num">4日</td><td class="num">9.1h</td><td class="num">17,300</td></tr>
+      <tr><td>demo_umi</td><td>—</td><td>鈴木</td><td>プラチナ</td><td class="num">16日</td><td class="num">62.8h</td><td class="num">669,298</td></tr>
+      <tr><td>demo_zen</td><td>—</td><td>高橋</td><td>ゴールド</td><td class="num">16日</td><td class="num">53.1h</td><td class="num">160,317</td></tr>
+      <tr><td>demo_saki</td><td><span class="badge">休眠</span></td><td>佐藤</td><td>スタート</td><td class="num">0日</td><td class="num">0.0h</td><td class="num">0</td></tr>
+    </table>
+  </div>
+  <p class="hint">← 横にスクロールできます ／ 担当者で絞り込めます（初期値はログイン中のご自身）</p>
+
+  <h2>会話ログ（demo_mao）</h2>
+  <div class="card">
+    <div class="chat">
+      <div class="msg out">おはようございます。今月、あと1日配信できたら"配信した日"が7日になります。
+時間もあと1時間ちょっとです。今週のどこか、いけそうな日ってありますか？</div>
+      <div class="msg in">今週は木曜なら空いてます</div>
+      <div class="msg out">木曜ですね。無理のない範囲で大丈夫です。
+終わったら配信メモだけ残しておいてください。</div>
+      <div class="msg in">イベントの参加条件ってどこで見れますか？</div>
+      <div class="msg out">確認してお返しします。少しお待ちください。</div>
+      <div class="msg out">お待たせしました。運営に確認しました。
+参加条件は〇〇です。エントリーは今月末までとのことです。</div>
+    </div>
+    <div class="hint">ai-boが答えられない事実質問は、運営の方へ取り次がれます。
+      回答は蓄積され、次に同じ質問が来たときは即答できるようになります。</div>
+  </div>
+</div>
+
+<!-- ══════ 個票 ══════ -->
+<div class="page" id="profile">
+  <div class="head"><h1>個票</h1><span class="month">demo_mao ／ <span data-ym="0"></span></span></div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="k">ai-boランク</div><div class="v" style="font-size:19px">シルバー</div><div class="d">先月 シルバー</div></div>
+    <div class="kpi"><div class="k">有効LIVE日数</div><div class="v">6<span class="u">日</span></div><div class="d">先月ライン 8日</div></div>
+    <div class="kpi"><div class="k">配信時間</div><div class="v">13.8<span class="u">h</span></div><div class="d">先月ライン 19.2h</div></div>
+    <div class="kpi"><div class="k">ダイヤ</div><div class="v">48,200</div><div class="d up">先月ライン 41,000</div></div>
+  </div>
+
+  <h2>インセンティブの進捗</h2>
+  <div class="card">
+    <div class="prog"><div class="l"><span>該当条件：有効LIVE日数</span><span>6 / 7日　あと1日</span></div>
+      <div class="track"><i style="width:86%"></i></div></div>
+    <div class="prog"><div class="l"><span>該当条件：配信時間</span><span>13.8 / 15h　あと1.2h</span></div>
+      <div class="track"><i style="width:92%"></i></div></div>
+    <div class="prog"><div class="l"><span>アクティブ度 Lv1（8日・25h）</span><span>未到達</span></div>
+      <div class="track"><i style="width:55%;background:var(--c4)"></i></div></div>
+    <div class="hint"><b>何が足りないかを条件ごとに分けて表示します。</b>
+      「あと〇ダイヤ」だけでは、有効日が足りているのか分からず担当者が動けないためです。</div>
+  </div>
+
+  <h2>有効LIVE日数の推移</h2>
+  <div class="card">
+    <figure>
+      <svg viewBox="0 0 620 175" role="img" aria-label="有効LIVE日数の月次推移（3月から8月）">
+        <line class="gridline" x1="42" y1="24"  x2="606" y2="24"/>
+        <line class="gridline" x1="42" y1="74"  x2="606" y2="74"/>
+        <line class="gridline" x1="42" y1="124" x2="606" y2="124"/>
+        <text class="axis" x="36" y="28"  text-anchor="end">20</text>
+        <text class="axis" x="36" y="78"  text-anchor="end">10</text>
+        <text class="axis" x="36" y="128" text-anchor="end">0</text>
+        <rect x="58"  y="64"  width="70" height="60" rx="4" fill="var(--c1)"><title>3月 12日</title></rect>
+        <rect x="152" y="59"  width="70" height="65" rx="4" fill="var(--c1)"><title>4月 13日</title></rect>
+        <rect x="246" y="74"  width="70" height="50" rx="4" fill="var(--c1)"><title>5月 10日</title></rect>
+        <rect x="340" y="79"  width="70" height="45" rx="4" fill="var(--c1)"><title>6月 9日</title></rect>
+        <rect x="434" y="84"  width="70" height="40" rx="4" fill="var(--c1)"><title>7月 8日</title></rect>
+        <rect x="528" y="94"  width="70" height="30" rx="4" fill="var(--c4)"><title>8月 6日（集計途中）</title></rect>
+        <text class="dlabel" x="563" y="88" text-anchor="middle" fill="var(--c4)">6日</text>
+        <text class="axis" x="93"  y="146" text-anchor="middle">3月</text>
+        <text class="axis" x="187" y="146" text-anchor="middle">4月</text>
+        <text class="axis" x="281" y="146" text-anchor="middle">5月</text>
+        <text class="axis" x="375" y="146" text-anchor="middle">6月</text>
+        <text class="axis" x="469" y="146" text-anchor="middle">7月</text>
+        <text class="axis" x="563" y="146" text-anchor="middle">8月</text>
+      </svg>
+      <figcaption>単位: 日。8月（オレンジ）は集計途中です。</figcaption>
+    </figure>
+  </div>
+
+  <h2>収益の内訳と、事務所内での位置</h2>
+  <div class="tbl">
+    <table>
+      <tr><th>指標</th><th class="num">この方</th><th class="num">事務所の中央値</th><th>位置</th></tr>
+      <tr><td>視聴転換率</td><td class="num">11.2%</td><td class="num">8.4%</td><td><span class="badge green">上位</span></td></tr>
+      <tr><td>滞在率</td><td class="num">9.8%</td><td class="num">11.8%</td><td><span class="badge">中位</span></td></tr>
+      <tr><td>コメント率</td><td class="num">74%</td><td class="num">67%</td><td><span class="badge green">上位</span></td></tr>
+      <tr><td>課金転換率</td><td class="num">22%</td><td class="num">37%</td><td><span class="badge orange">下位</span></td></tr>
+      <tr><td>Top5ギフター依存度</td><td class="num">99.1%</td><td class="num">97.5%</td><td><span class="badge red">要注意</span></td></tr>
+    </table>
+  </div>
+  <p class="hint">Top5依存度が高い方は、太客が離れたときの影響が大きくなります。</p>
+</div>
+
+<!-- ══════ 声かけ配信 ══════ -->
+<div class="page" id="push">
+  <div class="head"><h1>声かけ配信</h1><span class="month"><span data-ago="0"></span> 時点</span></div>
+  <p class="sub">毎朝9時に自動で送られます。この画面は、内容の確認と手動送信に使います。</p>
+
+  <h2>今日の自動選定（上位5名）</h2>
+  <div class="tbl">
+    <table>
+      <tr><th>クリエイター</th><th>選ばれた理由</th><th>場面</th><th>状態</th></tr>
+      <tr><td>demo_mao</td><td>あと3分で有効LIVE日だった</td><td>後押し</td><td><span class="badge green">送信済</span></td></tr>
+      <tr><td>demo_erina</td><td>14日間の空白（普段は2日間隔）</td><td>引き戻し②</td><td><span class="badge green">送信済</span></td></tr>
+      <tr><td>creator_g</td><td>昨日の配信が48分（あと12分）</td><td>惜しい配信</td><td><span class="badge green">送信済</span></td></tr>
+      <tr><td>creator_h</td><td>所属45日目・新人ケア枠</td><td>新人90日</td><td><span class="badge green">送信済</span></td></tr>
+      <tr><td>creator_i</td><td>次のランクが射程圏</td><td>追っかけ</td><td><span class="badge">保留</span></td></tr>
+    </table>
+  </div>
+
+  <h2>送信内容のプレビュー</h2>
+  <div class="card">
+    <div class="chat">
+      <div class="msg out">おはようございます。昨日の配信、48分でしたね。
+あと12分で"配信した日"に入ってました。惜しい！
+次はキリのいいところで1時間、狙ってみませんか？</div>
+    </div>
+    <div class="acts"><button class="btn main">この内容で送る</button>
+      <button class="btn">文面を作り直す</button><button class="btn">今日は送らない</button></div>
+    <div class="hint">文面はその場で生成されます。定型文の使い回しはしません。</div>
+  </div>
+
+  <h2>一斉お知らせ</h2>
+  <div class="card">
+    <div class="hint" style="margin:0 0 8px">全員、または条件を絞って送れます（イベント告知・締切のご案内など）。</div>
+    <div class="acts"><button class="btn">宛先を選ぶ</button>
+      <button class="btn">文面を書く</button><button class="btn main">プレビュー</button></div>
+  </div>
+
+  <div class="note"><b>ai-boは担当者の承認を待たずに自動で送ります。</b>
+    この画面は「止める」「内容を確認する」ためのものです。
+    毎回承認が必要だと、結局は誰も見なくなり、声かけ自体が止まってしまうためです。</div>
+</div>
+
+<!-- ══════ ai-bo稼働 ══════ -->
+<div class="page" id="ops">
+  <div class="head"><h1>ai-bo稼働</h1><span class="month" data-ym="0"></span></div>
+  <p class="sub">「ai-boは何を言っているのか」を確認するページです。</p>
+
+  <div class="kpis">
+    <div class="kpi"><div class="k">今月の送信</div><div class="v">312<span class="u">通</span></div></div>
+    <div class="kpi"><div class="k">返信があった</div><div class="v">89<span class="u">通</span></div><div class="d up">28.5%</div></div>
+    <div class="kpi"><div class="k">取り次ぎ</div><div class="v">7<span class="u">件</span></div><div class="d down">未回答 1件</div></div>
+    <div class="kpi"><div class="k">音声通話</div><div class="v">124<span class="u">分</span></div><div class="d">上限 3,000分</div></div>
+  </div>
+
+  <h2>送信ログ（本日）</h2>
+  <div class="tbl">
+    <table>
+      <tr><th>時刻</th><th>クリエイター</th><th>場面</th><th>本文（先頭）</th><th>返信</th></tr>
+      <tr><td>09:00</td><td>demo_mao</td><td>後押し</td><td>おはようございます。昨日の配信、あと少しで…</td><td><span class="badge green">あり</span></td></tr>
+      <tr><td>09:00</td><td>demo_erina</td><td>引き戻し②</td><td>最近ちょっと間が空きましたね…</td><td>—</td></tr>
+      <tr><td>09:00</td><td>creator_g</td><td>惜しい配信</td><td>昨日の配信、48分でしたね…</td><td><span class="badge green">あり</span></td></tr>
+      <tr><td>12:00</td><td>creator_h</td><td>機能紹介</td><td>今日は「配信メモ」のご紹介です…</td><td>—</td></tr>
+      <tr><td>23:00</td><td>（18名）</td><td>メモの声かけ</td><td>今日の配信、おつかれさまでした…</td><td>—</td></tr>
+    </table>
+  </div>
+  <p class="hint">本文は全文を展開して確認できます。</p>
+
+  <h2>取り次ぎの状況</h2>
+  <div class="card orange">
+    <div class="top"><span class="tag orange">未回答</span><span class="who">demo_mao</span>
+      <span class="rank"><span data-ago="1"></span> 14:20</span></div>
+    <div class="why">「イベントの参加条件ってどこで見れますか？」<br>
+      ai-boは推測で答えず、確認中とお伝えしています。</div>
+    <div class="acts"><button class="btn main">回答する</button></div>
+  </div>
+  <div class="card green">
+    <div class="top"><span class="tag green">回答済み・FAQに登録</span><span class="who">demo_umi</span>
+      <span class="rank"><span data-ago="3"></span></span></div>
+    <div class="why">「ランクが上がる条件は？」→ 回答済み。
+      次に同じ質問が来たら、ai-boがその場で答えます。</div>
+  </div>
+
+  <h2>安全性</h2>
+  <div class="card">
+    <div class="hint" style="margin:0">今月、深刻な相談の兆候を検知した件数: <b>0件</b><br>
+      検知した場合は、ご本人の同意を得たうえで運営の方へ共有します。</div>
+  </div>
+</div>
+
+<!-- ══════ コラボ ══════ -->
+<div class="page" id="collab">
+  <div class="head"><h1>コラボ</h1><span class="month" data-ym="0"></span></div>
+  <p class="sub">相手探しから日程調整、実施後の報告まで、ai-boが自動で進めます。</p>
+
+  <div class="kpis">
+    <div class="kpi"><div class="k">今月の成立</div><div class="v">6<span class="u">件</span></div></div>
+    <div class="kpi"><div class="k">進行中</div><div class="v">3<span class="u">件</span></div></div>
+    <div class="kpi"><div class="k">実施済み</div><div class="v">4<span class="u">件</span></div></div>
+    <div class="kpi"><div class="k">辞退・期限切れ</div><div class="v">2<span class="u">件</span></div></div>
+  </div>
+
+  <h2>進行中</h2>
+  <div class="tbl">
+    <table>
+      <tr><th>組み合わせ</th><th>状態</th><th>予定</th><th>次にやること</th></tr>
+      <tr><td>demo_mao × demo_riko</td><td><span class="badge green">日程確定</span></td><td><span data-ago="-4"></span> 22:00</td><td>前日にリマインド</td></tr>
+      <tr><td>demo_umi × demo_zen</td><td><span class="badge orange">相手の返事待ち</span></td><td>—</td><td><span data-ago="-1"></span>に期限切れ</td></tr>
+      <tr><td>demo_aoi × demo_mizuki</td><td><span class="badge">候補を提示中</span></td><td>—</td><td>本人の選択待ち</td></tr>
+    </table>
+  </div>
+
+  <h2>実施後の報告</h2>
+  <div class="card">
+    <div class="hint" style="margin:0"><span data-ago="4"></span> demo_umi × demo_aoi … 実施済み・両者から報告あり<br>
+      「話しやすくて楽しかった。また組みたい」（demo_umi）</div>
+  </div>
+  <p class="hint">15分ごとに自動で処理しているため、期限切れや報告漏れで止まることがありません。</p>
+</div>
+
+<!-- ══════ データ・設定 ══════ -->
+<div class="page" id="data">
+  <div class="head"><h1>データ・設定</h1></div>
+  <p class="sub">運営の日課は、ここに日次データを1回アップロードするだけです。</p>
+
+  <h2>日次データの取り込み</h2>
+  <div class="card">
+    <div class="hint" style="margin:0 0 10px">最終取込: <b><span data-ago="0"></span>分</b>（2日前）／ 取込 78行 ／ エラー 0件</div>
+    <div class="acts"><button class="btn main">ファイルを選ぶ</button><button class="btn">取込履歴を見る</button></div>
+    <div class="hint">列の並びが変わっても、<b>列名で読むので壊れません</b>。
+      期間がまとまったファイルは、日次データに混ざらないよう自動で弾きます。</div>
+  </div>
+
+  <h2>インセンティブの基準値</h2>
+  <p class="sub">TikTok側の規定が変わったら、担当者ご自身でここを更新できます。</p>
+  <div class="tbl">
+    <table>
+      <tr><th>制度</th><th>段階</th><th class="num">必要日数</th><th class="num">必要時間</th><th class="num">報酬率</th><th>有効期間</th></tr>
+      <tr><td>ランクアップ</td><td>Lv1→Lv2</td><td class="num">7日</td><td class="num">15h</td><td class="num">—</td><td>2026-01-01〜</td></tr>
+      <tr><td>ランク維持</td><td>Lv3〜Lv7</td><td class="num">7日</td><td class="num">15h</td><td class="num">—</td><td>2026-01-01〜</td></tr>
+      <tr><td>アクティブ度</td><td>Lv1</td><td class="num">8日</td><td class="num">25h</td><td class="num">—</td><td>2026-01-01〜</td></tr>
+      <tr><td>アクティブ度</td><td>Lv5</td><td class="num">22日</td><td class="num">110h</td><td class="num">—</td><td>2026-01-01〜</td></tr>
+    </table>
+  </div>
+  <p class="hint"><b>サンプルのため報酬率は伏せています。</b>実際の画面には御社の規定値が入ります。<br>変更はすぐ反映されます。<b>過去の月は当時の基準のまま</b>判定されるので、履歴の数字は狂いません。</p>
+
+  <h2>その他の設定</h2>
+  <div class="card">
+    <div class="hint" style="margin:0">朝の配信時刻（既定 9:00）／ 担当マネージャーの割り当て ／
+      売上増加インセンティブの月次境界の入力 ／ 自動実行の状況確認</div>
+  </div>
+</div>
+
+  <div class="note">
+    <b>これはサンプルです。</b>実際の画面は、御社のデータで同じように表示されます。
+    サンプルのためボタンは操作できません。
+  </div>
+  <a class="cta" href="https://lin.ee/x7dkQQq" target="_blank" rel="noopener">LINEで ai-bo に聞いてみる</a>
+  <a class="cta" href="index.html" style="margin-top:10px;background:var(--surface);color:var(--text);border:1px solid var(--border)">ai-bo のサイトに戻る</a>
+</div>
+
+<script>
+document.querySelectorAll("#nav button").forEach(b => {
+  b.addEventListener("click", () => {
+    document.querySelectorAll("#nav button").forEach(x => x.classList.remove("on"));
+    document.querySelectorAll(".page").forEach(x => x.classList.remove("on"));
+    b.classList.add("on");
+    document.getElementById(b.dataset.p).classList.add("on");
+    window.scrollTo(0, 0);
+  });
+});
+
+/* 日付と月は、開いた日に合わせて描く。
+   固定で書くと「2026年8月」のまま古くなり、商談で見せたときに気づかれるため。
+   data-ago="N" … 最新日のN日前 ／ data-ym="N" … Nヶ月前（年月）／ data-mo="N" … Nヶ月前（月だけ） */
+(function(){
+  const LAG = 2;                                   // データは約2日遅れで届く
+  const ev = new Date(); ev.setDate(ev.getDate() - LAG);
+  const md = n => { const d = new Date(ev); d.setDate(d.getDate() - n);
+                    return (d.getMonth() + 1) + "/" + d.getDate(); };
+  const mon = n => new Date(ev.getFullYear(), ev.getMonth() - n, 1);
+  document.querySelectorAll("[data-ago]").forEach(e => { e.textContent = md(+e.dataset.ago); });
+  document.querySelectorAll("[data-ym]").forEach(e => {
+    const d = mon(+e.dataset.ym); e.textContent = d.getFullYear() + "年" + (d.getMonth() + 1) + "月"; });
+  document.querySelectorAll("[data-mo]").forEach(e => {
+    e.textContent = (mon(+e.dataset.mo).getMonth() + 1) + "月"; });
+})();
+</script>
+</body>
+</html>
