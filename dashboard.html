@@ -1,14 +1,12 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<!-- ⚠ 確認用URL（GitHub Pages）のための一時設定。本番公開の前に必ず消すこと。 -->
-<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>運営ダッシュボードのサンプル｜ai-bo</title>
-<meta name="description" content="ai-boの運営ダッシュボードを、実際の画面と同じ構成でご覧いただけます。表示しているデータはすべて架空のものです。">
+<meta name="description" content="ai-boの運営ダッシュボードを、本番と同じ画面でご覧いただけます。表示しているクリエイター45名はすべて架空のデータです。">
 <meta property="og:title" content="運営ダッシュボードのサンプル｜ai-bo">
-<meta property="og:description" content="実際の画面と同じ構成のサンプルです。表示しているデータはすべて架空のものです。">
+<meta property="og:description" content="本番と同じ画面です。表示しているデータはすべて架空のものです。">
 <meta property="og:type" content="article">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:site_name" content="ai-bo">
@@ -16,609 +14,1743 @@
 <meta property="og:image" content="https://ai-bo-lab.jp/images/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://ai-bo-lab.jp/dashboard.html">
-<meta name="theme-color" content="#2f66d0" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0f131a" media="(prefers-color-scheme: dark)">
+<!-- ⚠ 確認用URL（GitHub Pages）のための一時設定。本番公開の前に必ず消すこと。 -->
+<meta name="robots" content="noindex, nofollow">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='8'%20fill='%232f66d0'/%3E%3Cg%20transform='translate(4%204)'%20fill='none'%20stroke='%23fff'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Crect%20x='4'%20y='8'%20width='16'%20height='12'%20rx='3'/%3E%3Cpath%20d='M12%208V4.5'/%3E%3Ccircle%20cx='12'%20cy='3'%20r='1.4'/%3E%3Ccircle%20cx='9'%20cy='13.5'%20r='1.3'%20fill='%23fff'%20stroke='none'/%3E%3Ccircle%20cx='15'%20cy='13.5'%20r='1.3'%20fill='%23fff'%20stroke='none'/%3E%3Cpath%20d='M9.5%2017h5'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* 実物の管理ダッシュボードと同じデザイントークン（Claudeデザイン モック準拠） */
+/* ═══ デザイントークン（Claudeデザイン モック準拠・README確定値） ═══ */
 html,body{margin:0;padding:0;background:#f4f6f9}
-:root{--bg:#f4f6f9;--surface:#fff;--surface2:#eef1f5;--text:#141c2b;--sub:#66707f;
-  --border:#e2e7ee;--accent:#2f66d0;--accent-soft:#e8effc;
+.dsroot{--bg:#f4f6f9;--surface:#ffffff;--surface2:#eef1f5;--text:#141c2b;--sub:#66707f;
+  --border:#e2e7ee;--accent:#2f66d0;--accent-strong:#2554b4;--accent-soft:#e8effc;
   --red:#d6455d;--red-soft:#fdecef;--orange:#d9821f;--orange-soft:#fdf1e3;
   --green:#199b6e;--green-soft:#e4f6ee;--purple:#7a5bd6;--purple-soft:#efeafc;
-  /* チャート系列（色覚特性の検証を通した組み合わせ） */
-  --c1:#2f66d0;--c2:#199b6e;--c3:#7a5bd6;--c4:#d9821f;--grid:#e2e7ee;
+  --chat-self:#c4edca;--chat-self-text:#1b3a24;
   --shadow:0 1px 2px rgba(20,28,43,.05),0 4px 14px rgba(20,28,43,.05)}
-@media (prefers-color-scheme:dark){
-  html,body{background:#0f131a}
-  :root{--bg:#0f131a;--surface:#171d27;--surface2:#1f2732;--text:#e9edf4;--sub:#8b96a8;
-    --border:#28313f;--accent:#6b96e8;--accent-soft:#1d2a45;
-    --red:#e57085;--red-soft:#3a2029;--orange:#e39b4d;--orange-soft:#3a2c1a;
-    --green:#3fc492;--green-soft:#173327;--purple:#a08ae8;--purple-soft:#2a2342;
-    --c1:#4a80d8;--c2:#199b6e;--c3:#7f61d4;--c4:#c8842f;--grid:#28313f;
-    --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25)}
+.dsroot[data-theme="dark"]{--bg:#0f131a;--surface:#171d27;--surface2:#1f2732;--text:#e9edf4;
+  --sub:#8b96a8;--border:#28313f;--accent:#6b96e8;--accent-strong:#89abee;--accent-soft:#1d2a45;
+  --red:#e57085;--red-soft:#3a2029;--orange:#e39b4d;--orange-soft:#3a2c1a;
+  --green:#3fc492;--green-soft:#173327;--purple:#a08ae8;--purple-soft:#2a2342;
+  --chat-self:#2c5237;--chat-self-text:#d9f2dc;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 14px rgba(0,0,0,.25)}
+body[data-theme-body="dark"]{background:#0f131a}
+
+.dsroot{display:flex;min-height:100vh;background:var(--bg);color:var(--text);
+  font-family:'IBM Plex Sans JP',sans-serif;font-size:14px;line-height:1.6}
+a{color:var(--accent);text-decoration:none;cursor:pointer}
+a:hover{color:var(--accent-strong)}
+
+/* ═══ サイドバー ═══ */
+aside.side{width:232px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;padding:20px 12px;gap:2px;position:sticky;top:0;height:100vh;
+  box-sizing:border-box}
+.side .brand{display:flex;align-items:center;gap:10px;padding:4px 12px 18px}
+.side .brand .mark{width:30px;height:30px;border-radius:8px;background:var(--accent);display:flex;
+  align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;letter-spacing:.02em}
+.side .brand b{font-weight:700;font-size:15px;line-height:1.2;display:block}
+.side .brand small{font-size:11px;color:var(--sub)}
+.side a.item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;
+  color:var(--sub);cursor:pointer;font-size:14px}
+.side a.item:hover{background:var(--surface2);color:var(--text)}
+.side a.item.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.side a.item svg{flex-shrink:0}
+.side a.item .navbadge{margin-left:auto;background:var(--red);color:#fff;font-size:11px;
+  font-weight:600;border-radius:99px;padding:1px 7px}
+.side .theme-btn{display:flex;align-items:center;justify-content:center;gap:8px;margin:4px 4px 0;
+  padding:9px;border-radius:8px;border:1px solid var(--border);background:var(--surface);
+  color:var(--sub);font-family:inherit;font-size:13px;font-weight:500;cursor:pointer}
+.side .theme-btn:hover{background:var(--surface2);color:var(--text)}
+@media (max-width:820px){
+  .dsroot{flex-direction:column}
+  aside.side{width:100%;height:auto;position:static;flex-direction:row;flex-wrap:wrap;
+    padding:8px;border-right:none;border-bottom:1px solid var(--border)}
+  .side .brand{display:none}
+  .side a.item{padding:7px 10px;font-size:12.5px}
+  .side a.item svg{display:none}
+  .side .theme-btn{margin:0}
 }
-*{box-sizing:border-box}
-body{color:var(--text);font-family:'IBM Plex Sans JP',sans-serif;font-size:14px;line-height:1.6}
-.wrap{max-width:960px;margin:0 auto;padding:14px 14px 56px}
 
-.demo-bar{background:var(--accent);color:#fff;padding:9px 14px;font-size:12.5px;
-  font-weight:600;text-align:center;letter-spacing:.02em;
-  display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
-.demo-bar a{color:#fff;text-decoration:underline;text-underline-offset:2px;font-weight:600}
+/* ═══ メイン・ヘッダー ═══ */
+main{flex:1;min-width:0;padding:24px 28px 40px;box-sizing:border-box;display:flex;
+  flex-direction:column;gap:20px}
+header.ph{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+header.ph .tt{margin-right:auto}
+header.ph h1{margin:0;font-size:20px;font-weight:700}
+header.ph .ps{font-size:12px;color:var(--sub);margin-top:2px}
 
-/* ── ページ切替 ── */
-.nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--border);
-  overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:nowrap;padding:8px 10px}
-.nav button{font-family:inherit;font-size:12.5px;font-weight:600;padding:7px 13px;margin-right:6px;
-  border:1px solid var(--border);background:var(--surface);color:var(--sub);
-  border-radius:99px;cursor:pointer}
-.nav button.on{background:var(--accent);border-color:var(--accent);color:#fff}
-.page{display:none} .page.on{display:block}
-
-.head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:16px 0 4px}
-.head h1{font-size:19px;margin:0;font-weight:700}
-.head .month{font-size:12.5px;color:var(--sub)}
-.fresh{font-size:12px;color:var(--sub);margin-bottom:16px}
-.fresh b{color:var(--green)}
-h2{font-size:14.5px;margin:24px 0 10px;font-weight:700}
-.sub{font-size:12px;color:var(--sub);margin:-6px 0 10px}
-
-/* ── 部品 ── */
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
-@media(max-width:640px){.kpis{grid-template-columns:repeat(2,1fr)}}
-.kpi{background:var(--surface);border:1px solid var(--border);border-radius:12px;
-  padding:13px 14px;box-shadow:var(--shadow)}
-.kpi .k{font-size:11.5px;color:var(--sub);margin-bottom:3px}
-.kpi .v{font-size:23px;font-weight:700;letter-spacing:-.01em}
-.kpi .u{font-size:12px;font-weight:500;color:var(--sub);margin-left:2px}
-.kpi .d{font-size:11.5px;margin-top:2px}
-.up{color:var(--green)} .down{color:var(--red)}
-
+/* ═══ カード ═══ */
 .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;
-  padding:14px 15px;box-shadow:var(--shadow);margin-bottom:10px}
-.card.red{border-left:4px solid var(--red)}
-.card.orange{border-left:4px solid var(--orange)}
-.card.green{border-left:4px solid var(--green)}
-.card.purple{border-left:4px solid var(--purple)}
-.card .top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.tag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px}
-.tag.red{background:var(--red-soft);color:var(--red)}
-.tag.orange{background:var(--orange-soft);color:var(--orange)}
-.tag.green{background:var(--green-soft);color:var(--green)}
-.tag.purple{background:var(--purple-soft);color:var(--purple)}
-.who{font-weight:700;font-size:14.5px}
-.rank{font-size:11.5px;color:var(--sub)}
-.why{margin-top:6px;color:var(--sub);font-size:13px}
-.acts{margin-top:10px;display:flex;gap:7px;flex-wrap:wrap}
-.btn{font-size:12px;padding:6px 12px;border-radius:8px;border:1px solid var(--border);
-  background:var(--surface2);color:var(--sub);font-family:inherit;font-weight:600;cursor:not-allowed}
-.btn.main{background:var(--accent);border-color:var(--accent);color:#fff}
+  padding:18px 20px;box-shadow:var(--shadow)}
+.card-c{padding:14px 16px}
+.card.bl-red{border-left:4px solid var(--red)}
+.card.bl-orange{border-left:4px solid var(--orange)}
+.card.bl-green{border-left:4px solid var(--green)}
+.card.bl-purple{border-left:4px solid var(--purple)}
+.sec-h{font-weight:600;font-size:14px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:1100px){.g4{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:700px){.g4,.g2{grid-template-columns:1fr}}
 
-.tbl{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--border);
-  border-radius:12px;box-shadow:var(--shadow);background:var(--surface)}
-table{width:100%;border-collapse:collapse;min-width:560px}
-th,td{padding:10px 12px;text-align:left;font-size:13px;border-bottom:1px solid var(--border);white-space:nowrap}
-th{background:var(--surface2);font-size:11.5px;color:var(--sub);font-weight:600}
-tr:last-child td{border-bottom:0}
-td.num{text-align:right;font-variant-numeric:tabular-nums}
-.badge{display:inline-block;white-space:nowrap;font-size:11px;padding:2px 9px;border-radius:999px;
-  background:var(--accent-soft);color:var(--accent);font-weight:600}
-.badge.red{background:var(--red-soft);color:var(--red)}
-.badge.orange{background:var(--orange-soft);color:var(--orange)}
-.badge.green{background:var(--green-soft);color:var(--green)}
-.badge.purple{background:var(--purple-soft);color:var(--purple)}
-.hint{font-size:11.5px;color:var(--sub);margin:6px 2px 0}
+/* ═══ KPI ═══ */
+.kpi-lbl{font-size:12px;color:var(--sub);font-weight:500}
+.kpi-num{font-size:30px;font-weight:700;font-variant-numeric:tabular-nums;
+  letter-spacing:-.01em;margin-top:6px}
+.kpi-num small{font-size:15px;font-weight:500;color:var(--sub);letter-spacing:0}
+.kpi-sub{font-size:12px;margin-top:4px}
+.kpi-sub .dim{color:var(--sub);font-weight:400}
+.up{color:var(--green);font-weight:600}.down{color:var(--red);font-weight:600}
 
-/* ── チャート ── */
-.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--sub);margin-bottom:10px}
-.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
-figure{margin:0}
-figcaption{font-size:11.5px;color:var(--sub);margin-top:8px}
-svg{display:block;width:100%;height:auto;overflow:visible}
-.gridline{stroke:var(--grid);stroke-width:1}
-.axis{fill:var(--sub);font-size:10.5px}
-.dlabel{font-size:11px;font-weight:600}
+/* ═══ バッジ・ピル ═══ */
+.badge{display:inline-flex;align-items:center;gap:6px;border-radius:99px;padding:3px 10px;
+  font-size:12px;font-weight:600;white-space:nowrap}
+.badge .dot{width:6px;height:6px;border-radius:99px}
+.pill{display:inline-flex;align-items:center;border-radius:99px;font-size:11px;font-weight:700;
+  padding:1px 8px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pill.red{background:var(--red-soft);color:var(--red)}
+.pill.orange{background:var(--orange-soft);color:var(--orange)}
+.pill.green{background:var(--green-soft);color:var(--green)}
+.pill.purple{background:var(--purple-soft);color:var(--purple)}
+.pill.accent{background:var(--accent-soft);color:var(--accent)}
+.pill.gray{background:var(--surface2);color:var(--sub)}
 
-.bars{display:grid;gap:11px}
-.bar-row{display:grid;grid-template-columns:74px 1fr;gap:10px;align-items:center}
-.bar-row .lb{font-size:12px;color:var(--sub);text-align:right}
-.bar-track{display:flex;flex-direction:column;gap:4px}
-.bar{display:flex;align-items:center;gap:7px}
-.bar .fill{height:12px;border-radius:0 4px 4px 0;min-width:2px}
-.bar .val{font-size:11.5px;font-weight:600;font-variant-numeric:tabular-nums}
-.bar .nm{font-size:10.5px;color:var(--sub);min-width:50px}
+/* ═══ ボタン・入力 ═══ */
+.btn{height:36px;padding:0 16px;border-radius:8px;border:none;background:var(--accent);color:#fff;
+  font-family:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.btn:hover{background:var(--accent-strong)}
+.btn2{height:36px;padding:0 16px;border-radius:8px;border:1px solid var(--border);
+  background:var(--surface);color:var(--text);font-family:inherit;font-size:13px;font-weight:500;cursor:pointer}
+.btn2:hover{background:var(--surface2)}
+.btnd{height:36px;padding:0 16px;border-radius:8px;border:1px solid var(--red);background:transparent;
+  color:var(--red);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.btnd:hover{background:var(--red-soft)}
+.btn.sm,.btn2.sm,.btnd.sm{height:32px;padding:0 14px;font-size:12px}
+.btn.xs,.btn2.xs,.btnd.xs{height:28px;padding:0 12px;font-size:12px;border-radius:6px}
+.sel{height:36px;border:1px solid var(--border);border-radius:8px;background:var(--surface);
+  color:var(--text);font-family:inherit;font-size:13px;padding:0 10px;cursor:pointer}
+.searchbox{display:flex;align-items:center;gap:8px;background:var(--surface);
+  border:1px solid var(--border);border-radius:8px;padding:0 12px;height:36px;width:240px;
+  box-sizing:border-box;color:var(--sub)}
+.searchbox:focus-within{border-color:var(--accent)}
+.searchbox input{border:none;outline:none;background:transparent;font-family:inherit;
+  font-size:13px;color:var(--text);width:100%}
+.tinput{height:36px;border:1px solid var(--border);border-radius:8px;background:var(--surface);
+  color:var(--text);font-family:inherit;font-size:13px;padding:0 12px;box-sizing:border-box}
+.tinput:focus{outline:none;border-color:var(--accent)}
 
-.prog{margin-top:11px}
-.prog .l{display:flex;justify-content:space-between;font-size:11.5px;color:var(--sub);margin-bottom:4px}
-.track{height:8px;background:var(--surface2);border-radius:99px;overflow:hidden}
-.track i{display:block;height:100%;border-radius:99px;background:var(--accent)}
+/* ═══ テーブル ═══ */
+.tblwrap{overflow-x:auto}
+table.dt{width:100%;border-collapse:collapse;font-size:13px}
+table.dt th{text-align:left;padding:10px 14px;font-weight:500;font-size:12px;color:var(--sub);
+  border-bottom:1px solid var(--border);white-space:nowrap}
+table.dt th:first-child{padding-left:20px}
+table.dt th:last-child{padding-right:20px}
+table.dt th.sortable{cursor:pointer;user-select:none}
+table.dt th.sortable:hover{color:var(--text)}
+table.dt th.num,table.dt td.num{text-align:right}
+table.dt th.ctr,table.dt td.ctr{text-align:center}
+table.dt td{padding:10px 14px;border-bottom:1px solid var(--border);white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+table.dt td:first-child{padding-left:20px}
+table.dt td:last-child{padding-right:20px}
+table.dt tbody tr:hover{background:var(--surface2)}
+table.dt tbody tr:last-child td{border-bottom:none}
+.tbl-head{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--border)}
+.tbl-foot{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;
+  font-size:12px;color:var(--sub)}
+.card.nopad{padding:0;overflow:hidden}
 
-.chat{display:flex;flex-direction:column;gap:7px}
-.msg{max-width:80%;padding:9px 12px;border-radius:13px;font-size:13px;white-space:pre-wrap;line-height:1.6}
-.msg.in{background:var(--surface2)}
-.msg.out{background:var(--accent-soft);color:var(--accent);align-self:flex-end}
+/* ═══ 進捗バー ═══ */
+.track{height:8px;border-radius:99px;background:var(--surface2);overflow:hidden}
+.track>span{display:block;height:100%;border-radius:99px}
+.track.mini{height:6px}
+.bar-row{display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px}
+.bar-row .n{font-weight:500}.bar-row .v{color:var(--sub);font-variant-numeric:tabular-nums}
 
-.note{margin-top:24px;padding:13px 15px;background:var(--surface2);border-radius:12px;
-  font-size:12.5px;color:var(--sub)}
-.cta{display:block;margin-top:16px;padding:14px;text-align:center;background:var(--accent);
-  color:#fff;border-radius:10px;text-decoration:none;font-weight:700}
+/* ═══ チャット（LINE風） ═══ */
+.chatbox{background:var(--bg);border-radius:10px;padding:16px 18px;display:flex;
+  flex-direction:column;gap:10px;max-height:420px;overflow-y:auto}
+.msg{display:flex;gap:8px;align-items:flex-end;max-width:78%}
+.msg .bub{padding:9px 13px;font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word}
+.msg.them{align-self:flex-start}
+.msg.them .bub{background:var(--surface);border:1px solid var(--border);border-radius:14px 14px 14px 4px}
+.msg.me{align-self:flex-end;flex-direction:row-reverse}
+.msg.me .bub{background:var(--chat-self);color:var(--chat-self-text);border-radius:14px 14px 4px 14px}
+.msg .ts{font-size:10px;color:var(--sub);white-space:nowrap}
+.ptab{height:26px;border-radius:99px;padding:0 12px;font-size:12px;display:inline-flex;
+  align-items:center;gap:6px;cursor:pointer;border:1px solid var(--border);background:transparent;
+  color:var(--sub);font-family:inherit}
+.ptab.on{background:var(--accent-soft);color:var(--accent);border-color:var(--accent);font-weight:600}
+.ctab{padding:8px 12px;border-bottom:2px solid transparent;display:inline-flex;align-items:center;
+  gap:8px;cursor:pointer;font-size:13px;color:var(--sub)}
+.ctab.on{border-bottom-color:var(--accent);color:var(--accent);font-weight:600}
+.avatar{width:22px;height:22px;border-radius:99px;background:var(--accent-soft);color:var(--accent);
+  display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+
+/* ═══ その他 ═══ */
+.note{font-size:11px;color:var(--sub);line-height:1.6}
+.empty{font-size:12.5px;color:var(--sub);border:1px dashed var(--border);border-radius:10px;
+  padding:12px 14px}
+.loading{color:var(--sub);padding:2rem 0;text-align:center;font-size:13px}
+.errbox{white-space:pre-wrap;color:var(--red);font-size:11.5px;background:var(--surface);
+  border:1px solid var(--border);border-radius:10px;padding:12px}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#141c2b;
+  color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;opacity:0;transition:opacity .2s;
+  pointer-events:none;z-index:60}
+.toast.show{opacity:1}
+details.fold{border:1px solid var(--border);border-radius:12px;background:var(--surface);
+  box-shadow:var(--shadow);padding:14px 16px}
+details.fold summary{cursor:pointer;font-size:13px;font-weight:600}
+details.fold summary .cnt{color:var(--sub);font-weight:400;font-size:12px}
+.dropzone{border:2px dashed var(--border);border-radius:10px;padding:18px;text-align:center;
+  color:var(--sub);font-size:13px;margin:10px 0}
+.alink{font-size:12px}
+.num6{font-weight:600;font-variant-numeric:tabular-nums}
+.stepnum{width:22px;height:22px;border-radius:99px;background:var(--accent);color:#fff;
+  display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.demo-note{margin:0 10px 12px;padding:11px 12px;border-radius:10px;
+  background:var(--accent-soft);color:var(--accent);font-size:11.5px;line-height:1.7}
+.demo-note b{display:block;font-size:12.5px;margin-bottom:3px}
+.demo-note span{display:block;margin-top:7px;color:var(--sub)}
+.demo-note span b{display:inline;font-size:11.5px;color:var(--text)}
+.demo-note a{display:block;margin-top:9px;color:var(--accent);font-weight:600;text-decoration:underline}
 </style>
 </head>
 <body>
-
-<div class="demo-bar"><span>サンプル画面です — 表示しているのはすべて架空のデータです</span><a href="index.html">← ai-bo のサイトに戻る</a></div>
-
-<div class="nav" id="nav">
-  <button class="on" data-p="home">ホーム</button>
-  <button data-p="results">成果・推移</button>
-  <button data-p="creators">クリエイター</button>
-  <button data-p="profile">個票</button>
-  <button data-p="push">声かけ配信</button>
-  <button data-p="ops">ai-bo稼働</button>
-  <button data-p="collab">コラボ</button>
-  <button data-p="data">データ・設定</button>
-</div>
-
-<div class="wrap">
-
-<!-- ══════ ホーム ══════ -->
-<div class="page on" id="home">
-  <div class="head"><h1>ホーム</h1><span class="month" data-ym="0"></span></div>
-  <div class="fresh">データ最終更新: <span data-ago="0"></span>分（2日前） <b>✓ 正常</b> ／ 本日の送信 14件・返信 3件・配信再開 2件</div>
-
-  <div class="kpis">
-    <div class="kpi"><div class="k">登録クリエイター</div><div class="v">45<span class="u">名</span></div><div class="d up">先月比 +3</div></div>
-    <div class="kpi"><div class="k">今月の稼働者</div><div class="v">25<span class="u">名</span></div><div class="d down">稼働率 56%</div></div>
-    <div class="kpi"><div class="k">要対応</div><div class="v">19<span class="u">件</span></div><div class="d down">うち人間対応 3件</div></div>
-    <div class="kpi"><div class="k">今月のダイヤ</div><div class="v">1,747,396</div><div class="d down">上位5名で84%</div></div>
-  </div>
-
-  <h2>今日、対応が必要な人</h2>
-  <div class="card red">
-    <div class="top"><span class="tag red">要人間対応</span><span class="who">demo_chiaki</span>
-      <span class="rank">ai-boランク: スタート</span></div>
-    <div class="why">最後の配信（<span data-ago="31"></span>）から31日空いています。
-      この人の通常の配信間隔は2日です。
-      <b>ai-boの声かけだけでは戻っていません。担当者の出番です。</b></div>
-    <div class="acts"><button class="btn main">対応済みにする</button>
-      <button class="btn">7日スヌーズ</button><button class="btn">会話を見る</button></div>
-  </div>
-  <div class="card orange">
-    <div class="top"><span class="tag orange">離脱リスク</span><span class="who">demo_erina</span>
-      <span class="rank">ai-boランク: アイアン</span></div>
-    <div class="why">最後の配信（<span data-ago="14"></span>）から14日空いています。
-      この人の通常の配信間隔は2日です。
-      <span class="rank">ai-bo声かけ#1を<span data-ago="4"></span>に送信済み・返信あり</span></div>
-    <div class="acts"><button class="btn main">対応済みにする</button>
-      <button class="btn">7日スヌーズ</button><button class="btn">会話を見る</button></div>
-  </div>
-  <div class="card green">
-    <div class="top"><span class="tag green">あと一歩</span><span class="who">demo_mao</span>
-      <span class="rank">ai-boランク: ブロンズ</span></div>
-    <div class="why"><span data-ago="2"></span>の配信は57分でした。
-      <b>あと3分で有効LIVE日（60分以上）になっていました。</b></div>
-    <div class="acts"><button class="btn main">対応済みにする</button>
-      <button class="btn">7日スヌーズ</button><button class="btn">会話を見る</button></div>
-  </div>
-  <div class="card purple">
-    <div class="top"><span class="tag purple">前月割れが続いている</span><span class="who">demo_tsumugi</span>
-      <span class="rank">ai-boランク: ブロンズ</span></div>
-    <div class="why">配信日数が <span data-mo="3"></span>10日 → <span data-mo="2"></span>7日
-      → <span data-mo="1"></span>4日 と下がり続けています（2ヶ月で60%減）。
-      まだ配信は続いているので、離れてしまう前の声かけが効きます。</div>
-    <div class="acts"><button class="btn main">対応済みにする</button>
-      <button class="btn">7日スヌーズ</button><button class="btn">会話を見る</button></div>
-  </div>
-
-  <div class="note"><b>各カードには「なぜこの人が出ているか」が日本語の文章で書かれます。</b>
-    対応したら1クリックで消えます。これが無いと同じ人が毎日出続け、担当者は2週間でリストを見なくなります。</div>
-</div>
-
-<!-- ══════ 成果・推移 ══════ -->
-<div class="page" id="results">
-  <div class="head"><h1>成果・推移</h1><span class="month" data-ym="0"></span></div>
-  <p class="sub">「ai-boに払う価値があるか」に答えるページです。</p>
-
-  <h2>事務所報酬の見込み</h2>
-  <div class="card">
-    <div style="font-size:30px;font-weight:700;letter-spacing:-.02em">$1,240</div>
-    <div class="hint" style="margin-top:2px">3つのインセンティブの合算（当月見込み）</div>
-    <div class="bars" style="margin-top:14px">
-      <div class="bar-row"><span class="lb">ランクUP／維持</span>
-        <div class="bar"><span class="fill" style="width:52%;background:var(--c1)" title="640ドル"></span>
-          <span class="val">$640</span></div></div>
-      <div class="bar-row"><span class="lb">アクティブ度</span>
-        <div class="bar"><span class="fill" style="width:29%;background:var(--c2)" title="360ドル"></span>
-          <span class="val">$360</span></div></div>
-      <div class="bar-row"><span class="lb">売上増加</span>
-        <div class="bar"><span class="fill" style="width:19%;background:var(--c3)" title="240ドル"></span>
-          <span class="val">$240</span></div></div>
+<div class="dsroot" id="dsroot" data-theme="light">
+  <aside class="side" id="nav">
+    <div class="brand"><div class="mark">ai</div>
+      <div><b>ai-bo 運営</b><small>ライブ事務所ダッシュボード</small></div></div>
+    <div class="demo-note">
+      <b>サンプル画面です</b>
+      本番と同じ画面に、架空のクリエイター45名のデータを入れています。
+      ボタンや検索は動きますが、保存はされません。
+      <span>サンプルでは<b>ホーム／成果・推移／クリエイター</b>をご覧いただけます。</span>
+      <a href="index.html">← ai-bo のサイトに戻る</a>
     </div>
-    <div class="hint">※売上増加の必要ダイヤは毎月変わるため、月初に管理画面から入力します。</div>
-  </div>
-
-  <h2>登録者と稼働者の推移</h2>
-  <p class="sub">登録は増えているのに、実際に配信する人は減っている——という状態が見えます。</p>
-  <div class="card">
-    <div class="legend">
-      <span><i style="background:var(--c1)"></i>登録者</span>
-      <span><i style="background:var(--c4)"></i>稼働者</span>
-    </div>
-    <figure>
-      <svg viewBox="0 0 620 190" role="img" aria-label="登録者と稼働者の月次推移（3月から8月）">
-        <line class="gridline" x1="42" y1="20"  x2="606" y2="20"/>
-        <line class="gridline" x1="42" y1="60"  x2="606" y2="60"/>
-        <line class="gridline" x1="42" y1="100" x2="606" y2="100"/>
-        <line class="gridline" x1="42" y1="140" x2="606" y2="140"/>
-        <text class="axis" x="36" y="24"  text-anchor="end">80</text>
-        <text class="axis" x="36" y="64"  text-anchor="end">60</text>
-        <text class="axis" x="36" y="104" text-anchor="end">40</text>
-        <text class="axis" x="36" y="144" text-anchor="end">20</text>
-
-        <polyline fill="none" stroke="var(--c1)" stroke-width="2" stroke-linejoin="round"
-          points="72,76 178,70 284,64 390,58 496,52 570,44"/>
-        <circle cx="72"  cy="76" r="4.5" fill="var(--c1)"><title>3月 登録者 62名</title></circle>
-        <circle cx="178" cy="70" r="4.5" fill="var(--c1)"><title>4月 登録者 65名</title></circle>
-        <circle cx="284" cy="64" r="4.5" fill="var(--c1)"><title>5月 登録者 68名</title></circle>
-        <circle cx="390" cy="58" r="4.5" fill="var(--c1)"><title>6月 登録者 71名</title></circle>
-        <circle cx="496" cy="52" r="4.5" fill="var(--c1)"><title>7月 登録者 74名</title></circle>
-        <circle cx="570" cy="44" r="4.5" fill="var(--c1)"><title>8月 登録者 78名</title></circle>
-        <text class="dlabel" x="570" y="34" text-anchor="middle" fill="var(--c1)">78名</text>
-
-        <polyline fill="none" stroke="var(--c4)" stroke-width="2" stroke-linejoin="round"
-          points="72,124 178,122 284,126 390,132 496,134 570,138"/>
-        <circle cx="72"  cy="124" r="4.5" fill="var(--c4)"><title>3月 稼働者 38名</title></circle>
-        <circle cx="178" cy="122" r="4.5" fill="var(--c4)"><title>4月 稼働者 39名</title></circle>
-        <circle cx="284" cy="126" r="4.5" fill="var(--c4)"><title>5月 稼働者 37名</title></circle>
-        <circle cx="390" cy="132" r="4.5" fill="var(--c4)"><title>6月 稼働者 34名</title></circle>
-        <circle cx="496" cy="134" r="4.5" fill="var(--c4)"><title>7月 稼働者 33名</title></circle>
-        <circle cx="570" cy="138" r="4.5" fill="var(--c4)"><title>8月 稼働者 31名</title></circle>
-        <text class="dlabel" x="570" y="156" text-anchor="middle" fill="var(--c4)">31名</text>
-
-        <text class="axis" x="72"  y="176" text-anchor="middle">3月</text>
-        <text class="axis" x="178" y="176" text-anchor="middle">4月</text>
-        <text class="axis" x="284" y="176" text-anchor="middle">5月</text>
-        <text class="axis" x="390" y="176" text-anchor="middle">6月</text>
-        <text class="axis" x="496" y="176" text-anchor="middle">7月</text>
-        <text class="axis" x="570" y="176" text-anchor="middle">8月</text>
-      </svg>
-      <figcaption>単位: 名。稼働者＝その月に1日以上配信した方。点にふれると各月の値が出ます。</figcaption>
-    </figure>
-  </div>
-
-  <h2>復帰率の比較</h2>
-  <p class="sub">「効きます」ではなく「測れます」。導入前を基準に、同じ物差しで比べます。</p>
-  <div class="card">
-    <div class="legend">
-      <span><i style="background:var(--c1)"></i>導入前（架空の例）</span>
-      <span><i style="background:var(--c2)"></i>ai-boが声をかけた後</span>
-    </div>
-    <div class="bars">
-      <div class="bar-row"><span class="lb">7日時点</span>
-        <div class="bar-track">
-          <div class="bar"><span class="nm">導入前</span>
-            <span class="fill" style="width:70%;background:var(--c1)" title="70パーセント"></span><span class="val">70%</span></div>
-          <div class="bar"><span class="nm">ai-bo後</span>
-            <span class="fill" style="width:5%;background:var(--c2)"></span>
-            <span class="val" style="color:var(--sub);font-weight:500">計測中（3件）</span></div>
-        </div></div>
-      <div class="bar-row"><span class="lb">21日時点</span>
-        <div class="bar-track">
-          <div class="bar"><span class="nm">導入前</span>
-            <span class="fill" style="width:45%;background:var(--c1)" title="45パーセント"></span><span class="val">45%</span></div>
-          <div class="bar"><span class="nm">ai-bo後</span>
-            <span class="fill" style="width:5%;background:var(--c2)"></span>
-            <span class="val" style="color:var(--sub);font-weight:500">計測中（1件）</span></div>
-        </div></div>
-      <div class="bar-row"><span class="lb">35日時点</span>
-        <div class="bar-track">
-          <div class="bar"><span class="nm">導入前</span>
-            <span class="fill" style="width:20%;background:var(--c1)" title="20パーセント"></span><span class="val">20%</span></div>
-          <div class="bar"><span class="nm">ai-bo後</span>
-            <span class="fill" style="width:5%;background:var(--c2)"></span>
-            <span class="val" style="color:var(--sub);font-weight:500">計測中（0件）</span></div>
-        </div></div>
-    </div>
-    <div class="hint">声かけが5件たまってから比較を表示します。
-      <b>件数が少ないうちは数字を出しません。</b>たまたまの結果を成果として見せないためです。</div>
-  </div>
-
-  <div class="note"><b>このページには「月末にいくら届きそう」という予測を出しません。</b>
-    検証の結果、月半ばの着地予測は4回に1回しか当たらないと分かったためです。
-    事実（いま何ダイヤか、あと何が足りないか）だけをお見せします。</div>
+    <a class="item" href="#home"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/></svg>ホーム</a>
+    <a class="item" href="#results"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="15 7 21 7 21 13"/></svg>成果・推移</a>
+    <a class="item" href="#creators"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>クリエイター</a>
+    <div style="flex:1"></div>
+    <button class="theme-btn" id="theme-btn">🌙 ダークに切替</button>
+  </aside>
+  <main id="main"><div class="loading">読み込み中…</div></main>
 </div>
-
-<!-- ══════ クリエイター ══════ -->
-<div class="page" id="creators">
-  <div class="head"><h1>クリエイター</h1><span class="month" data-ym="0"></span></div>
-  <p class="sub">一覧・会話ログ・担当者別。会話は全文をご覧いただけます。</p>
-
-  <h2>一覧</h2>
-  <div class="tbl">
-    <table>
-      <tr><th>クリエイター</th><th>状態</th><th>担当</th><th>ai-boランク</th>
-        <th class="num">有効日</th><th class="num">配信時間</th><th class="num">ダイヤ</th></tr>
-      <tr><td>demo_chiaki</td><td><span class="badge red">要対応</span></td><td>佐藤</td><td>スタート</td><td class="num">0日</td><td class="num">0.0h</td><td class="num">0</td></tr>
-      <tr><td>demo_erina</td><td><span class="badge orange">ai-bo対応中</span></td><td>鈴木</td><td>アイアン</td><td class="num">1日</td><td class="num">2.4h</td><td class="num">4,800</td></tr>
-      <tr><td>demo_mao</td><td><span class="badge green">あと一歩</span></td><td>高橋</td><td>ブロンズ</td><td class="num">4日</td><td class="num">8.6h</td><td class="num">9,700</td></tr>
-      <tr><td>demo_tsumugi</td><td><span class="badge purple">前月割れ</span></td><td>佐藤</td><td>ブロンズ</td><td class="num">4日</td><td class="num">9.1h</td><td class="num">17,300</td></tr>
-      <tr><td>demo_umi</td><td>—</td><td>鈴木</td><td>プラチナ</td><td class="num">16日</td><td class="num">62.8h</td><td class="num">669,298</td></tr>
-      <tr><td>demo_zen</td><td>—</td><td>高橋</td><td>ゴールド</td><td class="num">16日</td><td class="num">53.1h</td><td class="num">160,317</td></tr>
-      <tr><td>demo_saki</td><td><span class="badge">休眠</span></td><td>佐藤</td><td>スタート</td><td class="num">0日</td><td class="num">0.0h</td><td class="num">0</td></tr>
-    </table>
-  </div>
-  <p class="hint">← 横にスクロールできます ／ 担当者で絞り込めます（初期値はログイン中のご自身）</p>
-
-  <h2>会話ログ（demo_mao）</h2>
-  <div class="card">
-    <div class="chat">
-      <div class="msg out">おはようございます。今月、あと1日配信できたら"配信した日"が7日になります。
-時間もあと1時間ちょっとです。今週のどこか、いけそうな日ってありますか？</div>
-      <div class="msg in">今週は木曜なら空いてます</div>
-      <div class="msg out">木曜ですね。無理のない範囲で大丈夫です。
-終わったら配信メモだけ残しておいてください。</div>
-      <div class="msg in">イベントの参加条件ってどこで見れますか？</div>
-      <div class="msg out">確認してお返しします。少しお待ちください。</div>
-      <div class="msg out">お待たせしました。運営に確認しました。
-参加条件は〇〇です。エントリーは今月末までとのことです。</div>
-    </div>
-    <div class="hint">ai-boが答えられない事実質問は、運営の方へ取り次がれます。
-      回答は蓄積され、次に同じ質問が来たときは即答できるようになります。</div>
-  </div>
-</div>
-
-<!-- ══════ 個票 ══════ -->
-<div class="page" id="profile">
-  <div class="head"><h1>個票</h1><span class="month">demo_mao ／ <span data-ym="0"></span></span></div>
-
-  <div class="kpis">
-    <div class="kpi"><div class="k">ai-boランク</div><div class="v" style="font-size:19px">シルバー</div><div class="d">先月 シルバー</div></div>
-    <div class="kpi"><div class="k">有効LIVE日数</div><div class="v">6<span class="u">日</span></div><div class="d">先月ライン 8日</div></div>
-    <div class="kpi"><div class="k">配信時間</div><div class="v">13.8<span class="u">h</span></div><div class="d">先月ライン 19.2h</div></div>
-    <div class="kpi"><div class="k">ダイヤ</div><div class="v">48,200</div><div class="d up">先月ライン 41,000</div></div>
-  </div>
-
-  <h2>インセンティブの進捗</h2>
-  <div class="card">
-    <div class="prog"><div class="l"><span>該当条件：有効LIVE日数</span><span>6 / 7日　あと1日</span></div>
-      <div class="track"><i style="width:86%"></i></div></div>
-    <div class="prog"><div class="l"><span>該当条件：配信時間</span><span>13.8 / 15h　あと1.2h</span></div>
-      <div class="track"><i style="width:92%"></i></div></div>
-    <div class="prog"><div class="l"><span>アクティブ度 Lv1（8日・25h）</span><span>未到達</span></div>
-      <div class="track"><i style="width:55%;background:var(--c4)"></i></div></div>
-    <div class="hint"><b>何が足りないかを条件ごとに分けて表示します。</b>
-      「あと〇ダイヤ」だけでは、有効日が足りているのか分からず担当者が動けないためです。</div>
-  </div>
-
-  <h2>有効LIVE日数の推移</h2>
-  <div class="card">
-    <figure>
-      <svg viewBox="0 0 620 175" role="img" aria-label="有効LIVE日数の月次推移（3月から8月）">
-        <line class="gridline" x1="42" y1="24"  x2="606" y2="24"/>
-        <line class="gridline" x1="42" y1="74"  x2="606" y2="74"/>
-        <line class="gridline" x1="42" y1="124" x2="606" y2="124"/>
-        <text class="axis" x="36" y="28"  text-anchor="end">20</text>
-        <text class="axis" x="36" y="78"  text-anchor="end">10</text>
-        <text class="axis" x="36" y="128" text-anchor="end">0</text>
-        <rect x="58"  y="64"  width="70" height="60" rx="4" fill="var(--c1)"><title>3月 12日</title></rect>
-        <rect x="152" y="59"  width="70" height="65" rx="4" fill="var(--c1)"><title>4月 13日</title></rect>
-        <rect x="246" y="74"  width="70" height="50" rx="4" fill="var(--c1)"><title>5月 10日</title></rect>
-        <rect x="340" y="79"  width="70" height="45" rx="4" fill="var(--c1)"><title>6月 9日</title></rect>
-        <rect x="434" y="84"  width="70" height="40" rx="4" fill="var(--c1)"><title>7月 8日</title></rect>
-        <rect x="528" y="94"  width="70" height="30" rx="4" fill="var(--c4)"><title>8月 6日（集計途中）</title></rect>
-        <text class="dlabel" x="563" y="88" text-anchor="middle" fill="var(--c4)">6日</text>
-        <text class="axis" x="93"  y="146" text-anchor="middle">3月</text>
-        <text class="axis" x="187" y="146" text-anchor="middle">4月</text>
-        <text class="axis" x="281" y="146" text-anchor="middle">5月</text>
-        <text class="axis" x="375" y="146" text-anchor="middle">6月</text>
-        <text class="axis" x="469" y="146" text-anchor="middle">7月</text>
-        <text class="axis" x="563" y="146" text-anchor="middle">8月</text>
-      </svg>
-      <figcaption>単位: 日。8月（オレンジ）は集計途中です。</figcaption>
-    </figure>
-  </div>
-
-  <h2>収益の内訳と、事務所内での位置</h2>
-  <div class="tbl">
-    <table>
-      <tr><th>指標</th><th class="num">この方</th><th class="num">事務所の中央値</th><th>位置</th></tr>
-      <tr><td>視聴転換率</td><td class="num">11.2%</td><td class="num">8.4%</td><td><span class="badge green">上位</span></td></tr>
-      <tr><td>滞在率</td><td class="num">9.8%</td><td class="num">11.8%</td><td><span class="badge">中位</span></td></tr>
-      <tr><td>コメント率</td><td class="num">74%</td><td class="num">67%</td><td><span class="badge green">上位</span></td></tr>
-      <tr><td>課金転換率</td><td class="num">22%</td><td class="num">37%</td><td><span class="badge orange">下位</span></td></tr>
-      <tr><td>Top5ギフター依存度</td><td class="num">99.1%</td><td class="num">97.5%</td><td><span class="badge red">要注意</span></td></tr>
-    </table>
-  </div>
-  <p class="hint">Top5依存度が高い方は、太客が離れたときの影響が大きくなります。</p>
-</div>
-
-<!-- ══════ 声かけ配信 ══════ -->
-<div class="page" id="push">
-  <div class="head"><h1>声かけ配信</h1><span class="month"><span data-ago="0"></span> 時点</span></div>
-  <p class="sub">毎朝9時に自動で送られます。この画面は、内容の確認と手動送信に使います。</p>
-
-  <h2>今日の自動選定（上位5名）</h2>
-  <div class="tbl">
-    <table>
-      <tr><th>クリエイター</th><th>選ばれた理由</th><th>場面</th><th>状態</th></tr>
-      <tr><td>demo_mao</td><td>あと3分で有効LIVE日だった</td><td>後押し</td><td><span class="badge green">送信済</span></td></tr>
-      <tr><td>demo_erina</td><td>14日間の空白（普段は2日間隔）</td><td>引き戻し②</td><td><span class="badge green">送信済</span></td></tr>
-      <tr><td>creator_g</td><td>昨日の配信が48分（あと12分）</td><td>惜しい配信</td><td><span class="badge green">送信済</span></td></tr>
-      <tr><td>creator_h</td><td>所属45日目・新人ケア枠</td><td>新人90日</td><td><span class="badge green">送信済</span></td></tr>
-      <tr><td>creator_i</td><td>次のランクが射程圏</td><td>追っかけ</td><td><span class="badge">保留</span></td></tr>
-    </table>
-  </div>
-
-  <h2>送信内容のプレビュー</h2>
-  <div class="card">
-    <div class="chat">
-      <div class="msg out">おはようございます。昨日の配信、48分でしたね。
-あと12分で"配信した日"に入ってました。惜しい！
-次はキリのいいところで1時間、狙ってみませんか？</div>
-    </div>
-    <div class="acts"><button class="btn main">この内容で送る</button>
-      <button class="btn">文面を作り直す</button><button class="btn">今日は送らない</button></div>
-    <div class="hint">文面はその場で生成されます。定型文の使い回しはしません。</div>
-  </div>
-
-  <h2>一斉お知らせ</h2>
-  <div class="card">
-    <div class="hint" style="margin:0 0 8px">全員、または条件を絞って送れます（イベント告知・締切のご案内など）。</div>
-    <div class="acts"><button class="btn">宛先を選ぶ</button>
-      <button class="btn">文面を書く</button><button class="btn main">プレビュー</button></div>
-  </div>
-
-  <div class="note"><b>ai-boは担当者の承認を待たずに自動で送ります。</b>
-    この画面は「止める」「内容を確認する」ためのものです。
-    毎回承認が必要だと、結局は誰も見なくなり、声かけ自体が止まってしまうためです。</div>
-</div>
-
-<!-- ══════ ai-bo稼働 ══════ -->
-<div class="page" id="ops">
-  <div class="head"><h1>ai-bo稼働</h1><span class="month" data-ym="0"></span></div>
-  <p class="sub">「ai-boは何を言っているのか」を確認するページです。</p>
-
-  <div class="kpis">
-    <div class="kpi"><div class="k">今月の送信</div><div class="v">312<span class="u">通</span></div></div>
-    <div class="kpi"><div class="k">返信があった</div><div class="v">89<span class="u">通</span></div><div class="d up">28.5%</div></div>
-    <div class="kpi"><div class="k">取り次ぎ</div><div class="v">7<span class="u">件</span></div><div class="d down">未回答 1件</div></div>
-    <div class="kpi"><div class="k">音声通話</div><div class="v">124<span class="u">分</span></div><div class="d">上限 3,000分</div></div>
-  </div>
-
-  <h2>送信ログ（本日）</h2>
-  <div class="tbl">
-    <table>
-      <tr><th>時刻</th><th>クリエイター</th><th>場面</th><th>本文（先頭）</th><th>返信</th></tr>
-      <tr><td>09:00</td><td>demo_mao</td><td>後押し</td><td>おはようございます。昨日の配信、あと少しで…</td><td><span class="badge green">あり</span></td></tr>
-      <tr><td>09:00</td><td>demo_erina</td><td>引き戻し②</td><td>最近ちょっと間が空きましたね…</td><td>—</td></tr>
-      <tr><td>09:00</td><td>creator_g</td><td>惜しい配信</td><td>昨日の配信、48分でしたね…</td><td><span class="badge green">あり</span></td></tr>
-      <tr><td>12:00</td><td>creator_h</td><td>機能紹介</td><td>今日は「配信メモ」のご紹介です…</td><td>—</td></tr>
-      <tr><td>23:00</td><td>（18名）</td><td>メモの声かけ</td><td>今日の配信、おつかれさまでした…</td><td>—</td></tr>
-    </table>
-  </div>
-  <p class="hint">本文は全文を展開して確認できます。</p>
-
-  <h2>取り次ぎの状況</h2>
-  <div class="card orange">
-    <div class="top"><span class="tag orange">未回答</span><span class="who">demo_mao</span>
-      <span class="rank"><span data-ago="1"></span> 14:20</span></div>
-    <div class="why">「イベントの参加条件ってどこで見れますか？」<br>
-      ai-boは推測で答えず、確認中とお伝えしています。</div>
-    <div class="acts"><button class="btn main">回答する</button></div>
-  </div>
-  <div class="card green">
-    <div class="top"><span class="tag green">回答済み・FAQに登録</span><span class="who">demo_umi</span>
-      <span class="rank"><span data-ago="3"></span></span></div>
-    <div class="why">「ランクが上がる条件は？」→ 回答済み。
-      次に同じ質問が来たら、ai-boがその場で答えます。</div>
-  </div>
-
-  <h2>安全性</h2>
-  <div class="card">
-    <div class="hint" style="margin:0">今月、深刻な相談の兆候を検知した件数: <b>0件</b><br>
-      検知した場合は、ご本人の同意を得たうえで運営の方へ共有します。</div>
-  </div>
-</div>
-
-<!-- ══════ コラボ ══════ -->
-<div class="page" id="collab">
-  <div class="head"><h1>コラボ</h1><span class="month" data-ym="0"></span></div>
-  <p class="sub">相手探しから日程調整、実施後の報告まで、ai-boが自動で進めます。</p>
-
-  <div class="kpis">
-    <div class="kpi"><div class="k">今月の成立</div><div class="v">6<span class="u">件</span></div></div>
-    <div class="kpi"><div class="k">進行中</div><div class="v">3<span class="u">件</span></div></div>
-    <div class="kpi"><div class="k">実施済み</div><div class="v">4<span class="u">件</span></div></div>
-    <div class="kpi"><div class="k">辞退・期限切れ</div><div class="v">2<span class="u">件</span></div></div>
-  </div>
-
-  <h2>進行中</h2>
-  <div class="tbl">
-    <table>
-      <tr><th>組み合わせ</th><th>状態</th><th>予定</th><th>次にやること</th></tr>
-      <tr><td>demo_mao × demo_riko</td><td><span class="badge green">日程確定</span></td><td><span data-ago="-4"></span> 22:00</td><td>前日にリマインド</td></tr>
-      <tr><td>demo_umi × demo_zen</td><td><span class="badge orange">相手の返事待ち</span></td><td>—</td><td><span data-ago="-1"></span>に期限切れ</td></tr>
-      <tr><td>demo_aoi × demo_mizuki</td><td><span class="badge">候補を提示中</span></td><td>—</td><td>本人の選択待ち</td></tr>
-    </table>
-  </div>
-
-  <h2>実施後の報告</h2>
-  <div class="card">
-    <div class="hint" style="margin:0"><span data-ago="4"></span> demo_umi × demo_aoi … 実施済み・両者から報告あり<br>
-      「話しやすくて楽しかった。また組みたい」（demo_umi）</div>
-  </div>
-  <p class="hint">15分ごとに自動で処理しているため、期限切れや報告漏れで止まることがありません。</p>
-</div>
-
-<!-- ══════ データ・設定 ══════ -->
-<div class="page" id="data">
-  <div class="head"><h1>データ・設定</h1></div>
-  <p class="sub">運営の日課は、ここに日次データを1回アップロードするだけです。</p>
-
-  <h2>日次データの取り込み</h2>
-  <div class="card">
-    <div class="hint" style="margin:0 0 10px">最終取込: <b><span data-ago="0"></span>分</b>（2日前）／ 取込 78行 ／ エラー 0件</div>
-    <div class="acts"><button class="btn main">ファイルを選ぶ</button><button class="btn">取込履歴を見る</button></div>
-    <div class="hint">列の並びが変わっても、<b>列名で読むので壊れません</b>。
-      期間がまとまったファイルは、日次データに混ざらないよう自動で弾きます。</div>
-  </div>
-
-  <h2>インセンティブの基準値</h2>
-  <p class="sub">TikTok側の規定が変わったら、担当者ご自身でここを更新できます。</p>
-  <div class="tbl">
-    <table>
-      <tr><th>制度</th><th>段階</th><th class="num">必要日数</th><th class="num">必要時間</th><th class="num">報酬率</th><th>有効期間</th></tr>
-      <tr><td>ランクアップ</td><td>Lv1→Lv2</td><td class="num">7日</td><td class="num">15h</td><td class="num">—</td><td>2026-01-01〜</td></tr>
-      <tr><td>ランク維持</td><td>Lv3〜Lv7</td><td class="num">7日</td><td class="num">15h</td><td class="num">—</td><td>2026-01-01〜</td></tr>
-      <tr><td>アクティブ度</td><td>Lv1</td><td class="num">8日</td><td class="num">25h</td><td class="num">—</td><td>2026-01-01〜</td></tr>
-      <tr><td>アクティブ度</td><td>Lv5</td><td class="num">22日</td><td class="num">110h</td><td class="num">—</td><td>2026-01-01〜</td></tr>
-    </table>
-  </div>
-  <p class="hint"><b>サンプルのため報酬率は伏せています。</b>実際の画面には御社の規定値が入ります。<br>変更はすぐ反映されます。<b>過去の月は当時の基準のまま</b>判定されるので、履歴の数字は狂いません。</p>
-
-  <h2>その他の設定</h2>
-  <div class="card">
-    <div class="hint" style="margin:0">朝の配信時刻（既定 9:00）／ 担当マネージャーの割り当て ／
-      売上増加インセンティブの月次境界の入力 ／ 自動実行の状況確認</div>
-  </div>
-</div>
-
-  <div class="note">
-    <b>これはサンプルです。</b>実際の画面は、御社のデータで同じように表示されます。
-    サンプルのためボタンは操作できません。
-  </div>
-  <a class="cta" href="https://lin.ee/x7dkQQq" target="_blank" rel="noopener">LINEで ai-bo に聞いてみる</a>
-  <a class="cta" href="index.html" style="margin-top:10px;background:var(--surface);color:var(--text);border:1px solid var(--border)">ai-bo のサイトに戻る</a>
-</div>
-
+<div class="toast" id="toast"></div>
+<!-- ▼ サンプル用。本番ではここに無い2つ。これを外せば本番のまま。 -->
+<script src="assets/dashboard-demo.js"></script>
 <script>
-document.querySelectorAll("#nav button").forEach(b => {
-  b.addEventListener("click", () => {
-    document.querySelectorAll("#nav button").forEach(x => x.classList.remove("on"));
-    document.querySelectorAll(".page").forEach(x => x.classList.remove("on"));
-    b.classList.add("on");
-    document.getElementById(b.dataset.p).classList.add("on");
-    window.scrollTo(0, 0);
-  });
-});
-
-/* 日付と月は、開いた日に合わせて描く。
-   固定で書くと「2026年8月」のまま古くなり、商談で見せたときに気づかれるため。
-   data-ago="N" … 最新日のN日前 ／ data-ym="N" … Nヶ月前（年月）／ data-mo="N" … Nヶ月前（月だけ） */
+/* /api/admin/dashboard/* への fetch を、架空データの応答に差し替える。
+   本番のスクリプトは一行も変えていないので、この2つを外せば元に戻る。 */
 (function(){
-  const LAG = 2;                                   // データは約2日遅れで届く
-  const ev = new Date(); ev.setDate(ev.getDate() - LAG);
-  const md = n => { const d = new Date(ev); d.setDate(d.getDate() - n);
-                    return (d.getMonth() + 1) + "/" + d.getDate(); };
-  const mon = n => new Date(ev.getFullYear(), ev.getMonth() - n, 1);
-  document.querySelectorAll("[data-ago]").forEach(e => { e.textContent = md(+e.dataset.ago); });
-  document.querySelectorAll("[data-ym]").forEach(e => {
-    const d = mon(+e.dataset.ym); e.textContent = d.getFullYear() + "年" + (d.getMonth() + 1) + "月"; });
-  document.querySelectorAll("[data-mo]").forEach(e => {
-    e.textContent = (mon(+e.dataset.mo).getMonth() + 1) + "月"; });
+  "use strict";
+  const D = window.__AIBO_DEMO__ || {};
+  const norm = s => String(s||"").trim().replace(/^[@＠]/,"").toLowerCase();
+  const ok = body => Promise.resolve({
+    ok:true, status:200, json: () => Promise.resolve(body), text: () => Promise.resolve("")
+  });
+  const real = window.fetch.bind(window);
+  window.fetch = function(input, init){
+    const url = typeof input === "string" ? input : (input && input.url) || "";
+    if(url.indexOf("/api/admin/dashboard/") === -1) return real(input, init);
+    if(init && init.method && init.method.toUpperCase() !== "GET"){
+      return ok({ok:true, demo:true, message:"サンプルのため保存されません"});
+    }
+    const path = url.split("?")[0].replace(/.*\/api\/admin\/dashboard/, "");
+    const qs = new URLSearchParams((url.split("?")[1] || ""));
+    if(path === "/data")     return ok(D.data);
+    if(path === "/results")  return ok(D.results);
+    if(path === "/creators") return ok(D.creators);
+    if(path === "/rewards")  return ok(D.rewards);
+    if(path === "/creator"){
+      const d = (D.details || {})[norm(qs.get("u"))];
+      return ok(d || {empty:true, message:"サンプルにはこの方のデータがありません。"});
+    }
+    return ok({empty:true, message:"この画面はサンプルに含まれていません。"});
+  };
 })();
+</script>
+<!-- ▲ サンプル用 ここまで -->
+<script>
+"use strict";
+const TT_URL = "https://live-backstage.tiktok.com/";
+const C1="#3f7ad9", C2="#2fb3a8", C3="#8a6fe0", C4="#e0a23f", C5="#4fae62";
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g,
+  c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmt = n => n == null ? "—" : Number(n).toLocaleString("ja-JP");
+const compact = n => n == null ? "—" : (n >= 1000000 ? (n/1000000).toFixed(2)+"M"
+  : n >= 10000 ? Math.round(n/1000)+"K" : Number(n).toLocaleString("ja-JP"));
+
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),2600);}
+async function getJSON(url){const r=await fetch(url);const d=await r.json();
+  if(d && d.error) throw new Error(d.error); return d;}
+
+/* ═══ テーマ ═══ */
+function applyTheme(){
+  const pref = localStorage.getItem("aibo-theme") ||
+    (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  $("#dsroot").setAttribute("data-theme", pref);
+  document.body.setAttribute("data-theme-body", pref);
+  $("#theme-btn").textContent = pref === "light" ? "🌙 ダークに切替" : "☀ ライトに切替";
+}
+$("#theme-btn").addEventListener("click", () => {
+  const cur = $("#dsroot").getAttribute("data-theme");
+  localStorage.setItem("aibo-theme", cur === "light" ? "dark" : "light");
+  applyTheme();
+});
+applyTheme();
+
+/* ═══ 共通部品 ═══ */
+function kpiTile(lbl, numHTML, subHTML, extraHTML=""){
+  return `<div class="card">${lbl}${numHTML}${subHTML}${extraHTML}</div>`;
+}
+const ST = {
+  active:   {label:"稼働中",   bg:"var(--green-soft)",  color:"var(--green)",  dot:"var(--green)",  border:"1px solid transparent"},
+  newbie:   {label:"新人",     bg:"var(--purple-soft)", color:"var(--purple)", dot:"var(--purple)", border:"1px solid transparent"},
+  never:    {label:"未稼働",   bg:"var(--orange-soft)", color:"var(--orange)", dot:"var(--orange)", border:"1px solid transparent"},
+  dormant:  {label:"休眠",     bg:"var(--surface2)",    color:"var(--sub)",    dot:"var(--sub)",    border:"1px solid transparent"},
+  no_data:  {label:"データなし", bg:"transparent",       color:"var(--sub)",    dot:"var(--border)", border:"1px dashed var(--border)"},
+  withdrawn:{label:"退会",     bg:"var(--surface2)",    color:"var(--sub)",    dot:"var(--sub)",    border:"1px solid transparent"},
+};
+function stKey(r){ return (r.bucket === "active" && r.tenure < 90) ? "newbie" : r.bucket; }
+function stBadge(key){
+  const s = ST[key] || ST.no_data;
+  return `<span class="badge" style="background:${s.bg};color:${s.color};border:${s.border}">
+    <span class="dot" style="background:${s.dot}"></span>${s.label}</span>`;
+}
+function barColor(p){ return p >= 100 ? "var(--accent)" : p >= 60 ? "var(--green)"
+  : p >= 30 ? "var(--orange)" : "var(--red)"; }
+
+/* 棒グラフ（div方式・当月のみ不透明） */
+function divBars(items, color){
+  const max = Math.max(...items.map(i => i.value), 1);
+  return `<div style="display:flex;align-items:flex-end;gap:14px;height:150px;margin-top:18px;padding:0 6px">`
+    + items.map((it, i) => {
+      const last = i === items.length - 1;
+      const h = Math.max(it.value / max * 76, it.value > 0 ? 2 : 1.2);
+      return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end">
+        <div style="font-size:11px;${last ? `font-weight:700;color:${color}` : "color:var(--sub)"};font-variant-numeric:tabular-nums">${esc(it.display ?? it.value)}</div>
+        <div style="width:100%;max-width:44px;height:${h.toFixed(1)}%;border-radius:6px 6px 2px 2px;background:${color};${last ? "" : "opacity:.45;"}"></div>
+        <div style="font-size:11px;${last ? "font-weight:600" : "color:var(--sub)"}">${esc(it.label)}</div></div>`;
+    }).join("") + `</div>`;
+}
+/* 折れ線（svg・グリッド3本・最新点に円＋ラベル） */
+function lineSVG(labels, series, fmtFn){
+  const W=560, H=150, padL=34, padR=34, top=20, bottom=118;
+  // 最新値ラベルは点の12px上に置くので、最高点が上端に張り付かないよう余白を持たせる
+  const max = Math.max(...series.flatMap(s => s.values), 1) * 1.15;
+  const X = i => padL + (W-padL-padR) * (labels.length === 1 ? .5 : i/(labels.length-1));
+  const Y = v => bottom - (bottom-top) * v / max;
+  let s = `<svg viewBox="0 0 560 150" style="width:100%;height:150px;margin-top:18px;display:block">`;
+  [10,65,120].forEach(y => s += `<line x1="0" y1="${y}" x2="560" y2="${y}" stroke="var(--border)" stroke-width="1"/>`);
+  series.forEach(sr => s += `<polyline points="${sr.values.map((v,i)=>X(i).toFixed(1)+","+Y(v).toFixed(1)).join(" ")}"
+    fill="none" stroke="${sr.color}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`);
+  // 最新値ラベル: 全系列に出す。近接して重なる系列は点の下へ逃がす
+  const ends = series.map((sr, si) => {
+    const i = sr.values.length - 1;
+    return {si, color: sr.color, x: X(i), y: Y(sr.values[i]), v: sr.values[i]};
+  }).sort((a, b) => a.y - b.y);
+  const labelY = {};
+  ends.forEach((e, idx) => {
+    let ly = Math.max(13, e.y - 12);
+    if(idx > 0 && Math.abs(ly - labelY[ends[idx-1].si]) < 14) ly = Math.min(132, e.y + 16);
+    labelY[e.si] = ly;
+  });
+  series.forEach((sr, si) => {
+    const i = sr.values.length - 1;
+    s += `<circle cx="${X(i).toFixed(1)}" cy="${Y(sr.values[i]).toFixed(1)}" r="4" fill="${sr.color}"/>`;
+    s += `<text x="${X(i).toFixed(1)}" y="${labelY[si].toFixed(1)}" text-anchor="middle"
+      font-size="11" font-weight="700" fill="${sr.color}" font-family="IBM Plex Sans JP">${fmtFn ? fmtFn(sr.values[i]) : sr.values[i]}</text>`;
+  });
+  labels.forEach((lb, i) => s += `<text x="${X(i).toFixed(1)}" y="138" text-anchor="middle" font-size="10"
+    fill="var(--sub)" font-family="IBM Plex Sans JP">${esc(lb)}</text>`);
+  return s + `</svg>`;
+}
+function legend(items){
+  return `<div style="display:flex;gap:14px;font-size:12px;color:var(--sub)">` + items.map(([c, l]) =>
+    `<span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:3px;border-radius:2px;background:${c}"></span>${esc(l)}</span>`).join("") + `</div>`;
+}
+function downloadCSV(name, headers, rows){
+  const csv = "﻿" + [headers, ...rows].map(r =>
+    r.map(c => `"${String(c ?? "").replace(/"/g, '""')}"`).join(",")).join("\r\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv], {type: "text/csv"}));
+  a.download = name; a.click();
+}
+
+/* ═══ 対象月（全ページ共通の状態・URLに残す） ═══ */
+let MONTH = "";           // "" = 最新の月
+function monthQS(extra){  // APIに付ける ?month=
+  const p = [];
+  if(MONTH) p.push("month=" + encodeURIComponent(MONTH));
+  if(extra) p.push(extra);
+  return p.length ? "?" + p.join("&") : "";
+}
+const monthLabel = m => m ? `${+m.slice(0,4)}年${+m.slice(5,7)}月` : "";
+function monthSelect(months, current){
+  if(!months || !months.length) return "";
+  const opts = months.map(m =>
+    `<option value="${m}" ${m === current ? "selected" : ""}>${monthLabel(m)}</option>`).join("");
+  return `<label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--sub)">対象月
+    <select class="sel" id="month-sel">${opts}</select></label>`;
+}
+function bindMonthSelect(){
+  const el = $("#month-sel");
+  if(el) el.addEventListener("change", e => { MONTH = e.target.value; route(); });
+}
+
+/* ═══ ルーティング ═══ */
+const routes = {home: pgHome, creators: pgCreators, creator: pgCreator, push: pgPush,
+                results: pgResults, ops: pgOps, collab: pgCollab, data: pgData};
+async function route(){
+  const hash = location.hash.replace(/^#/, "") || "home";
+  const [page, arg] = hash.split("=");
+  document.querySelectorAll("aside.side a.item").forEach(a =>
+    a.classList.toggle("on", a.getAttribute("href") === "#" + (page === "creator" ? "creators" : page)));
+  const fn = routes[page] || pgHome;
+  const main = $("#main");
+  main.innerHTML = '<div class="loading">読み込み中…</div>';
+  try{ await fn(main, decodeURIComponent(arg || "")); }
+  catch(e){ main.innerHTML = `<div class="errbox">読み込みに失敗しました:\n${esc(e.message || e)}</div>`; }
+}
+window.addEventListener("hashchange", route);
+
+/* ナビの赤バッジ（要人間対応の件数） */
+async function updateNavBadge(d){
+  try{
+    d = d || await getJSON("/api/admin/dashboard/data");
+    const n = d.alerts ? (d.alerts.human || []).length : 0;
+    const b = $("#nav-badge");
+    b.style.display = n ? "" : "none";
+    b.textContent = n;
+  }catch(e){ /* 無視 */ }
+}
+
+/* ═══ ホーム ═══ */
+const ALERT_META = [
+  {key:"human",  cls:"red",    label:"要人間対応",        desc:"ai-boで解決しない状況。担当者の直接連絡を推奨。"},
+  {key:"watch",  cls:"orange", label:"離脱リスク・減速",   desc:"配信頻度が低下。ai-boが声かけ対応中。"},
+  {key:"near",   cls:"green",  label:"あと一歩",          desc:"条件達成まで残りわずか。後押しのチャンス。"},
+  {key:"goal",   cls:"purple", label:"前月割れが続いている", desc:"月単位で配信が減り続けています。離れる前の声かけを推奨。"},
+];
+let HOME = null, homeQuery = "", homePage = 0;
+async function pgHome(main){
+  const [d, res, cr] = await Promise.all([
+    getJSON("/api/admin/dashboard/data" + monthQS()),
+    getJSON("/api/admin/dashboard/results"),
+    getJSON("/api/admin/dashboard/creators" + monthQS()),
+  ]);
+  updateNavBadge(d);
+  if(d.empty){ main.innerHTML = `<header class="ph"><div class="tt"><h1>ホーム</h1></div></header>
+    <div class="empty">${esc(d.message)}</div>`; return; }
+  HOME = {d, res, cr}; homeQuery = ""; homePage = 0;
+  const k = d.kpi || {};
+  const lag = d.freshness.lag_days;
+  let html = `<header class="ph">
+    <div class="tt"><h1>ホーム</h1>
+      <div class="ps">${d.is_latest
+        ? `最終データ更新：${esc(d.freshness.data_date)}（${lag === 0 ? "今日" : lag === 1 ? "昨日" : lag + "日前"}${lag >= 4 ? "・要アップロード" : ""}）／ 本日のai-bo送信 ${d.today.sent}件・返信 ${d.today.replied}件`
+        : `${monthLabel(d.month)}の状況（${esc(d.freshness.data_date)}時点）を表示しています`}</div></div>
+    ${monthSelect(d.months, d.month)}
+    <div class="searchbox"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="home-q" placeholder="ライバー検索（名前）"></div>
+  </header>`;
+  if(!d.is_latest) html += `<div class="card card-c bl-orange" style="font-size:12.5px">
+    過去月を表示中です。要対応リストはその月の最終データ日時点の状況です（「対応済み」の記録は現在に対して行われます）。</div>`;
+
+  const delta = (v, unit, invert) => {
+    if(v == null) return `<span class="dim">前月データなし</span>`;
+    const good = invert ? v <= 0 : v >= 0;
+    return `<span class="${good ? "up" : "down"}">${v >= 0 ? "+" : "−"}${Math.abs(v)}${unit}</span> <span class="dim">前月同日比</span>`;
+  };
+  html += `<section class="g4">
+    ${kpiTile(`<div class="kpi-lbl">今月の総ダイヤ</div>`,
+      `<div class="kpi-num">${fmt(k.month_dia)}</div>`,
+      `<div class="kpi-sub">${delta(k.dia_delta_pct, "%")}</div>`)}
+    ${kpiTile(`<div class="kpi-lbl">稼働ライバー数</div>`,
+      `<div class="kpi-num">${k.active}<small> / ${k.total}名</small></div>`,
+      `<div class="kpi-sub">${delta(k.active_delta, "名")}</div>`)}
+    ${kpiTile(`<div class="kpi-lbl">LINE連携者</div>`,
+      `<div class="kpi-num">${k.linked}<small> 名</small></div>`,
+      `<div class="kpi-sub"><span class="dim">連携率 ${k.total ? Math.round(k.linked / k.total * 100) : 0}%</span></div>`)}
+    ${k.goal_pct != null ? kpiTile(
+      `<div style="display:flex;justify-content:space-between;align-items:baseline"><div class="kpi-lbl">先月ライン到達率</div>
+        <div style="font-size:12px;color:var(--sub);font-variant-numeric:tabular-nums">先月 ${compact(k.goal_total)}</div></div>`,
+      `<div class="kpi-num">${k.goal_pct}<small>%</small></div>`,
+      `<div class="track" style="margin-top:10px"><span style="width:${Math.min(100, k.goal_pct)}%;background:linear-gradient(90deg,var(--accent),#2fb3a8)"></span></div>`)
+      : kpiTile(`<div class="kpi-lbl">先月ライン到達率</div>`, `<div class="kpi-num">—</div>`,
+      `<div class="kpi-sub"><span class="dim">先月の実績データ未取込</span></div>`)}
+  </section>
+  <div class="note" style="margin-top:-8px">※「先月ライン」＝Excelの目標欄の値で、中身は<b>その人の先月の実績</b>です（実データで確認済み）。
+  到達しても報酬は変わりませんが、「先月を超える」という分かりやすい目安として表示しています。</div>`;
+
+  // アラートサマリー4枚
+  html += `<section class="g4">` + ALERT_META.map(m => {
+    const n = (d.alerts[m.key] || []).length;
+    return `<div class="card card-c bl-${m.cls}" style="cursor:pointer" onclick="document.getElementById('al-${m.key}').scrollIntoView({behavior:'smooth'})">
+      <div style="display:flex;align-items:center;gap:8px;font-weight:600;font-size:13px">${m.label}
+        <span class="pill ${m.cls}">${n}件</span></div>
+      <div class="note" style="margin-top:6px">${m.desc}</div></div>`;
+  }).join("") + `</section>`;
+
+  // チャート2列
+  const full = res.empty ? [] : res.months.filter(m => !m.partial);
+  const last6 = full.slice(-6);
+  html += `<section class="g2">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div class="sec-h">月別 総ダイヤ</div><div style="font-size:12px;color:var(--sub)">直近${last6.length}ヶ月・単位：M</div></div>
+      ${last6.length ? divBars(last6.map(m => ({label: +m.month.slice(5) + "月", value: m.total_dia,
+        display: (m.total_dia/1000000).toFixed(2)})), "var(--accent)") : '<div class="empty" style="margin-top:14px">データがありません</div>'}
+    </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div class="sec-h">月別 稼働率</div>${legend([["var(--accent)","稼働率"],[C2,"有効配信者率"]])}</div>
+      ${last6.length ? lineSVG(last6.map(m => +m.month.slice(5) + "月"),
+        [{color:"var(--accent)", values: last6.map(m => m.active_rate)},
+         {color:C2, values: last6.map(m => Math.round(m.valid1 / m.registered * 100))}],
+        v => v + "%") : '<div class="empty" style="margin-top:14px">データがありません</div>'}
+    </div>
+  </section>`;
+
+  // 対応リスト（詳細）
+  for(const m of ALERT_META){
+    const items = d.alerts[m.key] || [];
+    if(!items.length) continue;
+    html += `<section class="card nopad bl-${m.cls}" id="al-${m.key}">
+      <div class="tbl-head"><div class="sec-h" style="margin-right:auto">${m.label}</div>
+        <span class="pill ${m.cls}">${items.length}件</span></div>
+      <div style="padding:10px 20px 14px;display:flex;flex-direction:column;gap:10px">`;
+    for(const a of items){
+      html += `<div style="border-bottom:1px solid var(--border);padding-bottom:10px">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <a onclick="location.hash='creator='+encodeURIComponent('${esc(a.username)}')" style="font-weight:600">${esc(a.username)}</a>
+          <span style="font-size:12.5px;font-weight:500">${esc(a.title)}</span>
+          ${a.linked ? "" : '<span class="pill gray">LINE未連携</span>'}</div>
+        <div class="note" style="margin-top:3px">${esc(a.reason)}${a.aibo_note ? "　" + esc(a.aibo_note) : ""}</div>
+        <div style="display:flex;gap:6px;margin-top:7px">
+          <button class="btn2 xs" onclick="act('${esc(a.creator_id)}','${esc(a.kind)}','done')">対応済み</button>
+          <button class="btn2 xs" onclick="act('${esc(a.creator_id)}','${esc(a.kind)}','snooze7')">7日スヌーズ</button>
+          <button class="btn2 xs" onclick="act('${esc(a.creator_id)}','${esc(a.kind)}','hide')">今後表示しない</button>
+        </div></div>`;
+    }
+    html += `</div></section>`;
+  }
+  if(d.hidden_count) html += `<div class="note">非表示中のアラートが ${d.hidden_count} 件あります（対応済み・スヌーズ・非表示）。</div>`;
+
+  // ライバー一覧
+  html += `<section class="card nopad" id="home-table"></section>`;
+  main.innerHTML = html;
+  renderHomeTable();
+  bindMonthSelect();
+  $("#home-q").addEventListener("input", e => { homeQuery = e.target.value.toLowerCase(); homePage = 0; renderHomeTable(); });
+}
+let HSORT = {key:"dia", dir:-1};
+function hSort(k){ HSORT = {key:k, dir: HSORT.key === k ? -HSORT.dir : -1}; renderHomeTable(); }
+function creatorRowsSorted(rows, sort){
+  const val = r => sort.key === "dia" ? r.month.dia : sort.key === "days" ? r.month.days
+    : sort.key === "hours" ? r.month.hours
+    : sort.key === "goal" ? (r.goal && r.goal.goal_valid_days ? r.goal.goal_valid_days.pct : -1)
+    : r.month.dia;
+  return [...rows].sort((a, b) => (val(a) - val(b)) * sort.dir);
+}
+function renderHomeTable(){
+  if(!HOME) return;
+  const all = HOME.cr.empty ? [] : HOME.cr.rows.filter(r => !homeQuery || r.username.toLowerCase().includes(homeQuery));
+  const rows = creatorRowsSorted(all, HSORT);
+  const SIZE = 12, pages = Math.max(1, Math.ceil(rows.length / SIZE));
+  homePage = Math.min(homePage, pages - 1);
+  const view = rows.slice(homePage * SIZE, homePage * SIZE + SIZE);
+  const arr = k => HSORT.key === k ? (HSORT.dir === -1 ? " ↓" : " ↑") : "";
+  let h = `<div class="tbl-head"><div class="sec-h" style="margin-right:auto">ライバー一覧</div>
+    <div style="font-size:12px;color:var(--sub)">見出しクリックで並べ替え</div>
+    <button class="btn2 sm" onclick="homeCSV()">CSV出力</button></div>
+  <div class="tblwrap"><table class="dt" style="min-width:980px"><thead><tr>
+    <th>ライバー</th>
+    <th class="num sortable" onclick="hSort('dia')">ダイヤ${arr("dia")}</th>
+    <th class="num sortable" onclick="hSort('days')">有効LIVE日数${arr("days")}</th>
+    <th class="num sortable" onclick="hSort('hours')">配信時間${arr("hours")}</th>
+    <th class="ctr">ランク</th><th class="ctr">ai-bo</th><th class="ctr">ランクアップ該当</th>
+    <th style="width:130px">アクティブ度</th><th>担当</th><th>状態</th></tr></thead><tbody>`;
+  for(const r of view){
+    const actPct = Math.min(100, Math.round((r.month.days / 22) * 100));
+    h += `<tr>
+      <td><a onclick="location.hash='creator='+encodeURIComponent('${esc(r.username)}')" style="font-weight:500">${esc(r.username)}</a></td>
+      <td class="num num6">${fmt(r.month.dia)}</td>
+      <td class="num">${r.month.days}日</td>
+      <td class="num">${r.month.hours}h</td>
+      <td class="ctr"><span style="font-weight:700;font-size:12px">Lv${r.rank.current_rank}</span></td>
+      <td class="ctr" style="font-size:12px;font-weight:600;color:var(--accent)">${esc(r.aibo_rank.name)}</td>
+      <td class="ctr" style="font-size:12px;font-weight:600;color:${r.rank.qualified ? "var(--green)" : "var(--sub)"}">${r.rank.qualified ? "◎" : "−"}</td>
+      <td><div style="display:flex;align-items:center;gap:8px">
+        <div class="track mini" style="flex:1"><span style="width:${actPct}%;background:${actPct >= 60 ? "var(--green)" : actPct >= 30 ? "var(--orange)" : "var(--sub)"}"></span></div>
+        <span style="font-size:11px;color:var(--sub);width:26px;text-align:right;font-variant-numeric:tabular-nums">${actPct}</span></div></td>
+      <td>${esc(r.manager ? r.manager.split("@")[0] : "—")}</td>
+      <td>${stBadge(stKey(r))}</td></tr>`;
+  }
+  if(!view.length) h += `<tr><td colspan="10" style="color:var(--sub)">該当するライバーがいません。</td></tr>`;
+  h += `</tbody></table></div>
+  <div class="tbl-foot"><span>${rows.length ? homePage*SIZE+1 : 0}–${Math.min(rows.length, (homePage+1)*SIZE)} / ${rows.length}名</span>
+    <div style="display:flex;gap:6px">
+      <button class="btn2 xs" ${homePage === 0 ? "disabled" : ""} onclick="homePage--;renderHomeTable()">前へ</button>
+      <button class="btn2 xs" ${homePage >= pages-1 ? "disabled" : ""} onclick="homePage++;renderHomeTable()">次へ</button>
+    </div></div>`;
+  $("#home-table").innerHTML = h;
+}
+function homeCSV(){
+  if(!HOME || HOME.cr.empty) return;
+  downloadCSV("ライバー一覧.csv",
+    ["名前","ダイヤ","有効LIVE日数","配信時間h","ランク","ai-boランク","ランクアップ該当","担当","状態"],
+    HOME.cr.rows.map(r => [r.username, r.month.dia, r.month.days, r.month.hours,
+      "Lv" + r.rank.current_rank, r.aibo_rank.name, r.rank.qualified ? "該当" : "-",
+      r.manager || "", (ST[stKey(r)] || {}).label || r.bucket]));
+  toast("CSVを出力しました");
+}
+async function act(creatorId, kind, action){
+  try{
+    const res = await fetch("/api/admin/dashboard/action", {method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({creator_id: creatorId, alert_kind: kind, action})});
+    if(!res.ok) throw new Error("HTTP " + res.status);
+    toast(action === "done" ? "対応済みにしました（7日間非表示）"
+      : action === "snooze7" ? "7日間スヌーズしました" : "今後表示しません");
+    route();
+  }catch(e){ toast("記録に失敗しました: " + e); }
+}
+
+/* ═══ 成果・推移 ═══ */
+let RESRANGE = 0;  // 0=全期間 / 6・12=直近Nヶ月
+const usd = n => n == null ? "—" : "$" + Number(n).toLocaleString("ja-JP", {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+/* 事務所報酬の見込み（3インセンティブの内訳） */
+function rewardSection(rw){
+  if(rw.empty) return "";
+  const rv = rw.revenue, pr = rw.pro_rate;
+  const bandPill = pr.band === "High" ? "green" : pr.band === "Low" ? "red" : pr.band === "Mid" ? "accent" : "gray";
+  let h = `<section class="card"><div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">
+      <div class="sec-h">${monthLabel(rw.month)}の事務所報酬（見込み）</div>
+      <span class="note">ダイヤ × $0.01 × 報酬率。3つのインセンティブは同じダイヤに重ねて掛かります</span></div>
+    <div style="display:grid;grid-template-columns:minmax(220px,1fr) 2fr;gap:20px;margin-top:14px;align-items:start" class="rw-grid">
+      <div>
+        <div class="kpi-lbl">合計（見込み）</div>
+        <div class="kpi-num" style="font-size:38px">${usd(rw.total_usd)}</div>
+        <div class="note">事務所 総ダイヤ ${fmt(rw.total_dia)}</div>
+      </div>
+      <div>`;
+  const lines = [
+    ["ランクアップ／維持", rw.rank_usd, "月間7日・15h＋前月ランクとの比較で決定"],
+    ["アクティブ度", rw.activity_usd, "日数と時間の両方を満たす最高Lv（当月100ダイヤ以上が前提）"],
+  ];
+  for(const [label, v, note] of lines){
+    const pct = rw.total_usd ? Math.round(v / rw.total_usd * 100) : 0;
+    h += `<div style="margin-bottom:10px"><div class="bar-row"><span class="n">${label}</span>
+      <span class="v">${usd(v)}</span></div>
+      <div class="track"><span style="width:${pct}%;background:var(--accent)"></span></div>
+      <div class="note">${note}</div></div>`;
+  }
+  if(rv){
+    const pct = rw.total_usd ? Math.round(rv.usd / rw.total_usd * 100) : 0;
+    h += `<div style="margin-bottom:10px"><div class="bar-row">
+      <span class="n">売上増加　<span class="pill accent">${esc(rv.tier_name || "未到達")}</span></span>
+      <span class="v">${usd(rv.usd)}</span></div>
+      <div class="track"><span style="width:${pct}%;background:${C2}"></span></div>
+      <div class="note">報酬率 ${rv.base_rate}%${rv.penalty ? ` − ${rv.penalty}%（プロ昇格率Low）= <b>${rv.rate}%</b>` : ""}
+        ${rv.to_next != null ? `／ 次の${esc(rv.next_tier_name)}まで あと ${fmt(rv.to_next)} ダイヤ` : "／ 最上位Tierに到達"}</div></div>`;
+  } else {
+    h += `<div class="empty" style="margin-bottom:10px">売上増加インセンティブは、この月の必要ダイヤが未入力のため計算できません。
+      <a onclick="location.hash='data'">データ・設定 → 売上増加タブ</a>で登録してください。</div>`;
+  }
+  h += `<div class="note">プロ昇格率 <b>${pr.pct == null ? "—" : pr.pct + "%"}</b>
+    <span class="pill ${bandPill}">${esc(pr.band)}</span>
+    （3ヶ月以上所属かつアクティブ度Lv1達成の${pr.denom}名中、20万ダイヤ到達が${pr.num}名）
+    ${pr.band === "Low" ? "／ Lowのため売上増加の報酬率が1%下がっています" : ""}</div>
+    </div></div>`;
+  h += `<details class="tbl" style="margin-top:12px"><summary>報酬が立つクリエイター ${rw.creator_count}名の内訳</summary>
+    <div class="tblwrap" style="margin-top:8px"><table class="dt">
+    <thead><tr><th>名前</th><th class="num">ダイヤ</th><th class="num">有効日</th><th class="num">時間</th>
+      <th class="num">ランク率</th><th>判定</th><th class="num">アクティブ度</th><th class="num">報酬</th></tr></thead><tbody>
+    ${rw.creators.map(r => `<tr><td style="font-weight:500">${esc(r.username)}</td>
+      <td class="num">${fmt(r.dia)}</td><td class="num">${r.days}日</td><td class="num">${r.hours}h</td>
+      <td class="num num6">${r.rank_rate}%</td><td style="font-size:12px;color:var(--sub)">${esc(r.rank_reason)}</td>
+      <td class="num">${r.activity_level ? "Lv" + r.activity_level + "（" + r.activity_rate + "%）" : "—"}</td>
+      <td class="num num6">${usd(r.usd)}</td></tr>`).join("")
+      || `<tr><td colspan="8" style="color:var(--sub)">報酬が立つクリエイターがいません。</td></tr>`}
+    </tbody></table></div>
+    <div class="note" style="margin-top:6px">※売上増加は事務所全体にかかるため、この表には含めていません。</div></details>
+  </section>`;
+  return h;
+}
+async function pgResults(main){
+  const [d, rw] = await Promise.all([
+    getJSON("/api/admin/dashboard/results"),
+    getJSON("/api/admin/dashboard/rewards" + monthQS()),
+  ]);
+  updateNavBadge();
+  if(d.empty){ main.innerHTML = `<header class="ph"><div class="tt"><h1>成果・推移</h1></div></header><div class="empty">データがありません。</div>`; return; }
+  let full = d.months.filter(m => !m.partial);
+  if(RESRANGE) full = full.slice(-RESRANGE);
+  const latest = full[full.length - 1] || {};
+  const rv = d.revival || {};
+  let html = `<header class="ph"><div class="tt"><h1>成果・推移</h1>
+    <div class="ps">ai-bo導入の費用対効果を月次で確認（データ不完全な月はグラフから除外）</div></div>
+    ${rw.empty ? "" : monthSelect(rw.months, rw.month)}
+    <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--sub)">推移グラフ
+      <select class="sel" id="res-range">
+        <option value="0" ${RESRANGE === 0 ? "selected" : ""}>全期間</option>
+        <option value="12" ${RESRANGE === 12 ? "selected" : ""}>直近12ヶ月</option>
+        <option value="6" ${RESRANGE === 6 ? "selected" : ""}>直近6ヶ月</option>
+      </select></label></header>
+  ${rewardSection(rw)}
+  <section class="g4">
+    ${kpiTile(`<div class="kpi-lbl">登録クリエイター</div>`, `<div class="kpi-num">${fmt(d.latest_registered)}<small> 名</small></div>`,
+      `<div class="kpi-sub"><span class="dim">直近の完全データ月</span></div>`)}
+    ${kpiTile(`<div class="kpi-lbl">直近月の稼働率</div>`, `<div class="kpi-num">${latest.active_rate ?? "—"}<small>%</small></div>`,
+      `<div class="kpi-sub"><span class="dim">${latest.month || ""}・${latest.active ?? "—"}名が配信</span></div>`)}
+    ${kpiTile(`<div class="kpi-lbl">LINE連携者</div>`, `<div class="kpi-num">${d.linked}<small> 名</small></div>`,
+      `<div class="kpi-sub"><span class="dim">連携率 ${latest.registered ? Math.round(d.linked / latest.registered * 100) : "—"}%</span></div>`)}
+    ${(() => {
+      const iv = d.interventions || {month: d.interventions_done, prev_month: 0, total: d.interventions_done};
+      const diff = iv.month - iv.prev_month;
+      // 介入が減る＝ai-boが自力で解決できている＝改善なので、減少を緑で出す
+      const sub = iv.prev_month
+        ? `<span class="${diff <= 0 ? "up" : "down"}">${diff <= 0 ? "−" : "+"}${Math.abs(diff)}件</span> <span class="dim">前月比</span>`
+        : `<span class="dim">累計 ${iv.total}件</span>`;
+      return kpiTile(`<div class="kpi-lbl">担当者の介入（今月）</div>`,
+        `<div class="kpi-num">${iv.month}<small> 件</small></div>`, `<div class="kpi-sub">${sub}</div>`);
+    })()}
+  </section>
+  <div class="note" style="margin-top:-8px">※「担当者の介入」＝アラートで「対応済み」を押した回数。ai-boが自力で解決できるほど減るため、減少は改善として緑で表示します。</div>
+  <section class="g2">
+    <div class="card"><div style="display:flex;justify-content:space-between;align-items:center">
+      <div class="sec-h">月別 稼働率</div><div style="font-size:12px;color:var(--sub)">単位：%</div></div>
+      ${full.length ? divBars(full.map(m => ({label: +m.month.slice(5) + "月", value: m.active_rate, display: m.active_rate + "%"})), C1) : '<div class="empty" style="margin-top:14px">データなし</div>'}</div>
+    <div class="card"><div style="display:flex;justify-content:space-between;align-items:center">
+      <div class="sec-h">月別 総ダイヤ</div><div style="font-size:12px;color:var(--sub)">単位：M</div></div>
+      ${full.length ? divBars(full.map(m => ({label: +m.month.slice(5) + "月", value: m.total_dia, display: (m.total_dia/1000000).toFixed(2)})), C2) : '<div class="empty" style="margin-top:14px">データなし</div>'}</div>
+  </section>
+  <section class="g2">
+    <div class="card"><div style="display:flex;justify-content:space-between;align-items:center">
+      <div class="sec-h">上位10名のダイヤ占有率</div>
+      <div style="font-size:12px;color:var(--sub)">低いほど太客頼みから脱却</div></div>`;
+  const t10 = full.filter(m => m.top10_share != null);
+  html += t10.length ? lineSVG(t10.map(m => +m.month.slice(5) + "月"),
+    [{color:C3, values: t10.map(m => m.top10_share)}], v => v + "%")
+    : '<div class="empty" style="margin-top:14px">データなし</div>';
+  html += `</div>
+    <div class="card bl-purple">
+      <div class="sec-h">復帰率（ai-bo声かけ後30日以内の配信再開）</div>`;
+  if(rv.rate != null && rv.matured >= 5){
+    html += `<div style="background:var(--purple-soft);border-radius:10px;padding:14px 16px;margin-top:12px">
+      <div style="font-size:34px;font-weight:700;color:var(--purple);font-variant-numeric:tabular-nums">${rv.rate}%</div>
+      <div style="font-size:12px;color:var(--sub)">声かけ${rv.episodes}件中 ${rv.returned}名が再開（導入前の自然復帰率 ${rv.baseline}%）</div></div>
+      <div class="bar-row" style="margin-top:12px"><span class="n">判定可能件数</span><span class="v">${rv.matured}件</span></div>
+      <div class="track"><span style="width:100%;background:var(--purple)"></span></div>`;
+  } else {
+    html += `<div style="background:var(--purple-soft);border-radius:10px;padding:14px 16px;margin-top:12px">
+      <div style="font-size:22px;font-weight:700;color:var(--purple)">計測中</div>
+      <div style="font-size:12px;color:var(--sub)">声かけ${rv.episodes || 0}件を記録済み。判定できるのは声かけから30日後（現在 判定可能${rv.matured || 0}件・5件から表示）</div></div>
+      <div class="bar-row" style="margin-top:12px"><span class="n">表示までの充足</span><span class="v">${rv.matured || 0} / 5件</span></div>
+      <div class="track"><span style="width:${Math.min(100, (rv.matured || 0) / 5 * 100)}%;background:var(--purple)"></span></div>`;
+  }
+  html += `</div></section>
+  <section class="card nopad"><div class="tbl-head"><div class="sec-h" style="margin-right:auto">月次サマリー</div>
+    <div style="font-size:12px;color:var(--sub)">※印はデータ不完全な参考値</div></div>
+  <div class="tblwrap"><table class="dt"><thead><tr><th>月</th><th class="num">登録者</th><th class="num">配信者数</th>
+    <th class="num">稼働率</th><th class="num">総ダイヤ</th><th class="num">上位10名占有率</th><th class="num">前月比</th></tr></thead><tbody>`;
+  let prev = null;
+  for(const m of d.months){
+    let cmp = "—";
+    if(prev && prev.total_dia){
+      const p = Math.round((m.total_dia - prev.total_dia) / prev.total_dia * 100);
+      cmp = `<span class="${p >= 0 ? "up" : "down"}">${p >= 0 ? "+" : "−"}${Math.abs(p)}%</span>`;
+    }
+    html += `<tr><td>${esc(m.month)}${m.partial ? ' <span style="color:var(--sub)">※</span>' : ""}</td>
+      <td class="num">${m.registered}</td><td class="num">${m.active}</td>
+      <td class="num num6">${m.active_rate}%</td><td class="num num6">${fmt(m.total_dia)}</td>
+      <td class="num">${m.top10_share == null ? "—" : m.top10_share + "%"}</td><td class="num">${cmp}</td></tr>`;
+    prev = m;
+  }
+  html += `</tbody></table></div></section>`;
+  main.innerHTML = html;
+  bindMonthSelect();
+  $("#res-range").addEventListener("change", e => { RESRANGE = +e.target.value; route(); });
+  if(window.matchMedia("(max-width:820px)").matches){
+    const g = main.querySelector(".rw-grid");
+    if(g) g.style.gridTemplateColumns = "1fr";
+  }
+}
+
+/* ═══ クリエイター ═══ */
+let CR = null, CRQ = "", CRB = "", CRM = "", CRP = 0, CRSORT = {key:"dia", dir:-1};
+let CH = {staff:"全員", sel:null, cache:{}};
+async function pgCreators(main){
+  CR = await getJSON("/api/admin/dashboard/creators" + monthQS());
+  updateNavBadge();
+  if(CR.empty){ main.innerHTML = `<header class="ph"><div class="tt"><h1>クリエイター</h1></div></header><div class="empty">データがありません。</div>`; return; }
+  CRQ = ""; CRP = 0;
+  const managers = [...new Set(CR.rows.map(r => r.manager).filter(Boolean))].sort();
+  let html = `<header class="ph"><div class="tt"><h1>クリエイター</h1>
+    <div class="ps">${monthLabel(CR.month)}の実績・先月ライン・インセンティブ（${CR.rows.length}名）</div></div>
+    ${monthSelect(CR.months, CR.month)}
+    <button class="btn2" onclick="crCSV()">CSV出力</button></header>
+  <section class="card nopad">
+    <div class="tbl-head" style="gap:10px;flex-wrap:wrap">
+      <div class="searchbox" style="width:220px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="cr-q" placeholder="名前で検索"></div>
+      <select id="cr-b" class="sel"><option value="">全ての状態</option>
+        ${Object.entries(ST).map(([k, v]) => `<option value="${k}">${v.label}</option>`).join("")}</select>
+      <select id="cr-m" class="sel"><option value="">全ての担当</option>
+        ${managers.map(m => `<option value="${esc(m)}">${esc(m.split("@")[0])}</option>`).join("")}</select>
+      <div style="margin-left:auto;font-size:12px;color:var(--sub)">見出しクリックで並べ替え</div>
+    </div><div id="cr-table"></div></section>
+  <section style="display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:14px" id="cr-lower">
+    <div class="card nopad" id="cr-chat"></div>
+    <div class="card" id="cr-staff"></div>
+  </section>`;
+  main.innerHTML = html;
+  if(window.matchMedia("(max-width:900px)").matches) $("#cr-lower").style.gridTemplateColumns = "1fr";
+  renderCrTable();
+  renderStaffGoals();
+  initChat();
+  bindMonthSelect();
+  $("#cr-q").addEventListener("input", e => { CRQ = e.target.value.toLowerCase(); CRP = 0; renderCrTable(); });
+  $("#cr-b").addEventListener("change", e => { CRB = e.target.value; CRP = 0; renderCrTable(); });
+  $("#cr-m").addEventListener("change", e => { CRM = e.target.value; CRP = 0; renderCrTable(); });
+}
+function crSort(k){ CRSORT = {key:k, dir: CRSORT.key === k ? -CRSORT.dir : -1}; renderCrTable(); }
+function renderCrTable(){
+  if(!CR || CR.empty) return;
+  let rows = CR.rows.filter(r => (!CRQ || r.username.toLowerCase().includes(CRQ))
+    && (!CRB || stKey(r) === CRB) && (!CRM || r.manager === CRM));
+  rows = creatorRowsSorted(rows, CRSORT);
+  const SIZE = 15, pages = Math.max(1, Math.ceil(rows.length / SIZE));
+  CRP = Math.min(CRP, pages - 1);
+  const view = rows.slice(CRP * SIZE, CRP * SIZE + SIZE);
+  const arr = k => CRSORT.key === k ? (CRSORT.dir === -1 ? " ↓" : " ↑") : "";
+  let h = `<div class="tblwrap"><table class="dt" style="min-width:1080px"><thead><tr>
+    <th>名前</th>
+    <th class="num sortable" onclick="crSort('dia')">ダイヤ${arr("dia")}</th>
+    <th class="num sortable" onclick="crSort('days')">有効日${arr("days")}</th>
+    <th class="num sortable" onclick="crSort('hours')">時間${arr("hours")}</th>
+    <th class="sortable" style="width:150px" onclick="crSort('goal')">先月ライン${arr("goal")}</th>
+    <th class="ctr">ランク</th><th class="ctr">ai-bo</th><th class="ctr">ランクUP該当</th>
+    <th>担当</th><th>状態</th></tr></thead><tbody>`;
+  for(const r of view){
+    const g = r.goal && r.goal.goal_valid_days;
+    const goalCell = g ? `<div style="display:flex;align-items:center;gap:8px">
+        <div class="track mini" style="flex:1"><span style="width:${g.pct}%;background:${barColor(g.pct)}"></span></div>
+        <span style="font-size:11px;color:var(--sub);width:52px;text-align:right;font-variant-numeric:tabular-nums">${g.actual}/${g.goal}日</span></div>`
+      : `<span style="color:var(--sub);font-size:12px">—</span>`;
+    const rk = r.rank;
+    h += `<tr>
+      <td><a onclick="location.hash='creator='+encodeURIComponent('${esc(r.username)}')" style="font-weight:500">${esc(r.username)}</a></td>
+      <td class="num num6">${fmt(r.month.dia)}</td><td class="num">${r.month.days}日</td>
+      <td class="num">${r.month.hours}h</td><td>${goalCell}</td>
+      <td class="ctr"><span style="font-weight:700;font-size:12px">Lv${rk.current_rank}</span></td>
+      <td class="ctr" style="font-size:12px;font-weight:600;color:var(--accent)">${esc(r.aibo_rank.name)}</td>
+      <td class="ctr" style="font-size:12px;font-weight:600;color:${rk.qualified ? "var(--green)" : "var(--sub)"}">
+        ${rk.qualified ? "◎" : `あと${rk.lack_days}日/${rk.lack_hours}h`}</td>
+      <td>${esc(r.manager ? r.manager.split("@")[0] : "—")}</td>
+      <td>${stBadge(stKey(r))}</td></tr>`;
+  }
+  if(!view.length) h += `<tr><td colspan="10" style="color:var(--sub)">該当するクリエイターがいません。</td></tr>`;
+  h += `</tbody></table></div>
+  <div class="tbl-foot"><span>${rows.length ? CRP*SIZE+1 : 0}–${Math.min(rows.length, (CRP+1)*SIZE)} / ${rows.length}名</span>
+    <div style="display:flex;gap:6px">
+      <button class="btn2 xs" ${CRP === 0 ? "disabled" : ""} onclick="CRP--;renderCrTable()">前へ</button>
+      <button class="btn2 xs" ${CRP >= pages-1 ? "disabled" : ""} onclick="CRP++;renderCrTable()">次へ</button></div></div>`;
+  $("#cr-table").innerHTML = h;
+}
+function crCSV(){
+  if(!CR || CR.empty) return;
+  downloadCSV("クリエイター一覧.csv",
+    ["名前","ダイヤ","有効日","時間h","先月ライン到達率%","ランク","ai-boランク","ランクUP該当","担当","状態"],
+    CR.rows.map(r => [r.username, r.month.dia, r.month.days, r.month.hours,
+      r.goal && r.goal.goal_valid_days ? r.goal.goal_valid_days.pct : "",
+      "Lv" + r.rank.current_rank, r.aibo_rank.name, r.rank.qualified ? "該当" : "-",
+      r.manager || "", (ST[stKey(r)] || {}).label || r.bucket]));
+  toast("CSVを出力しました");
+}
+function renderStaffGoals(){
+  const box = $("#cr-staff"); if(!box) return;
+  const by = {};
+  for(const r of CR.rows){
+    if(!r.manager || !r.goal || !r.goal.goal_diamonds) continue;
+    const b = by[r.manager] = by[r.manager] || {goal: 0, actual: 0};
+    b.goal += r.goal.goal_diamonds.goal; b.actual += r.goal.goal_diamonds.actual;
+  }
+  const entries = Object.entries(by).sort((a, z) => z[1].actual - a[1].actual);
+  let h = `<div class="sec-h">担当別 先月ライン到達率</div>`;
+  if(!entries.length){
+    h += `<div class="empty" style="margin-top:12px">担当と先月実績のデータが揃うと表示されます（月初ファイルの取込で先月ライン、日次取込で担当が入ります）。</div>`;
+  } else {
+    h += entries.map(([m, v]) => {
+      const pct = Math.min(999, Math.round(v.actual / v.goal * 100));
+      return `<div style="margin-top:12px"><div class="bar-row"><span class="n">${esc(m.split("@")[0])}</span>
+        <span class="v">${pct}%（${compact(v.actual)} / ${compact(v.goal)}）</span></div>
+        <div class="track"><span style="width:${Math.min(100, pct)}%;background:${barColor(pct)}"></span></div></div>`;
+    }).join("");
+    h += `<div class="note" style="margin-top:12px">※担当ライバーの「先月のダイヤ合計」に対する今月の到達率。100%超え＝担当全体で前月比プラス。</div>`;
+  }
+  box.innerHTML = h;
+}
+function initChat(){
+  const linked = CR.rows.filter(r => r.linked).sort((a, z) => z.month.dia - a.month.dia);
+  CH = {staff:"全員", sel: linked.length ? linked[0].username : null, cache:{}};
+  renderChat();
+}
+function chatStaffs(){
+  const linked = CR.rows.filter(r => r.linked);
+  const set = [...new Set(linked.map(r => r.manager).filter(Boolean))].sort();
+  return ["全員", ...set];
+}
+async function renderChat(){
+  const box = $("#cr-chat"); if(!box) return;
+  const linked = CR.rows.filter(r => r.linked)
+    .filter(r => CH.staff === "全員" || r.manager === CH.staff)
+    .sort((a, z) => z.month.dia - a.month.dia);
+  if(CH.sel == null || !linked.some(r => r.username === CH.sel))
+    CH.sel = linked.length ? linked[0].username : null;
+  let h = `<div class="tbl-head" style="flex-wrap:wrap"><div class="sec-h" style="margin-right:auto">クリエイターチャット（ai-boの対話ログ）</div></div>
+  <div style="padding:12px 20px 0;display:flex;gap:8px;flex-wrap:wrap">`
+    + chatStaffs().map(s => `<button class="ptab ${CH.staff === s ? "on" : ""}"
+      onclick="CH.staff='${esc(s)}';CH.sel=null;renderChat()">${esc(s === "全員" ? "全員" : s.split("@")[0])}</button>`).join("")
+    + `</div>
+  <div style="padding:6px 20px 0;display:flex;gap:2px;overflow-x:auto;border-bottom:1px solid var(--border)">`
+    + linked.slice(0, 8).map(r => `<span class="ctab ${CH.sel === r.username ? "on" : ""}"
+      onclick="CH.sel='${esc(r.username)}';renderChat()"><span class="avatar">${esc(r.username[0].toUpperCase())}</span>${esc(r.username)}</span>`).join("")
+    + `</div><div style="padding:14px 20px 18px" id="chat-body"><div class="loading">読み込み中…</div></div>`;
+  box.innerHTML = h;
+  const body = $("#chat-body");
+  if(!CH.sel){ body.innerHTML = `<div class="empty">LINE連携済みのクリエイターがいません。</div>`; return; }
+  try{
+    let det = CH.cache[CH.sel];
+    if(!det){ det = await getJSON("/api/admin/dashboard/creator?u=" + encodeURIComponent(CH.sel)); CH.cache[CH.sel] = det; }
+    const chat = det.chat || [];
+    let ch = `<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <span class="avatar" style="width:28px;height:28px;font-size:13px">${esc(CH.sel[0].toUpperCase())}</span>
+      <div style="margin-right:auto"><div style="font-weight:600;font-size:13px">${esc(CH.sel)}</div></div>
+      <a onclick="location.hash='creator='+encodeURIComponent('${esc(CH.sel)}')" class="alink">個票を見る →</a></div>`;
+    if(!chat.length){ ch += `<div class="empty">まだ対話がありません。</div>`; }
+    else {
+      ch += `<div class="chatbox">` + chat.map(c => `
+        <div class="msg ${c.speaker === "user" ? "them" : "me"}">
+          <div class="bub">${esc(c.message)}</div><span class="ts">${esc(c.at)}</span></div>`).join("") + `</div>`;
+    }
+    ch += `<div class="note" style="margin-top:8px">緑＝ai-boの送信、白＝クリエイターの返信。返信はai-bo（AI）が自動で行っています。</div>`;
+    body.innerHTML = ch;
+    const cb = body.querySelector(".chatbox"); if(cb) cb.scrollTop = cb.scrollHeight;
+  }catch(e){ body.innerHTML = `<div class="errbox">${esc(e.message || e)}</div>`; }
+}
+
+/* ═══ 個票 ═══ */
+async function pgCreator(main, username){
+  const d = await getJSON("/api/admin/dashboard/creator?u=" + encodeURIComponent(username)
+    + (MONTH ? "&month=" + encodeURIComponent(MONTH) : ""));
+  updateNavBadge();
+  if(d.empty){ main.innerHTML = `<a class="alink" onclick="location.hash='creators'">← 一覧へ</a>
+    <div class="empty" style="margin-top:10px">${esc(d.message)}</div>`; return; }
+  const m = d.month, g = d.goal, rk = d.rank, ac = d.activity;
+  let html = `<header class="ph"><div class="tt">
+    <a class="alink" onclick="location.hash='creators'">← 一覧へ</a>
+    <h1 style="margin-top:4px">${esc(d.username)}</h1>
+    <div class="ps">${monthLabel(d.month_key)}の実績 ／ 所属${d.tenure}日 ／ ai-boランク <b style="color:var(--accent)">${esc(d.aibo_rank.name)}</b>（本人に見せる成長指標）
+      ／ 報酬タスク <b>Lv${rk.current_rank}</b>（本人非公開）${d.linked ? "" : " ／ LINE未連携"}</div></div>
+    ${monthSelect(d.months, d.month_key)}
+    <a href="${TT_URL}" target="_blank" rel="noopener"><button class="btn2">TikTok管理画面 ↗</button></a></header>`;
+  if(d.aibo_flow) html += `<div class="card card-c bl-orange" style="font-size:12.5px">
+    ai-boが引き戻しの声かけ#${d.aibo_flow.step}を${esc(d.aibo_flow.last_sent)}に送信済み・${d.aibo_flow.replied ? "返信あり" : "返信なし"}</div>`;
+  html += `<section class="g4">
+    ${kpiTile(`<div class="kpi-lbl">今月のダイヤ</div>`, `<div class="kpi-num">${fmt(m.dia)}</div>`,
+      `<div class="kpi-sub"><span class="dim">先月 ${d.prev_month ? fmt(d.prev_month.dia) : "—"}</span></div>`)}
+    ${kpiTile(`<div class="kpi-lbl">有効LIVE日数</div>`, `<div class="kpi-num">${m.days}<small> 日</small></div>`,
+      `<div class="kpi-sub"><span class="dim">先月 ${d.prev_month ? d.prev_month.days + "日" : "—"}</span></div>`)}
+    ${kpiTile(`<div class="kpi-lbl">配信時間</div>`, `<div class="kpi-num">${m.hours}<small> h</small></div>`,
+      `<div class="kpi-sub"><span class="dim">先月 ${d.prev_month ? d.prev_month.hours + "h" : "—"}</span></div>`)}
+    ${kpiTile(`<div class="kpi-lbl">ランクアップ該当条件</div>`,
+      `<div class="kpi-num" style="font-size:22px;color:${rk.qualified ? "var(--green)" : "var(--red)"}">${rk.qualified ? "充足 ◎" : "不足"}</div>`,
+      `<div class="kpi-sub"><span class="dim">${rk.qualified ? `月間${rk.req_days}日・${rk.req_hours}hをクリア` : `あと${rk.lack_days}日 / ${rk.lack_hours}h ← ここが打ち手`}</span></div>`)}
+  </section>`;
+
+  // 先月ライン（＝先月の実績）への到達
+  html += `<section class="card"><div class="sec-h">先月ラインへの到達${g ? "" : "（先月の実績データなし）"}</div>`;
+  if(g){
+    const meta = [["goal_valid_days","有効LIVE日数","日"],["goal_live_hours","配信時間","h"],["goal_diamonds","ダイヤ",""]];
+    for(const [k, label, unit] of meta){
+      const it = g[k]; if(!it) continue;
+      html += `<div style="margin-top:12px"><div class="bar-row"><span class="n">${label}</span>
+        <span class="v">${fmt(it.actual)}${unit} / 先月 ${fmt(it.goal)}${unit}（あと${fmt(it.remaining)}${unit}）</span></div>
+        <div class="track"><span style="width:${it.pct}%;background:${barColor(it.pct)}"></span></div></div>`;
+    }
+    html += `<div class="note" style="margin-top:10px">残り${g.remaining_days}日。「先月ライン」はこの人の先月の実績そのもので、
+      到達しても報酬は変わりません（報酬は下のインセンティブ条件で決まります）。月末の着地予測は表示しません。</div>`;
+  } else html += `<div class="empty" style="margin-top:10px">この月の先月ラインが未取込です（月初ファイルの取込で入ります）。</div>`;
+  html += `</section>`;
+
+  // インセンティブ
+  html += `<section class="card"><div class="sec-h">インセンティブ進捗（条件別の分解）</div>
+    <div style="font-size:13px;margin-top:10px;line-height:1.9">
+    <b>ランクアップ／維持</b>　該当条件（月間 有効${rk.req_days}日以上 かつ ${rk.req_hours}h以上）:
+    ${rk.qualified ? '<span class="up">✓ 充足</span>' : `<span class="down">✗ 不足</span>（あと${rk.lack_days}日 / ${rk.lack_hours}h）`}<br>
+    現在 Lv${rk.current_rank}${rk.next_rank ? ` → Lv${rk.next_rank}まで あと<span class="num6">${fmt(rk.to_next_dia)}</span>ダイヤ` : "（最高ランク）"}
+    ${rk.prev_rank != null ? `　／　前月Lv${rk.prev_rank}の維持ライン: ${rk.keep_gap_dia === 0 ? '<span class="up">✓ 充足</span>' : `あと${fmt(rk.keep_gap_dia)}ダイヤ`}` : ""}<br>
+    <b>アクティブ度</b>　現在 ${ac.level ? `Lv${ac.level}（報酬率${ac.rate}%）` : "Lv未達"}${
+      ac.next_level ? ` → Lv${ac.next_level}（${ac.next_rate}%）まで あと${ac.next_lack_days}日 / ${ac.next_lack_hours}h` : "（最高Lv）"}
+      ${ac.eligible ? "" : '　<span class="pill gray">前提: 当月100ダイヤ以上</span>'}</div>
+    <div class="note" style="margin-top:8px">この画面の数値・Lvはクリエイター本人には見せない運用です（本人にはai-boランクのみ）。</div></section>`;
+
+  // チャート
+  const monthly = d.monthly.slice(-6);
+  html += `<section class="g2">
+    <div class="card"><div style="display:flex;justify-content:space-between;align-items:center">
+      <div class="sec-h">月別 ダイヤ</div><div style="font-size:12px;color:var(--sub)">単位：K</div></div>
+      ${monthly.length ? divBars(monthly.map(x => ({label: +x.month.slice(5) + "月", value: x.dia,
+        display: Math.round(x.dia/1000).toLocaleString()})), "var(--accent)") : '<div class="empty" style="margin-top:14px">データなし</div>'}</div>
+    <div class="card"><div style="display:flex;justify-content:space-between;align-items:center">
+      <div class="sec-h">日別 配信時間（分・直近30日）</div>
+      ${legend([[C2, "配信分数"], ["var(--border)", "60分=有効ライン"]])}</div>`;
+  const daily = d.daily.slice(-30);
+  if(daily.length){
+    const labels = daily.map((x, i) => i === 0 || i === daily.length-1 || i === Math.floor(daily.length/2) ? x.date.slice(5) : "");
+    html += lineSVG(labels, [{color:C2, values: daily.map(x => x.minutes)}], v => v + "分");
+  } else html += `<div class="empty" style="margin-top:14px">直近の配信データがありません。</div>`;
+  html += `</div></section>`;
+
+  // ファネル
+  html += `<section class="card"><div class="sec-h">収益ファネル（直近90日の稼働日）</div>`;
+  if(d.funnel){
+    html += `<div class="note" style="margin:4px 0 8px">対象 ${d.funnel.days} 稼働日分</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px 24px">`;
+    for(const mt of d.funnel.metrics){
+      html += `<div style="display:flex;justify-content:space-between;font-size:13px;border-bottom:1px solid var(--border);padding:6px 0">
+        <span style="color:var(--sub)">${esc(mt.label)}</span>
+        <span class="num6">${mt.value == null ? "—" : (mt.format === "pct" ? mt.value + "%" : fmt(mt.value))}</span></div>`;
+    }
+    html += `</div><div class="note" style="margin-top:8px">事務所内の相対位置（パーセンタイル）は複数人のデータが貯まり次第表示します。</div>`;
+  } else html += `<div class="empty" style="margin-top:10px">ファネル指標のデータがまだありません。Excelの再アップロードで過去分も入ります。</div>`;
+  html += `</section>`;
+
+  // 対話
+  html += `<section class="card"><div class="sec-h">ai-boとの対話（直近30件）</div>`;
+  if(d.chat && d.chat.length){
+    html += `<div class="chatbox" style="margin-top:10px">` + d.chat.map(c => `
+      <div class="msg ${c.speaker === "user" ? "them" : "me"}">
+        <div class="bub">${esc(c.message)}</div><span class="ts">${esc(c.at)}</span></div>`).join("") + `</div>`;
+  } else html += `<div class="empty" style="margin-top:10px">${d.linked ? "まだ対話がありません。" : "LINE未連携のため対話はありません。"}</div>`;
+  html += `</section>`;
+  main.innerHTML = html;
+  bindMonthSelect();
+  const cb = main.querySelector(".chatbox"); if(cb) cb.scrollTop = cb.scrollHeight;
+}
+
+/* ═══ 声かけ配信 ═══ */
+function scenePill(scene){
+  const s = String(scene || "");
+  const cls = /ランク|祝/.test(s) ? "purple" : /引き戻し|放置|減速|停止/.test(s) ? "orange"
+    : /取り次ぎ|質問/.test(s) ? "accent" : "green";
+  return `<span class="pill ${cls}">${esc(s)}</span>`;
+}
+async function pgPush(main){
+  const d = await getJSON("/api/admin/dashboard/push");
+  updateNavBadge();
+  if(d.error_message){ main.innerHTML = `<header class="ph"><div class="tt"><h1>声かけ配信</h1></div></header>
+    <div class="empty">${esc(d.error_message)}</div>`; return; }
+  const m = d.meta;
+  let html = `<header class="ph"><div class="tt"><h1>声かけ配信</h1>
+    <div class="ps">AIが選定した対象に、文面を確認してから一斉に声かけする（対象月 ${esc(m.target_month)}）</div></div></header>
+  ${m.stale ? `<div class="card card-c bl-orange" style="font-size:12.5px">データが${m.freshness_days}日前と古めです。断定的な声かけ（締切直前の追い込み等）は控えめに。</div>` : ""}
+  <section class="card" style="display:flex;gap:24px;flex-wrap:wrap;font-size:13px">
+    <div><div class="kpi-lbl">最終データ日</div><div class="num6" style="font-size:15px">${esc(m.latest_data_date)}</div></div>
+    <div><div class="kpi-lbl">全体総ダイヤ</div><div class="num6" style="font-size:15px">${fmt(m.total_dia)}${m.sales_rate != null ? `（売上増加率 ${m.sales_rate}%）` : ""}</div></div>
+    <div><div class="kpi-lbl">計算母数</div><div class="num6" style="font-size:15px">${m.creators}人</div></div>
+    <div><div class="kpi-lbl">LINE連携済み</div><div class="num6" style="font-size:15px">${m.linked}人</div></div>
+  </section>
+  <section class="card nopad">
+    <div class="tbl-head"><span class="stepnum">1</span><div class="sec-h" style="margin-right:auto">介入対象（連携済み・スコア順）</div>
+      <div style="font-size:12px;color:var(--sub)">✓を付けた人に送れます</div></div>
+    <div class="tblwrap"><table class="dt" style="min-width:900px"><thead><tr>
+      <th style="width:36px"></th><th class="num">#</th><th>ハンドル</th><th class="num">スコア</th>
+      <th>内訳（期待リフト）</th><th class="num">反応性</th><th>場面</th><th class="num">当月実績</th></tr></thead><tbody>`;
+  html += d.intervention.map((s, i) => `<tr>
+      <td><input type="checkbox" class="push-ck" value="${esc(s.handle)}" ${i < 5 ? "checked" : ""}></td>
+      <td class="num" style="color:var(--sub)">${i+1}</td>
+      <td style="font-weight:600">${esc(s.handle)}</td>
+      <td class="num num6">$${s.score_usd}</td>
+      <td style="font-size:12px;color:var(--sub)">ランク$${s.rankup} / アクティブ$${s.active} / 売上$${s.sales}</td>
+      <td class="num">${s.responsiveness}</td>
+      <td>${scenePill(s.scene)}</td>
+      <td class="num" style="font-size:12px;color:var(--sub)">${fmt(s.dia)} / ${s.days}日</td></tr>`).join("")
+    || `<tr><td colspan="8" style="color:var(--sub)">該当なし</td></tr>`;
+  html += `</tbody></table></div>
+    <div style="padding:10px 20px 14px" class="note">スコア＝声かけで見込める事務所報酬の増分（期待リフト×反応性）。反応性は配信メモの提出実績から実測。</div></section>
+  <section class="card bl-purple">
+    <div style="display:flex;align-items:center;gap:10px"><span class="stepnum">2</span><div class="sec-h">新人ケア枠（90日プログラム＝常時対象）</div></div>`;
+  html += d.newbies.length ? d.newbies.map(n => `
+    <label style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);cursor:pointer;font-size:13px">
+      <input type="checkbox" class="push-ck" value="${esc(n.handle)}" checked>
+      <span style="font-weight:600">${esc(n.handle)}</span>
+      <span class="pill purple">加入${n.tenure}日目</span>
+      <span style="color:var(--sub);font-size:12px;margin-left:auto">${esc(n.scene)}・${esc(n.mode)} ／ 当月${fmt(n.dia)}ダイヤ・${n.days}日${n.gate ? " ／ " + esc(n.gate) : ""}</span>
+    </label>`).join("") : `<div class="empty" style="margin-top:10px">連携済みの新人はいません。</div>`;
+  html += `</section>
+  <section class="card">
+    <div style="display:flex;align-items:center;gap:10px"><span class="stepnum">3</span><div class="sec-h">プレビュー → 実送信</div></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;align-items:center">
+      <input id="push-extra" class="tinput" style="min-width:240px" placeholder="追加ハンドル（カンマ区切り・任意）">
+      <button class="btn" onclick="pushPreview()">プレビュー生成（送らない）</button>
+      <button class="btnd" onclick="pushSend()">実送信する</button></div>
+    <div class="note" style="margin-top:8px">AIが1人ずつ文面を作るため、1人あたり数秒かかります（一度に最大${d.max_batch}名）。実送信時は最新データで作り直して送ります（内部状態も進みます）。</div>
+    <div id="push-result" style="margin-top:12px"></div></section>
+  <section class="g2">
+    <details class="fold"><summary>登録誘導リスト <span class="cnt">未連携×高スコア ${d.outreach.length}名 — エージェンシーからLINE登録を促す価値が高い人</span></summary>
+      <div style="margin-top:10px;font-size:13px">${d.outreach.map(s =>
+        `<div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding:6px 0">
+        <span style="font-weight:500">${esc(s.handle)}</span><span style="color:var(--sub)">スコア$${s.score_usd}・当月${fmt(s.dia)}ダイヤ</span></div>`).join("") || "該当なし"}</div></details>
+    <details class="fold"><summary>データ欠損 <span class="cnt">${d.missing.length}名 — 欠損＝放置ではないため自動の声かけを停止中</span></summary>
+      <div style="margin-top:10px;font-size:13px">${d.missing.map(x =>
+        `<div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--border);padding:6px 0">
+        <span style="font-weight:500">${esc(x.handle)}</span><span style="color:var(--sub)">最終データ日 ${esc(x.last_date)}</span></div>`).join("") || "該当なし"}</div></details>
+  </section>
+  <section id="bc-section"><div class="loading">お知らせ機能を読み込み中…</div></section>`;
+  main.innerHTML = html;
+  renderBroadcast();
+}
+
+/* ═══ 一斉お知らせ（自由文・対象絞り込み・プレビュー・履歴） ═══ */
+let BC = null, BCKIND = "all", BCVALUE = "";
+async function renderBroadcast(){
+  const box = $("#bc-section"); if(!box) return;
+  try{ BC = await getJSON("/api/admin/dashboard/broadcasts"); }
+  catch(e){ box.innerHTML = `<div class="errbox">${esc(e.message || e)}</div>`; return; }
+  const kinds = [["all","全員"],["manager","担当者で絞る"],["bucket","状態で絞る"],["handles","名前を指定"]];
+  let h = `<div class="card"><div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">
+      <div class="sec-h">お知らせの一斉送信</div>
+      <span class="note">イベント告知・キャンペーン連絡など。ai-boのトークにそのまま届きます</span></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 8px">
+      ${kinds.map(([k, l]) => `<button class="ptab ${BCKIND === k ? "on" : ""}"
+        onclick="BCKIND='${k}';BCVALUE='';renderBroadcastForm()">${esc(l)}</button>`).join("")}
+    </div>
+    <div id="bc-target"></div>
+    <div style="margin-top:12px">
+      <div style="font-size:12px;color:var(--sub);margin-bottom:4px">お知らせの本文</div>
+      <textarea id="bc-body" class="tinput" rows="5" style="width:100%;height:auto;padding:10px 12px;
+        font-family:inherit;line-height:1.7;resize:vertical" placeholder="例）今週末のイベントについてのご案内です。&#10;参加を希望される方は…"></textarea>
+      <div class="note" id="bc-count">0文字</div></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+      <button class="btn" onclick="bcPreview()">送信先と内容を確認</button>
+      <button class="btnd" onclick="bcSend()" id="bc-send" disabled>この内容で送信する</button></div>
+    <div class="note">確認を押すと送信先の一覧が出ます。内容を読んでから送信してください（送信の取り消しはできません）。</div>
+    <div id="bc-result" style="margin-top:12px"></div></div>
+  <div style="height:14px"></div>
+  <div class="card nopad"><div class="tbl-head"><div class="sec-h" style="margin-right:auto">送信履歴</div>
+    <div style="font-size:12px;color:var(--sub)">直近${BC.rows.length}件</div></div>
+    <div style="padding:6px 20px 14px">`;
+  if(!BC.rows.length) h += `<div class="empty" style="margin-top:8px">まだ送信していません。</div>`;
+  for(const r of BC.rows){
+    const head = r.body.replace(/\s+/g, " ").slice(0, 50);
+    h += `<details style="border-bottom:1px solid var(--border);padding:8px 0">
+      <summary style="cursor:pointer;display:flex;gap:10px;align-items:center;font-size:13px;list-style:none;flex-wrap:wrap">
+        <span style="color:var(--sub);font-size:11px;white-space:nowrap">${esc(r.at)}</span>
+        <span class="pill accent">${esc(r.target_desc || "")}</span>
+        <span class="pill ${r.failed_count ? "orange" : "green"}">送信${r.sent_count}${r.failed_count ? " / 失敗" + r.failed_count : ""}</span>
+        <span style="color:var(--sub);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(head)}${r.body.length > 50 ? "…" : ""}</span></summary>
+      <div style="font-size:13px;white-space:pre-wrap;background:var(--bg);border-radius:8px;padding:10px 12px;margin:8px 0 6px">${esc(r.body)}</div>
+      <div class="note">送信者: ${esc(r.actor || "—")} ／ 送信先: ${esc((r.recipients || []).join("、")) || "—"}</div></details>`;
+  }
+  h += `</div></div>`;
+  box.innerHTML = h;
+  renderBroadcastForm();
+  const ta = $("#bc-body");
+  ta.addEventListener("input", () => {
+    $("#bc-count").textContent = ta.value.length + "文字";
+    $("#bc-send").disabled = true;   // 本文を変えたら再確認を必須にする
+  });
+}
+function renderBroadcastForm(){
+  const box = $("#bc-target"); if(!box) return;
+  if(BCKIND === "manager"){
+    box.innerHTML = `<select class="sel" id="bc-val" style="min-width:200px">
+      <option value="">担当者を選んでください</option>
+      ${BC.managers.map(m => `<option value="${esc(m)}" ${BCVALUE === m ? "selected" : ""}>${esc(m.split("@")[0])}</option>`).join("")}
+      </select>${BC.managers.length ? "" : '<div class="note">担当者データがまだありません（Excelの再取込で入ります）。</div>'}`;
+  } else if(BCKIND === "bucket"){
+    box.innerHTML = `<select class="sel" id="bc-val" style="min-width:200px">
+      <option value="">状態を選んでください</option>
+      ${BC.buckets.map(b => `<option value="${esc(b.key)}" ${BCVALUE === b.key ? "selected" : ""}>${esc(b.label)}</option>`).join("")}
+      </select>`;
+  } else if(BCKIND === "handles"){
+    box.innerHTML = `<input class="tinput" id="bc-val" style="width:100%" placeholder="名前をカンマ区切りで（例: demo_umi, demo_zen）" value="${esc(BCVALUE)}">`;
+  } else {
+    box.innerHTML = `<div class="note">LINE連携済みの全員に送ります。</div>`;
+  }
+  const el = $("#bc-val");
+  if(el) el.addEventListener("change", () => { BCVALUE = el.value; $("#bc-send").disabled = true; });
+  if($("#bc-send")) $("#bc-send").disabled = true;
+}
+function bcTarget(){
+  const el = $("#bc-val");
+  const v = el ? el.value : "";
+  if(BCKIND === "handles"){
+    return {kind: "handles", handles: v.split(/[,、\s]+/).map(s => s.trim()).filter(Boolean)};
+  }
+  return {kind: BCKIND, value: v};
+}
+async function bcPreview(){
+  const box = $("#bc-result");
+  const body = $("#bc-body").value.trim();
+  if(!body){ toast("本文を入力してください"); return; }
+  box.innerHTML = `<div class="loading" style="padding:.5rem;text-align:left">送信先を確認中…</div>`;
+  try{
+    const res = await fetch("/api/admin/dashboard/broadcast/preview", {method:"POST",
+      headers:{"Content-Type":"application/json"}, body: JSON.stringify({target: bcTarget()})});
+    const r = await res.json(); if(r.error) throw new Error(r.error);
+    const ok = r.count > 0 && !r.over_limit;
+    box.innerHTML = `<div class="card card-c ${ok ? "bl-green" : "bl-orange"}" style="box-shadow:none">
+      <div style="font-weight:600;font-size:13px">送信先：${esc(r.desc)}　<span class="pill ${ok ? "green" : "orange"}">${r.count}名</span></div>
+      ${r.over_limit ? `<div class="note" style="color:var(--red)">上限${r.max}名を超えています。条件を絞ってください。</div>` : ""}
+      ${r.count ? `<div class="note" style="margin-top:4px">${esc(r.names.join("、"))}</div>` : `<div class="note">条件に合う連携済みの人がいません。</div>`}
+      <div style="font-size:12px;color:var(--sub);margin:10px 0 4px">実際に届く内容</div>
+      <div class="msg me" style="max-width:100%"><div class="bub">${esc(body)}</div></div></div>`;
+    $("#bc-send").disabled = !ok;
+    if(ok) toast("内容を確認したら「この内容で送信する」を押してください");
+  }catch(e){ box.innerHTML = `<div class="errbox">${esc(e.message || e)}</div>`; }
+}
+async function bcSend(){
+  const body = $("#bc-body").value.trim();
+  const box = $("#bc-result");
+  if(!body){ toast("本文を入力してください"); return; }
+  if(!confirm("この内容でLINEを一斉送信します。送信後の取り消しはできません。よろしいですか？")) return;
+  box.innerHTML = `<div class="loading" style="padding:.5rem;text-align:left">送信中…</div>`;
+  try{
+    const res = await fetch("/api/admin/dashboard/broadcast/send", {method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({body, target: bcTarget()})});
+    const r = await res.json(); if(r.error) throw new Error(r.error);
+    toast(`${r.sent}名に送信しました`);
+    $("#bc-body").value = "";
+    renderBroadcast();
+  }catch(e){ box.innerHTML = `<div class="errbox">送信に失敗しました:\n${esc(e.message || e)}</div>`; }
+}
+function pushSelected(){
+  const set = new Set([...document.querySelectorAll(".push-ck:checked")].map(c => c.value));
+  ($("#push-extra").value || "").split(/[,、\s]+/).forEach(h => {
+    h = h.trim().replace(/^[@＠]/, ""); if(h) set.add(h);
+  });
+  return [...set];
+}
+function renderPushResults(box, results, sent){
+  box.innerHTML = (sent != null
+    ? `<div class="up" style="margin-bottom:8px">✓ ${sent}名に送信しました。</div>`
+    : `<div style="margin-bottom:8px;font-size:13px">プレビューです（まだ送っていません）。内容が良ければ「実送信する」を押してください。</div>`)
+    + results.map(r => `<div class="card card-c ${r.status === "skip" ? "bl-orange" : "bl-green"}" style="margin-bottom:8px;box-shadow:none">
+      <div style="font-weight:600;font-size:13px">${esc(r.handle)}
+        <span style="font-weight:400;color:var(--sub);font-size:12px">${r.status === "sent" ? "✓送信済み" : r.status === "skip" ? "対象外" : "プレビュー"}</span></div>
+      <div style="font-size:13px;white-space:pre-wrap;margin-top:6px;background:var(--bg);border-radius:8px;padding:10px 12px">${esc(r.message)}</div></div>`).join("");
+}
+async function pushPreview(){
+  const handles = pushSelected(); const box = $("#push-result");
+  if(!handles.length){ toast("対象を選んでください"); return; }
+  box.innerHTML = `<div class="loading">文面を生成中…（${handles.length}名・1人あたり数秒）</div>`;
+  try{
+    const res = await fetch("/api/admin/dashboard/push/preview", {method:"POST",
+      headers:{"Content-Type":"application/json"}, body: JSON.stringify({handles})});
+    const r = await res.json(); if(r.error) throw new Error(r.error);
+    renderPushResults(box, r.results, null);
+  }catch(e){ box.innerHTML = `<div class="errbox">生成に失敗しました:\n${esc(e.message || e)}</div>`; }
+}
+async function pushSend(){
+  const handles = pushSelected(); const box = $("#push-result");
+  if(!handles.length){ toast("対象を選んでください"); return; }
+  if(!confirm(`${handles.length}名にai-boからLINEを実送信します。よろしいですか？`)) return;
+  box.innerHTML = `<div class="loading">送信中…（${handles.length}名）</div>`;
+  try{
+    const res = await fetch("/api/admin/dashboard/push/send", {method:"POST",
+      headers:{"Content-Type":"application/json"}, body: JSON.stringify({handles})});
+    const r = await res.json(); if(r.error) throw new Error(r.error);
+    renderPushResults(box, r.results, r.sent);
+    toast(`${r.sent}名に送信しました`);
+  }catch(e){ box.innerHTML = `<div class="errbox">送信に失敗しました:\n${esc(e.message || e)}</div>`; }
+}
+
+/* ═══ ai-bo稼働 ═══ */
+let OPSDAYS = 14;
+async function pgOps(main){
+  const [d, calls] = await Promise.all([
+    getJSON("/api/admin/dashboard/ops?days=" + OPSDAYS),
+    getJSON("/api/admin/dashboard/calls"),
+  ]);
+  updateNavBadge();
+  const pend = d.relay.pending, ans = d.relay.answered;
+  let html = `<header class="ph"><div class="tt"><h1>ai-bo稼働</h1>
+    <div class="ps">AIが何をしているかの可視化と、人間が答えるべき質問の把握</div></div>
+    <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--sub)">表示期間
+      <select class="sel" id="ops-days">
+        ${[14, 30, 60].map(n => `<option value="${n}" ${OPSDAYS === n ? "selected" : ""}>直近${n}日</option>`).join("")}
+      </select></label></header>
+  <section class="g4">
+    ${kpiTile(`<div class="kpi-lbl">本日のai-bo送信</div>`, `<div class="kpi-num">${d.today.sent}<small> 件</small></div>`, "")}
+    ${kpiTile(`<div class="kpi-lbl">本日の返信</div>`, `<div class="kpi-num">${d.today.replied}<small> 件</small></div>`, "")}
+    <div class="card ${pend.length ? "bl-orange" : ""}">
+      <div class="kpi-lbl">取り次ぎ未回答</div>
+      <div class="kpi-num" ${pend.length ? 'style="color:var(--orange)"' : ""}>${pend.length}<small> 件</small></div>
+      <div class="kpi-sub"><span class="dim">運営LINEでの回答待ち</span></div></div>
+    ${kpiTile(`<div class="kpi-lbl">回答済みの蓄積</div>`, `<div class="kpi-num">${ans.length}${ans.length >= 20 ? "+" : ""}<small> 件</small></div>`,
+      `<div class="kpi-sub"><span class="dim">FAQ即答の資産になります</span></div>`)}
+  </section>
+  <section class="g2">
+    <div class="card"><div style="display:flex;justify-content:space-between;align-items:center">
+      <div class="sec-h">日別のai-bo送信数</div><div style="font-size:12px;color:var(--sub)">直近${d.days}日</div></div>
+      ${divBars(d.daily.map(x => ({label: +x.date.slice(8) + "日", value: x.sent, display: x.sent})), C1)}</div>
+    <div class="card"><div style="display:flex;justify-content:space-between;align-items:center">
+      <div class="sec-h">日別の返信数</div><div style="font-size:12px;color:var(--sub)">直近${d.days}日</div></div>
+      ${divBars(d.daily.map(x => ({label: +x.date.slice(8) + "日", value: x.replied, display: x.replied})), C2)}</div>
+  </section>
+  <section class="card ${pend.length ? "bl-orange" : ""}">
+    <div style="display:flex;align-items:center;gap:8px"><div class="sec-h">質問取り次ぎの対応状況</div>
+      <span class="pill ${pend.length ? "orange" : "gray"}">未回答 ${pend.length}件</span></div>`;
+  if(!pend.length) html += `<div class="empty" style="margin-top:10px">未回答の質問はありません。</div>`;
+  for(const q of pend){
+    const urgent = q.hours != null && q.hours >= 12;
+    html += `<div style="border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-top:10px">
+      <div style="font-size:13px;font-weight:600">${esc(q.name)}
+        <span style="color:${urgent ? "var(--red)" : "var(--sub)"};font-weight:${urgent ? 600 : 400};font-size:12px">
+        ${esc(q.created)}・${q.hours != null ? q.hours + "時間経過" : ""}${urgent ? "（12h超）" : ""}</span></div>
+      <div style="font-size:13px;margin-top:4px">Q. ${esc(q.question)}</div>
+      <div class="note" style="margin-top:4px">回答は運営用LINEに届いている確認メッセージから返信してください。</div></div>`;
+  }
+  if(ans.length){
+    html += `<details style="margin-top:12px"><summary style="cursor:pointer;font-size:12.5px;color:var(--accent)">▶ 回答済みの履歴（直近${ans.length}件）</summary>`;
+    for(const q of ans){
+      html += `<div style="border-bottom:1px solid var(--border);padding:10px 0;font-size:13px">
+        <div style="font-weight:600">${esc(q.name)} <span style="color:var(--sub);font-weight:400;font-size:12px">${esc(q.answered || "")} 回答</span></div>
+        <div style="color:var(--sub)">Q. ${esc(q.question)}</div>
+        <div>A. ${esc(q.answer || "")}</div></div>`;
+    }
+    html += `</details>`;
+  }
+  html += `</section>
+  <section class="card nopad"><div class="tbl-head"><div class="sec-h" style="margin-right:auto">送信メッセージ履歴</div>
+    <div style="font-size:12px;color:var(--sub)">直近${d.sent.length}件・クリックで全文</div></div>
+    <div style="padding:12px 20px 0;display:flex;gap:8px;flex-wrap:wrap" id="ops-tabs"></div>
+    <div style="padding:6px 20px 14px" id="ops-sent"></div></section>
+  <section class="card nopad"><div class="tbl-head"><div class="sec-h" style="margin-right:auto">自動実行の状況</div>
+    <div style="font-size:12px;color:var(--sub)">直近${d.jobs.length}件</div></div>
+    <div class="tblwrap"><table class="dt"><thead><tr><th>実行時刻</th><th>ジョブ</th><th>結果</th></tr></thead><tbody>
+    ${d.jobs.map(j => `<tr><td>${esc(j.at)}</td><td style="font-weight:500">${esc(j.job)}</td>
+      <td style="white-space:normal;max-width:520px;font-size:12px;color:var(--sub)">${esc(j.detail)}</td></tr>`).join("")}
+    </tbody></table></div></section>` + callSection(calls);
+  main.innerHTML = html;
+  OPS = d; OPSNAME = "";
+  renderOpsSent();
+  $("#ops-days").addEventListener("change", e => { OPSDAYS = +e.target.value; route(); });
+}
+
+/* ai-bo通話の利用状況（分課金なので使いすぎに気づけるようにする） */
+function callSection(c){
+  if(!c || c.error) return "";
+  const mins = s => Math.floor((s || 0) / 60) + "分" + String((s || 0) % 60).padStart(2, "0") + "秒";
+  const cap = c.limits.agency_min * 60;
+  const pct = cap ? Math.min(100, Math.round(c.total_seconds / cap * 100)) : 0;
+  let h = `<section class="card"><div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">
+      <div class="sec-h">ai-bo通話の利用状況（${esc(c.month)}）</div>
+      ${c.enabled ? "" : '<span class="pill gray">未設定（OPENAI_API_KEYを入れると使えます）</span>'}
+      <span class="note">1人あたり月${c.limits.per_month_min}分・1回${c.limits.per_call_min}分まで</span></div>
+    <div class="tiles" style="margin-top:12px">
+      ${kpiTile(`<div class="kpi-lbl">今月の通話時間</div>`,
+        `<div class="kpi-num">${Math.floor(c.total_seconds / 60)}<small> 分</small></div>`,
+        `<div class="kpi-sub"><span class="dim">${c.usage.length}名が利用</span></div>`)}
+      ${kpiTile(`<div class="kpi-lbl">概算の費用</div>`,
+        `<div class="kpi-num" style="font-size:24px">$${c.est_usd_low}〜${c.est_usd_high}</div>`,
+        `<div class="kpi-sub"><span class="dim">実測レンジからの目安です</span></div>`)}
+      ${cap ? kpiTile(`<div class="kpi-lbl">全体ブレーカー</div>`,
+        `<div class="kpi-num">${pct}<small>%</small></div>`,
+        `<div class="track" style="margin-top:8px"><span style="width:${pct}%;background:${pct >= 80 ? "var(--red)" : "var(--accent)"}"></span></div>
+         <div class="note">上限 ${c.limits.agency_min}分／月に達すると通話を止めます</div>`) : ""}
+    </div>`;
+  if(c.usage.length){
+    h += `<div class="tblwrap"><table class="dt"><thead><tr><th>名前</th><th class="num">通話時間</th>
+      <th class="num">回数</th><th class="num">残り</th><th>気にかけ</th></tr></thead><tbody>`;
+    for(const u of c.usage){
+      const remain = Math.max(0, c.limits.per_month_min * 60 - u.seconds);
+      h += `<tr><td style="font-weight:500">${esc(u.tiktok_id)}</td>
+        <td class="num num6">${mins(u.seconds)}</td><td class="num">${u.calls}</td>
+        <td class="num" style="color:${remain <= 300 ? "var(--red)" : "var(--sub)"}">${Math.floor(remain / 60)}分</td>
+        <td>${u.flagged ? '<span class="pill red">' + u.flagged + '件</span>' : "—"}</td></tr>`;
+    }
+    h += `</tbody></table></div>`;
+  } else {
+    h += `<div class="empty">まだ通話の利用がありません。</div>`;
+  }
+  if(c.sessions.length){
+    h += `<details class="tbl" style="margin-top:10px"><summary>通話の記録（文字起こし・直近${c.sessions.length}件）</summary>`;
+    for(const s of c.sessions){
+      h += `<details style="border-bottom:1px solid var(--border);padding:8px 0">
+        <summary style="cursor:pointer;font-size:13px;list-style:none;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+          <span style="color:var(--sub);font-size:11px">${esc(s.at)}</span>
+          <span style="font-weight:600">${esc(s.tiktok_id)}</span>
+          <span class="pill accent">${mins(s.seconds)}</span>
+          ${s.flagged ? '<span class="pill red">気にかけ</span>' : ""}</summary>
+        <div style="font-size:12.5px;white-space:pre-wrap;background:var(--bg);border-radius:8px;
+          padding:10px 12px;margin:8px 0 4px;max-height:300px;overflow-y:auto">${esc(s.transcript || "（文字起こしなし）")}</div></details>`;
+    }
+    h += `</details>`;
+  }
+  h += `<div class="note" style="margin-top:10px">通話の内容は、文字チャットと同じ安全確認にかけています。
+    深刻な相談を検知した場合は運営LINEにお知らせが届きます（通話後の事後通知です）。</div></section>`;
+  return h;
+}
+let OPS = null, OPSNAME = "";
+function renderOpsSent(){
+  if(!OPS) return;
+  const counts = {};
+  for(const s of OPS.sent) counts[s.name] = (counts[s.name] || 0) + 1;
+  const names = Object.keys(counts).sort((a, z) => counts[z] - counts[a]);
+  $("#ops-tabs").innerHTML = [["", "全員", OPS.sent.length], ...names.map(n => [n, n, counts[n]])]
+    .map(([v, label, n]) => `<button class="ptab ${OPSNAME === v ? "on" : ""}"
+      onclick="OPSNAME='${esc(v)}';renderOpsSent()">${esc(label)} <span style="opacity:.7">${n}</span></button>`).join("");
+  const list = OPS.sent.filter(s => !OPSNAME || s.name === OPSNAME);
+  let h = "";
+  if(!list.length) h = `<div class="empty" style="margin-top:8px">送信がありません。</div>`;
+  for(const s of list){
+    const head = s.message.replace(/\s+/g, " ").slice(0, 60);
+    h += `<details style="border-bottom:1px solid var(--border);padding:8px 0">
+      <summary style="cursor:pointer;display:flex;gap:10px;align-items:center;font-size:13px;list-style:none">
+        <span style="font-weight:600;white-space:nowrap">${esc(s.name)}</span>
+        <span style="color:var(--sub);font-size:11px;white-space:nowrap">${esc(s.at)}</span>
+        <span style="color:var(--sub);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(head)}${s.message.length > 60 ? "…" : ""}</span></summary>
+      <div style="font-size:13px;white-space:pre-wrap;background:var(--bg);border-radius:8px;padding:10px 12px;margin:8px 0 4px">${esc(s.message)}</div></details>`;
+  }
+  $("#ops-sent").innerHTML = h;
+}
+
+/* ═══ コラボ ═══ */
+async function pgCollab(main){
+  const d = await getJSON("/api/admin/dashboard/collab");
+  updateNavBadge();
+  const f = d.funnel;
+  const rate = (a, b) => b ? Math.round(a / b * 1000) / 10 : 0;
+  let html = `<header class="ph"><div class="tt"><h1>コラボ</h1>
+    <div class="ps">クリエイター同士のコラボ企画の進行管理</div></div></header>
+  <section class="g4">
+    ${kpiTile(`<div class="kpi-lbl">進行中</div>`, `<div class="kpi-num">${d.active.length}<small> 件</small></div>`, "")}
+    ${kpiTile(`<div class="kpi-lbl">申請（累計）</div>`, `<div class="kpi-num">${f.requested}<small> 件</small></div>`, "")}
+    ${kpiTile(`<div class="kpi-lbl">成立（累計）</div>`, `<div class="kpi-num">${f.matched}<small> 件</small></div>`,
+      `<div class="kpi-sub"><span class="dim">成立率 ${rate(f.matched, f.requested)}%</span></div>`)}
+    ${kpiTile(`<div class="kpi-lbl">完了（累計）</div>`, `<div class="kpi-num">${f.completed}<small> 件</small></div>`,
+      `<div class="kpi-sub"><span class="dim">完了率 ${rate(f.completed, f.matched)}%</span></div>`)}
+  </section>
+  <section style="display:grid;grid-template-columns:1fr 1.4fr;gap:14px" id="collab-mid">
+    <div class="card"><div class="sec-h">コラボのファネル</div>`;
+  const steps = [["申請", f.requested, .45], ["成立", f.matched, .7], ["完了", f.completed, 1]];
+  const maxV = Math.max(f.requested, 1);
+  for(const [label, v, op] of steps){
+    html += `<div style="margin-top:14px"><div class="bar-row"><span class="n">${label}</span>
+      <span class="v">${fmt(v)}件（${rate(v, maxV)}%）</span></div>
+      <div class="track" style="height:10px"><span style="width:${v / maxV * 100}%;background:var(--accent);opacity:${op}"></span></div></div>`;
+  }
+  html += `<div class="note" style="margin-top:12px">成立＝受諾されたもの（その後の完了・キャンセル等を含む）。</div></div>
+    <div class="card"><div class="sec-h">進行中のコラボ</div>`;
+  const stPill = s => s === "requested" ? '<span class="pill orange">申請中</span>'
+    : s === "matched" ? '<span class="pill accent">実施待ち</span>' : '<span class="pill purple">報告待ち</span>';
+  if(!d.active.length) html += `<div class="empty" style="margin-top:10px">進行中のコラボはありません。</div>`;
+  for(const r of d.active){
+    html += `<div style="display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);padding:10px 0;font-size:13px">
+      <span style="font-weight:600">${esc(r.requester)} × ${esc(r.target)}</span>${stPill(r.status)}
+      <span style="margin-left:auto;color:var(--sub);font-size:12px">${r.slot ? "実施枠 " + esc(r.slot) : "申請 " + esc(r.created)}${r.deadline ? " ／ 期限 " + esc(r.deadline) : ""}</span></div>`;
+  }
+  html += `</div></section>
+  <section class="card nopad"><div class="tbl-head"><div class="sec-h" style="margin-right:auto">履歴</div>
+    <div style="font-size:12px;color:var(--sub)">直近${d.history.length}件</div></div>
+  <div class="tblwrap"><table class="dt"><thead><tr><th>日時</th><th>ペア</th><th>結果</th><th>報告（申請者 / 相手）</th></tr></thead><tbody>`;
+  const RESULT = {completed:["完了","var(--green)"], declined:["辞退","var(--sub)"], withdrawn:["取り下げ","var(--sub)"],
+    expired:["期限切れ","var(--sub)"], cancelled:["キャンセル","var(--sub)"], no_show_reported:["不参加報告","var(--red)"],
+    self_reported_miss:["自己都合未実施","var(--red)"], report_conflicted:["報告矛盾","var(--red)"]};
+  const REPORT_LABEL = {done:"実施した", partner_no_show:"相手が来なかった", self_miss:"自分の都合で未実施"};
+  if(!d.history.length) html += `<tr><td colspan="4" style="color:var(--sub)">まだ履歴がありません。</td></tr>`;
+  for(const r of d.history){
+    const [lbl, col] = RESULT[r.status] || [r.label, "var(--sub)"];
+    const rep = r.reports || {};
+    const repTxt = (rep.requester || rep.target)
+      ? `${REPORT_LABEL[rep.requester] || rep.requester || "—"} / ${REPORT_LABEL[rep.target] || rep.target || "—"}` : "—";
+    html += `<tr><td>${esc(r.closed || r.created)}</td><td style="font-weight:500">${esc(r.requester)} × ${esc(r.target)}</td>
+      <td><span class="badge" style="background:var(--surface2);color:${col}"><span class="dot" style="background:${col}"></span>${esc(lbl)}</span></td>
+      <td style="font-size:12px;color:var(--sub)">${esc(repTxt)}</td></tr>`;
+  }
+  html += `</tbody></table></div></section>`;
+  main.innerHTML = html;
+  if(window.matchMedia("(max-width:900px)").matches) $("#collab-mid").style.gridTemplateColumns = "1fr";
+}
+
+/* 取り込めていない日の一覧。月ごとの日数だけでは「どの日が抜けたか」が分からないため。 */
+function gapsBlock(g, pad){
+  if(!g || !g.since) return "";
+  pad = pad === undefined ? "10px 20px 0" : pad;
+  const miss = g.missing || [];
+  const md = iso => { const p = String(iso).split("-"); return `${+p[1]}/${+p[2]}`; };
+  const range = `${md(g.since)}〜${md(g.until)}`;
+  if(!miss.length){
+    return `<div style="padding:${pad}"><div class="note" style="color:var(--green)">
+      ✅ 取り込めていない日はありません（${esc(range)} を確認）</div></div>`;
+  }
+  return `<div style="padding:${pad}">
+    <div class="errbox" style="white-space:normal">
+      <b>⚠ 取り込めていない日が ${miss.length}日あります</b>
+      <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">
+        ${miss.map(x => `<span class="pill" style="background:var(--orange-soft,#fdf1e3);
+          color:var(--orange,#d9821f);font-weight:700">${esc(md(x))}</span>`).join("")}
+      </div>
+      <div class="note" style="margin-top:8px">${esc(range)} を確認した結果です。
+        データは約${g.lag_days}日遅れで届くため、直近${g.lag_days}日は確認の対象外です。</div>
+    </div></div>`;
+}
+
+/* ═══ データ・設定 ═══ */
+async function pgData(main){
+  const d = await getJSON("/api/admin/dashboard/settings");
+  updateNavBadge();
+  const dpm = d.ingest.days_per_month || {};
+  const daysInMonth = ym => { const [y, m] = ym.split("-").map(Number); return new Date(y, m, 0).getDate(); };
+  let html = `<header class="ph"><div class="tt"><h1>データ・設定</h1>
+    <div class="ps">日次データの取り込みと運用ツール</div></div></header>
+  <section class="card"><div class="sec-h">日次Excelの取り込み</div>
+    <div class="note" style="margin-top:4px">自社コンソールからダウンロードした日次Excel（複数選択可）を取り込みます。同じ日を入れ直しても二重にはなりません。</div>
+    <div class="dropzone"><input type="file" id="up-files" multiple accept=".xlsx" style="font-size:13px;font-family:inherit"></div>
+    <button class="btn" id="up-btn">アップロード</button>
+    <div id="up-result" style="margin-top:10px;font-size:13px"></div></section>
+  <section class="g2">
+    <div class="card nopad"><div class="tbl-head"><div class="sec-h" style="margin-right:auto">取り込み状況</div>
+      <div style="font-size:12px;color:var(--sub)">全${fmt(d.ingest.rows)}行・${d.ingest.creators}名</div></div>
+      <div class="tblwrap"><table class="dt"><thead><tr><th>月</th><th class="num">取込済み日数</th><th style="width:160px">充足率</th></tr></thead><tbody>
+      ${Object.entries(dpm).map(([mth, c]) => {
+        const dim = daysInMonth(mth), pct = Math.min(100, Math.round(c / dim * 100));
+        return `<tr><td>${esc(mth)}</td><td class="num">${c} / ${dim}日</td>
+          <td><div style="display:flex;align-items:center;gap:8px">
+            <div class="track mini" style="flex:1"><span style="width:${pct}%;background:${pct >= 100 ? "var(--green)" : "var(--orange)"}"></span></div>
+            <span style="font-size:11px;color:var(--sub);width:32px;text-align:right">${pct}%</span></div></td></tr>`;
+      }).join("")}</tbody></table></div>
+      ${gapsBlock(d.ingest.gaps)}
+      <div style="padding:10px 20px 14px" class="note">先月ライン（月初ファイル由来）: ${d.goals.rows}名分（${(d.goals.months || []).map(x => x.slice(0, 7)).join("・") || "なし"}）<br>
+      ファネル用データ: ${fmt(d.extras.rows || 0)}行（${esc(d.extras.min_date || "—")}〜${esc(d.extras.max_date || "—")}）</div></div>
+    <div class="card"><div class="sec-h">運用ツール</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+        <button class="btn2 sm" onclick="tool('memo-remind',{},'配信メモのリマインドを今すぐ送信しますか？')">メモリマインド送信</button>
+        <button class="btn2 sm" onclick="tool('collab-run',{},'コラボ定期処理を今すぐ実行しますか？（冪等）')">コラボ定期処理を実行</button></div>
+
+      <div style="font-size:12px;font-weight:600;margin:14px 0 6px">商談デモ用データ</div>
+      <div class="note" style="margin-bottom:6px">架空のクリエイター30名を入れて、ホームの「要対応」4分類や
+        ランク分布が実際に動くところを見せられるようにします。ユーザー名は <code>demo_</code> で始まります。<br>
+        <b>実データのある環境では実行できません</b>（営業用のデモ環境専用です）。</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn2 sm" onclick="tool('demo-seed',{},'商談デモ用のデータを入れ直しますか？（何度実行しても同じ状態になります）')">デモデータを投入</button>
+        <button class="btnd sm" onclick="tool('demo-clear',{},'デモデータを削除しますか？（demo_ で始まる分だけ消えます）')">デモデータを削除</button></div>
+      <div style="font-size:12px;font-weight:600;margin:14px 0 6px">共有範囲のお知らせ（連携済みの既存ユーザー向け）</div>
+      <div class="note" style="margin-bottom:6px">この機能を作る前から使っている人は入口の案内を見ていません。
+        「やり取りと配信データは所属事務所の担当者が確認できる」ことを一度だけ全員に送ります（誤送信防止のため2回目は送れません）。</div>
+      <button class="btnd sm" onclick="tool('privacy-notice',{},'連携済みの全員にお知らせをLINEで送信します。一度きりで取り消せません。よろしいですか？')">お知らせを一斉送信</button>
+      <div style="font-size:12px;font-weight:600;margin:14px 0 6px">連携解除（入口やり直し用・データは消えません）</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <input id="tl-unlink" class="tinput" style="width:200px;height:32px" placeholder="ハンドル (例: demo_umi)">
+        <button class="btnd sm" onclick="tool('unlink',{handle:$('#tl-unlink').value},'この人のLINE連携を解除しますか？')">解除する</button></div>
+      <div style="font-size:12px;font-weight:600;margin:14px 0 6px">再マッチ制限（30日）の解除</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <input id="tl-ca" class="tinput" style="width:140px;height:32px" placeholder="ハンドルA">
+        <input id="tl-cb" class="tinput" style="width:140px;height:32px" placeholder="ハンドルB">
+        <button class="btn2 sm" onclick="tool('clear-cooldown',{handle_a:$('#tl-ca').value,handle_b:$('#tl-cb').value})">解除する</button></div>
+      <div style="font-size:12px;font-weight:600;margin:14px 0 6px">運営マネージャー登録（運営LINEの通知先）</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <input id="tl-mid" class="tinput" style="width:220px;height:32px" placeholder="運営LINE ID (Uから始まる)">
+        <input id="tl-mname" class="tinput" style="width:110px;height:32px" placeholder="名前">
+        <button class="btn sm" onclick="tool('add-manager',{line_id:$('#tl-mid').value,name:$('#tl-mname').value})">登録する</button></div>
+      <div id="tool-result" style="margin-top:10px;font-size:13px"></div>
+      <div class="note" style="margin-top:10px"><a href="/health/data" target="_blank">診断データ ↗</a>
+        ／ <a href="/api/admin/legacy" target="_blank">旧管理画面（保険・廃止予定） ↗</a></div></div>
+  </section>
+  <section class="card nopad"><div class="tbl-head"><div class="sec-h" style="margin-right:auto">インセンティブ基準値（現行有効）</div></div>
+    <div style="padding:12px 20px 0;display:flex;gap:8px;flex-wrap:wrap" id="tier-tabs"></div>
+    <div id="tier-table"></div>
+    <div style="padding:12px 20px 16px">
+      <details><summary style="cursor:pointer;font-size:12.5px;color:var(--accent)">＋ 基準値の行を追加する（規定改定・REVENUEの月次境界入力）</summary>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center">
+        <select id="tr-prog" class="sel" style="height:32px"><option>REVENUE</option><option>RANK_UP</option><option>RANK_KEEP</option><option>ACTIVITY</option></select>
+        <input id="tr-name" class="tinput" style="width:110px;height:32px" placeholder="段階名 (Tier3)">
+        <input id="tr-order" class="tinput" type="number" style="width:80px;height:32px" placeholder="順序">
+        <input id="tr-dia" class="tinput" style="width:110px;height:32px" placeholder="必要ダイヤ">
+        <input id="tr-rate" class="tinput" type="number" step="0.1" style="width:90px;height:32px" placeholder="報酬率%">
+        <input id="tr-from" class="tinput" type="date" style="height:32px">
+        <input id="tr-to" class="tinput" type="date" style="height:32px" title="有効終了日（月次境界なら月末）">
+        <button class="btn sm" onclick="addTier()">追加する</button></div>
+      <div class="note" style="margin-top:8px">REVENUEの月次境界: プログラム=REVENUE・段階名=Tier1〜7・必要ダイヤ=当月の境界値・有効期間=その月の1日〜末日で追加（報酬率は空欄でOK）。
+      規定改定時は行を上書きせず「締める」で期間を区切り、新しい行を追加します（過去月の判定を守るため）。</div>
+      <div id="tier-result" style="font-size:13px"></div></details></div></section>`;
+  main.innerHTML = html;
+  TIERS = d.tiers || [];  // 選択中のタブ(TIERPROG)は保存後の再描画でも保つ
+  REVMONTHS = d.revenue_months || {};
+  REVMONTH = REVMONTH || d.this_month || "";
+  renderTiers();
+  $("#tier-table").addEventListener("change", e => {
+    if(e.target.id === "rev-month"){ REVMONTH = e.target.value; renderTiers(); }
+  });
+  $("#up-btn").addEventListener("click", async () => {
+    const files = $("#up-files").files;
+    if(!files.length){ toast("ファイルを選択してください"); return; }
+    const fd = new FormData();
+    for(const f of files) fd.append("files", f);
+    $("#up-result").innerHTML = `<div class="loading" style="text-align:left;padding:0">取り込み中…（${files.length}ファイル）</div>`;
+    try{
+      const res = await fetch("/api/admin/dashboard/upload", {method:"POST", body: fd});
+      const r = await res.json(); if(r.error) throw new Error(r.error);
+      $("#up-result").innerHTML = `<div class="up">取込 ${r.used}件 ／ スキップ ${r.skipped}件 ／ ${fmt(r.rows)}行</div>
+        <ul style="margin:6px 0 0;padding-left:18px;font-size:12px;color:var(--sub)">${r.details.map(x => `<li>${esc(x)}</li>`).join("")}</ul>
+        ${gapsBlock(r.gaps, "10px 0 0")}
+        <div class="note" style="margin-top:8px">運営LINEへ完了のお知らせを送りました。</div>`;
+      toast("取り込みが完了しました");
+    }catch(e){ $("#up-result").innerHTML = `<div class="errbox">取込に失敗しました:\n${esc(e.message || e)}</div>`; }
+  });
+}
+let TIERS = null, TIERPROG = "", REVMONTHS = {}, REVMONTH = "";
+const PROG_LABEL = {RANK_UP:"ランクアップ", RANK_KEEP:"ランク維持", ACTIVITY:"アクティブ度", REVENUE:"売上増加"};
+function progPillOf(p){
+  return p === "RANK_UP" ? '<span class="pill green">RANK_UP</span>'
+    : p === "RANK_KEEP" ? '<span class="pill purple">RANK_KEEP</span>'
+    : p === "ACTIVITY" ? '<span class="pill accent">ACTIVITY</span>' : '<span class="pill orange">REVENUE</span>';
+}
+function renderTiers(){
+  if(!TIERS) return;
+  // 月次で手入力した売上増加の境界値は専用フォームで扱うので、基準値の表からは除く
+  const base = TIERS.filter(t => !t.monthly);
+  const counts = {};
+  for(const t of base) counts[t.program] = (counts[t.program] || 0) + 1;
+  const order = ["RANK_UP", "RANK_KEEP", "ACTIVITY", "REVENUE"].filter(p => counts[p]);
+  $("#tier-tabs").innerHTML = [["", "全て", base.length], ...order.map(p => [p, PROG_LABEL[p] || p, counts[p]])]
+    .map(([v, label, n]) => `<button class="ptab ${TIERPROG === v ? "on" : ""}"
+      onclick="TIERPROG='${v}';renderTiers()">${esc(label)} <span style="opacity:.7">${n}</span></button>`).join("");
+  const list = base.filter(t => !TIERPROG || t.program === TIERPROG);
+  const revForm = TIERPROG === "REVENUE" ? revenueMonthForm() : "";
+  // 売上増加の必要ダイヤは月ごとに変わるため、選択中の月に入力済みの値を差し込んで表示する
+  const revByOrder = {};
+  for(const r of (REVMONTHS[REVMONTH] || [])) revByOrder[r.tier_order] = r.req_diamonds;
+  const diaCell = t => {
+    if(t.program === "REVENUE" && t.req_diamonds == null){
+      const v = revByOrder[t.tier_order];
+      return v == null
+        ? `<span style="color:var(--sub);font-size:12px">未入力</span>`
+        : `${fmt(v)} <span style="color:var(--sub);font-size:11px">${esc(REVMONTH)}</span>`;
+    }
+    return t.req_diamonds == null ? "—" : fmt(t.req_diamonds);
+  };
+  const hasRev = list.some(t => t.program === "REVENUE");
+  $("#tier-table").innerHTML = revForm + `<div class="tblwrap"><table class="dt" style="min-width:860px"><thead><tr>
+      <th>プログラム</th><th>段階</th><th class="num">必要有効日</th><th class="num">必要時間</th>
+      <th class="num">必要ダイヤ</th><th class="num">報酬率</th><th>有効期間</th><th></th></tr></thead><tbody>
+    ${list.map(t => `<tr><td>${progPillOf(t.program)}</td><td style="font-weight:500">${esc(t.tier_name || "")}</td>
+      <td class="num">${t.req_effective_days ?? "—"}</td><td class="num">${t.req_live_hours ?? "—"}</td>
+      <td class="num">${diaCell(t)}</td>
+      <td class="num num6">${t.reward_rate ?? "—"}%</td>
+      <td style="font-size:12px;color:var(--sub)">${esc(t.valid_from || "")}〜${esc(t.valid_to || "")}</td>
+      <td><button class="btn2 xs" onmouseover="this.style.color='var(--red)';this.style.borderColor='var(--red)'"
+        onmouseout="this.style.color='';this.style.borderColor=''" onclick="closeTier(${t.id})">締める</button></td></tr>`).join("")
+      || `<tr><td colspan="8" style="color:var(--sub)">該当する基準値がありません。</td></tr>`}
+    </tbody></table></div>`
+    + (hasRev ? `<div class="note" style="padding:10px 20px 0">
+      売上増加の報酬率（規定）は毎月共通ですが、<b>必要ダイヤは毎月変わる</b>ため
+      ${TIERPROG === "REVENUE" ? "上のフォームで登録した" : `<a onclick="TIERPROG='REVENUE';renderTiers()">売上増加タブ</a>で登録した`}
+      <b>${esc(REVMONTH)}</b> の値を表示しています。</div>` : "");
+}
+/* 売上増加インセンティブ: その月の境界ダイヤ7段階をまとめて入力するフォーム */
+function revenueMonthForm(){
+  const rates = {};
+  for(const t of TIERS) if(t.program === "REVENUE" && !t.monthly) rates[t.tier_order] = t.reward_rate;
+  const saved = REVMONTHS[REVMONTH] || [];
+  const byOrder = {};
+  for(const r of saved) byOrder[r.tier_order] = r.req_diamonds;
+  const done = saved.length > 0;
+  const months = Object.keys(REVMONTHS).sort().reverse();
+  let h = `<div style="margin:14px 20px 4px;border:1px solid var(--border);border-radius:12px;padding:16px 18px;background:var(--bg)">
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <div class="sec-h">今月の境界ダイヤを入力</div>
+      ${done ? '<span class="pill green">登録済み</span>' : '<span class="pill orange">未登録</span>'}
+      <input type="month" id="rev-month" class="tinput" style="height:32px;margin-left:auto" value="${esc(REVMONTH)}">
+    </div>
+    <div class="note" style="margin:6px 0 12px">TikTokが毎月設定する各Tierの必要ダイヤ（事務所合計）を入れてください。入力し直すとその月の値だけが置き換わります（他の月には影響しません）。</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px">`;
+  for(let i = 1; i <= 7; i++){
+    h += `<div><div style="font-size:11px;color:var(--sub);margin-bottom:4px">Tier${i}
+      <span style="font-weight:600">${rates[i] != null ? rates[i] + "%" : ""}</span></div>
+      <input class="tinput rev-in" data-tier="${i}" style="width:100%;height:32px"
+        inputmode="numeric" placeholder="必要ダイヤ" value="${byOrder[i] != null ? byOrder[i] : ""}"></div>`;
+  }
+  h += `</div>
+    <div style="display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap">
+      <button class="btn sm" onclick="saveRevenueMonth()">この月の境界値を保存</button>
+      ${months.length ? `<span class="note">登録済みの月：${months.map(m => `<a onclick="REVMONTH='${m}';renderTiers()">${esc(m)}</a>`).join(" / ")}</span>` : ""}
+      <span id="rev-result" style="font-size:12.5px"></span></div></div>`;
+  return h;
+}
+async function saveRevenueMonth(){
+  const month = $("#rev-month").value;
+  const box = $("#rev-result");
+  if(!month){ toast("対象月を選んでください"); return; }
+  const boundaries = {};
+  document.querySelectorAll(".rev-in").forEach(el => {
+    const v = (el.value || "").replace(/[,\s]/g, "");
+    if(v !== "") boundaries[el.dataset.tier] = v;
+  });
+  if(!Object.keys(boundaries).length){ toast("必要ダイヤを入力してください"); return; }
+  box.innerHTML = `<span style="color:var(--sub)">保存中…</span>`;
+  try{
+    const res = await fetch("/api/admin/dashboard/tiers/revenue-month", {method:"POST",
+      headers:{"Content-Type":"application/json"}, body: JSON.stringify({month, boundaries})});
+    const r = await res.json(); if(r.error) throw new Error(r.error);
+    toast(`${month} の境界値を保存しました（${r.saved}段階）`);
+    REVMONTH = month;
+    route();
+  }catch(e){ box.innerHTML = `<span style="color:var(--red)">${esc(e.message || e)}</span>`; }
+}
+async function tool(name, payload, confirmMsg){
+  if(confirmMsg && !confirm(confirmMsg)) return;
+  const box = $("#tool-result");
+  box.innerHTML = `<span style="color:var(--sub)">実行中…</span>`;
+  try{
+    const res = await fetch("/api/admin/dashboard/tools/" + name, {method:"POST",
+      headers:{"Content-Type":"application/json"}, body: JSON.stringify(payload || {})});
+    const r = await res.json(); if(r.error) throw new Error(r.error);
+    box.innerHTML = `<span class="up">✓ ${esc(r.message)}</span>`;
+    toast("実行しました");
+  }catch(e){ box.innerHTML = `<div class="errbox">失敗しました:\n${esc(e.message || e)}</div>`; }
+}
+async function closeTier(id){
+  const today = new Date().toISOString().slice(0, 10);
+  const d = prompt("この行の有効終了日（YYYY-MM-DD）を入力してください。\nこの日までは有効なまま、翌日以降は使われなくなります。", today);
+  if(!d) return;
+  try{
+    const res = await fetch("/api/admin/dashboard/tiers/close", {method:"POST",
+      headers:{"Content-Type":"application/json"}, body: JSON.stringify({id, valid_to: d})});
+    const r = await res.json(); if(r.error) throw new Error(r.error);
+    toast("行を締めました"); route();
+  }catch(e){ toast("失敗しました: " + (e.message || e)); }
+}
+async function addTier(){
+  const payload = {
+    program: $("#tr-prog").value, tier_name: $("#tr-name").value,
+    tier_order: $("#tr-order").value, req_diamonds: $("#tr-dia").value,
+    reward_rate: $("#tr-rate").value, valid_from: $("#tr-from").value,
+    valid_to: $("#tr-to").value,
+    scope: $("#tr-prog").value === "REVENUE" ? "AGENCY" : "CREATOR",
+    note: "ダッシュボードから手入力",
+  };
+  try{
+    if(!payload.valid_from) throw new Error("有効開始日を入れてください。");
+    const res = await fetch("/api/admin/dashboard/tiers/add", {method:"POST",
+      headers:{"Content-Type":"application/json"}, body: JSON.stringify(payload)});
+    const r = await res.json(); if(r.error) throw new Error(r.error);
+    toast("追加しました"); route();
+  }catch(e){ $("#tier-result").innerHTML = `<div class="errbox">追加に失敗しました:\n${esc(e.message || e)}</div>`; }
+}
+
+route();
 </script>
 </body>
 </html>
