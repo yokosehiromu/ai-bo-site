@@ -556,14 +556,18 @@ footer{border-top:1px solid var(--border); margin-top:88px; padding:30px 0; colo
   .rk .v{font-size:12px}
 }
 
-/* ── 理念ページ（philosophy.html） ───────────── */
-.caution{
-  background:var(--surface); border:2px solid var(--accent); border-radius:var(--radius);
-  padding:30px 34px; box-shadow:0 26px 56px -28px color-mix(in srgb, var(--accent) 52%, transparent);
+
+/* ── 拡張性の節（philosophy.html） ───────────── */
+.g4{grid-template-columns:repeat(4,1fr)}
+@media (max-width:980px){ .g4{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:620px){ .g4{grid-template-columns:1fr} }
+.feat{padding-top:15px; border-top:2px solid var(--border)}
+.feat h3{font-size:15.5px; margin:0 0 9px; line-height:1.5}
+.feat p{margin:0; color:var(--sub); font-size:13.5px}
+.ex{
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius); padding:26px 28px;
 }
-.caution .cap{font-size:11.5px; font-weight:600; letter-spacing:.08em; color:var(--accent); margin-bottom:10px}
-.caution h3{font-size:20px; margin:0 0 12px}
-.caution p{margin:0 0 10px; color:var(--sub); font-size:15px; max-width:var(--measure)}
-.caution p:last-child{margin-bottom:0}
-.caution b{color:var(--text)}
-@media (max-width:860px){ .caution{padding:26px 22px} }
+.ex .lb{font-size:11.5px; font-weight:600; letter-spacing:.06em; color:var(--accent); margin-bottom:11px}
+.ex h3{font-size:18px; margin:0 0 10px}
+.ex p{margin:0; color:var(--sub); font-size:14px}
