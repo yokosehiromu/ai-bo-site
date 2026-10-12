@@ -571,3 +571,26 @@ footer{border-top:1px solid var(--border); margin-top:88px; padding:30px 0; colo
 .ex .lb{font-size:11.5px; font-weight:600; letter-spacing:.06em; color:var(--accent); margin-bottom:11px}
 .ex h3{font-size:18px; margin:0 0 10px}
 .ex p{margin:0; color:var(--sub); font-size:14px}
+
+/* ── 2段組みの本文（カードの右側が空かないように） ── */
+.cols2{display:grid; grid-template-columns:1fr 1fr; gap:14px 42px}
+.cols2 p{margin:0; font-size:15.5px}
+@media (max-width:860px){ .cols2{grid-template-columns:1fr; gap:12px} }
+
+/* ── 締めの宣言（philosophy.html 最終節） ──────
+   サイト唯一の濃色ブロック。ここだけ配色が独立しているのは意図的。 */
+.closing{background:#1b2230; color:#fff; padding:clamp(56px,7vw,92px) 0; margin-top:clamp(40px,5vw,72px)}
+.closing .ttl{
+  display:inline-block; text-align:right; margin:0;
+  font-size:clamp(26px,4.2vw,56px); font-weight:700; line-height:1.34; letter-spacing:-.02em;
+}
+.closing .ttl span{display:block}
+.closing em{font-style:normal; color:#ff8f7c}
+.closing i{font-style:normal; color:#6d7584}
+.closing p{
+  margin:clamp(22px,2.6vw,34px) 0 0; color:#b6bdc9;
+  font-size:clamp(14px,1.15vw,17px); line-height:1.95; max-width:var(--measure);
+}
+@media (max-width:860px){
+  .closing .ttl{text-align:left; display:block}
+}
