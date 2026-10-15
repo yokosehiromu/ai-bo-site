@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>公式LINEデモ｜クリエイターからの見え方 - ai-bo</title>
+<meta name="description" content="所属クリエイターのLINEに、ai-boがどう見えているか。リッチメニューを実際に押して、マイステータス・配信メモ・コラボマッチング・ai-bo通話の4画面をそのままお試しいただけます。表示しているデータはすべて架空のものです。">
+<meta property="og:title" content="公式LINEデモ｜クリエイターからの見え方 - ai-bo">
+<meta property="og:description" content="リッチメニューを実際に押して、クリエイターに見えている画面をそのままお試しいただけます。">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="ai-bo">
+<meta property="og:url" content="https://ai-bo-lab.jp/line-demo.html">
+<meta property="og:image" content="https://ai-bo-lab.jp/images/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://ai-bo-lab.jp/line-demo.html">
+<meta name="theme-color" content="#2f66d0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f131a" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='8'%20fill='%232f66d0'/%3E%3Cg%20transform='translate(4%204)'%20fill='none'%20stroke='%23fff'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Crect%20x='4'%20y='8'%20width='16'%20height='12'%20rx='3'/%3E%3Cpath%20d='M12%208V4.5'/%3E%3Ccircle%20cx='12'%20cy='3'%20r='1.4'/%3E%3Ccircle%20cx='9'%20cy='13.5'%20r='1.3'%20fill='%23fff'%20stroke='none'/%3E%3Ccircle%20cx='15'%20cy='13.5'%20r='1.3'%20fill='%23fff'%20stroke='none'/%3E%3Cpath%20d='M9.5%2017h5'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+
+<style>
+/* ══════════════════════════════════════════════════════════════
+   公式LINEデモ（このページだけで使う）
+   ──────────────────────────────────────────────────────────────
+   端末の中身は、本番と同じ部品・同じ文面を写している。出典:
+     リッチメニュー … server/app/services/sales/richmenu.py（クリエイター視点の面）
+                      ＋ server/sales_static/richmenu_creator.png
+     マイステータス … server/dashboard/index.html（LIFF）
+     配信メモ       … server/memo_liff/index.html（LIFF）
+     コラボ         … server/collab_liff/index.html（LIFF）
+     ai-bo通話      … server/call_liff/index.html（LIFF）＋ aibo/voice.py のカタログ
+     トークの文面   … aibo/memo.py reminder_message ／ index.html のヒーローと同じ承認済み文面
+   ⚠ 表示しているクリエイターは架空。実データは絶対に載せない
+     （資料/営業用ai-bo/シナリオ設計_v0.2.md §7.3）。
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── 舞台（スマホを中央に置く） ── */
+.lp-stage{display:grid; grid-template-columns:1fr; justify-items:center; gap:34px; padding-bottom:10px}
+@media (min-width:1200px){
+  .lp-stage{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); align-items:start; gap:clamp(24px,3vw,56px)}
+  .lp-side{justify-self:end} .lp-side.r{justify-self:start}
+}
+.lp-side{display:grid; gap:14px; max-width:330px; width:100%; align-content:start}
+.lp-note{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:17px 19px}
+.lp-note h3{font-size:14px; margin:0 0 7px; display:flex; align-items:center; gap:8px}
+.lp-note h3 .n{
+  flex:none; width:21px; height:21px; border-radius:7px; background:var(--accent-soft);
+  color:var(--accent); font-size:11.5px; display:grid; place-items:center; font-weight:700;
+}
+.lp-note p{margin:0; font-size:12.8px; color:var(--sub); line-height:1.82}
+
+/* ── 端末 ── */
+.lp-phone{
+  width:396px; max-width:100%; background:var(--frame); border-radius:50px; padding:13px;
+  box-shadow:0 40px 86px -26px rgba(12,20,38,.52), 0 6px 20px rgba(12,20,38,.18);
+}
+.lp-screen{
+  position:relative; border-radius:38px; overflow:hidden; height:782px;
+  display:flex; flex-direction:column; background:#8bacd1;
+  font-size:14px; line-height:1.7; color:#111;
+}
+@media (max-width:460px){
+  .lp-phone{border-radius:34px; padding:9px}
+  .lp-screen{border-radius:26px; height:720px}
+}
+.lp-screen *{box-sizing:border-box}
+
+/* ステータスバー */
+.lp-status{
+  flex:none; background:#fff; color:#111; display:flex; align-items:center;
+  padding:9px 22px 3px; font-size:11.5px; font-weight:600;
+}
+.lp-status .sig{margin-left:auto; display:flex; align-items:center; gap:6px; opacity:.8}
+.lp-status .bat{width:19px; height:10px; border:1.3px solid #111; border-radius:3px; position:relative}
+.lp-status .bat::before{content:""; position:absolute; inset:1.5px; right:5px; background:#111; border-radius:1px}
+.lp-status .bat::after{content:""; position:absolute; right:-3.4px; top:3px; width:2px; height:4px; background:#111; border-radius:0 1px 1px 0}
+
+/* トークのヘッダー */
+.lp-talkbar{
+  flex:none; background:#fff; border-bottom:1px solid #e7e9ee;
+  display:flex; align-items:center; gap:11px; padding:7px 14px 10px;
+}
+.lp-talkbar .back{color:#5a6472; font-size:19px; line-height:1}
+.lp-talkbar .av{width:32px; height:32px; border-radius:50%; background:#2f66d0; display:grid; place-items:center; flex:none}
+.lp-talkbar b{font-size:14.5px; font-weight:600; display:block; line-height:1.3}
+.lp-talkbar .st{font-size:10.5px; color:#8a8f98; line-height:1.3; display:block}
+.lp-talkbar .tools{margin-left:auto; display:flex; gap:14px; color:#5a6472; font-size:15px}
+
+/* トーク本体 */
+.lp-chat{flex:1; overflow-y:auto; padding:14px 12px 18px; display:flex; flex-direction:column; gap:11px}
+.lp-chat::-webkit-scrollbar{width:0}
+.lp-day{align-self:center; background:rgba(0,0,0,.18); color:#fff; font-size:10.5px;
+  border-radius:999px; padding:2px 12px}
+.lp-row{display:flex; gap:7px; align-items:flex-end; max-width:100%}
+.lp-row .av{width:30px; height:30px; border-radius:50%; background:#2f66d0; flex:none; display:grid; place-items:center}
+.lp-bub{
+  background:#fff; border-radius:4px 15px 15px 15px; padding:9px 12px; font-size:13px;
+  line-height:1.75; max-width:224px; box-shadow:0 1px 1.5px rgba(0,0,0,.13); color:#111;
+}
+.lp-row .tm{font-size:9.5px; color:#f0f5fa; flex:none; margin-bottom:2px; text-shadow:0 1px 2px rgba(0,0,0,.3)}
+.lp-row.me{justify-content:flex-end}
+.lp-row.me .lp-bub{background:#8de055; border-radius:15px 4px 15px 15px; color:#15320f}
+/* flexメッセージ（配信メモのフォーム案内。本番と同じ構成） */
+.lp-flex{background:#fff; border-radius:13px; overflow:hidden; width:224px; box-shadow:0 1px 1.5px rgba(0,0,0,.13)}
+.lp-flex .bd{padding:13px 14px 14px}
+.lp-flex .ti{font-size:13.5px; font-weight:700; line-height:1.55}
+.lp-flex .tx{font-size:12px; color:#666; margin-top:5px; line-height:1.7}
+.lp-flex .ft{padding:0 12px 12px}
+.lp-flex button{
+  width:100%; border:0; border-radius:8px; background:#2f66d0; color:#fff; font-family:inherit;
+  font-size:12.5px; font-weight:700; padding:9px 0; cursor:pointer;
+}
+.lp-flex button:hover{background:#2554b4}
+.lp-qr{display:flex; gap:6px; flex-wrap:wrap; padding-left:37px}
+.lp-qr span{font-size:11px; background:#fff; border:1px solid #cfe0f0; color:#2f66d0;
+  border-radius:999px; padding:4px 12px; font-weight:600}
+
+/* 入力バー */
+.lp-input{
+  flex:none; background:#fff; border-top:1px solid #e7e9ee; display:flex; align-items:center;
+  gap:12px; padding:8px 14px; color:#8a8f98; font-size:13px;
+}
+.lp-input .ic{font-size:17px; color:#6d7684}
+.lp-input .fld{flex:1; background:#f1f3f6; border-radius:999px; padding:6px 13px; font-size:12.5px}
+
+/* リッチメニュー（本番と同じ 2500x1686 の比率。上下2段×左右2列） */
+.lp-menutab{
+  flex:none; background:#fff; border-top:1px solid #eef0f4; text-align:center;
+  font-size:11.5px; color:#5a6472; padding:5px 0 6px; cursor:pointer; font-weight:600;
+  font-family:inherit; width:100%; border-left:0; border-right:0; border-bottom:0;
+}
+.lp-menutab:hover{background:#f6f8fa}
+.lp-rich{
+  flex:none; aspect-ratio:2500/1686; background:#f4f6f9; padding:5px;
+  display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:6px;
+}
+.lp-rich.hide{display:none}
+.lp-cell{
+  background:#fff; border:1px solid #e8ecf2; border-radius:11px; display:flex;
+  flex-direction:column; align-items:center; justify-content:center; gap:2px;
+  cursor:pointer; font-family:inherit; color:#141c2b; text-align:center; padding:4px;
+  transition:background .12s, transform .12s;
+}
+.lp-cell:hover{background:#eef3fb}
+.lp-cell:active, .lp-cell.tap{background:#dce8fb; transform:scale(.985)}
+.lp-cell b{font-size:14.5px; font-weight:700; letter-spacing:.01em}
+.lp-cell span{font-size:10.5px; color:#66707f; font-weight:400}
+
+/* ── LIFF（メニューから開く画面）── */
+.lp-liff{
+  position:absolute; inset:0; background:#f4f6f9; display:flex; flex-direction:column;
+  transform:translateY(100%); transition:transform .26s cubic-bezier(.3,.8,.4,1);
+  visibility:hidden; color:#141c2b;
+}
+.lp-liff.open{transform:translateY(0); visibility:visible}
+@media (prefers-reduced-motion:reduce){ .lp-liff{transition:none} }
+.lp-liffbar{
+  flex:none; background:#fff; border-bottom:1px solid #e2e7ee; display:flex; align-items:center;
+  padding:26px 14px 11px; gap:10px;
+}
+.lp-liffbar .x{
+  border:0; background:transparent; font-size:17px; line-height:1; color:#5a6472;
+  cursor:pointer; font-family:inherit; padding:2px 4px;
+}
+.lp-liffbar .ttl{font-size:13.5px; font-weight:600; margin:0 auto; transform:translateX(-12px)}
+.lp-liffbody{flex:1; overflow-y:auto; padding:14px 14px 28px; font-size:13px; line-height:1.7}
+.lp-liffbody::-webkit-scrollbar{width:0}
+
+/* LIFFの中の共通部品（本番の各LIFFのトークンに合わせてある） */
+.lf h1{font-size:17px; margin:0 0 4px; font-weight:700}
+.lf .lead{font-size:12px; color:#66707f; margin:0 0 13px}
+.lf .card{background:#fff; border:1px solid #e2e7ee; border-radius:12px; padding:14px; margin-bottom:11px}
+.lf h2{font-size:13px; margin:0 0 9px; font-weight:700}
+.lf .sub{font-size:11.5px; color:#66707f}
+.lf .btn{
+  width:100%; padding:12px; border:0; border-radius:10px; background:#2f66d0; color:#fff;
+  font-size:14px; font-weight:700; font-family:inherit; cursor:pointer; margin-top:4px;
+}
+.lf .btn:hover{background:#2554b4}
+.lf .btn:disabled{opacity:.4; cursor:not-allowed}
+.lf .btn.ghost{background:#fff; color:#2f66d0; border:1.6px solid #2f66d0}
+.lf .btn.ghost:hover{background:#eef3fb}
+.lf .btn.small{width:auto; padding:8px 14px; font-size:12.5px; margin-top:8px}
+.lf .hint{font-size:11px; color:#8a8f98; margin-top:7px; line-height:1.65}
+.lf .msg{border-radius:9px; padding:10px 12px; font-size:12px; margin-top:10px; line-height:1.7}
+.lf .msg.ok{background:#e4f6ee; color:#15704f}
+.lf .msg.info{background:#e8effc; color:#2554b4}
+.lf .chips{display:flex; gap:7px; flex-wrap:wrap}
+.lf .chip{
+  padding:7px 13px; border:1px solid #e2e7ee; border-radius:999px; background:#f4f6f9;
+  font-size:12.5px; color:#52514e; font-family:inherit; cursor:pointer;
+}
+.lf .chip.on{background:#2f66d0; border-color:#2f66d0; color:#fff; font-weight:600}
+
+/* マイステータス */
+.lf .asof{font-size:11px; color:#8a8f98; margin:-2px 0 11px}
+.lf .rank-row{display:flex; align-items:center; gap:12px}
+.lf .medal{
+  width:58px; height:58px; border-radius:50%; background:#2a78d6; color:#fff; flex:none;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; font-weight:700;
+}
+.lf .medal .r{font-size:10px; opacity:.85; line-height:1}
+.lf .medal .n{font-size:23px; line-height:1.2}
+.lf .rank-title{font-size:19px; font-weight:700; line-height:1.3}
+.lf .rank-sub{font-size:11.5px; color:#66707f}
+.lf .rank-prev{margin-left:auto; text-align:right; font-size:10.5px; color:#8a8f98; line-height:1.5}
+.lf .rank-prev b{display:block; font-size:12.5px; color:#52514e}
+.lf .prog{margin-top:10px}
+.lf .prog .label{display:flex; justify-content:space-between; font-size:11px; color:#66707f; margin-bottom:3px}
+.lf .bar{height:8px; background:#cde2fb; border-radius:99px; overflow:hidden}
+.lf .bar i{display:block; height:100%; background:#2a78d6; border-radius:99px}
+.lf details{margin-top:12px}
+.lf summary{font-size:12px; color:#2f66d0; cursor:pointer; font-weight:600}
+.lf .rl-row{display:flex; align-items:center; gap:8px; padding:6px 8px; border-radius:8px; font-size:11.5px}
+.lf .rl-mark{width:16px; flex:none; text-align:center; font-size:10.5px; color:#8a8f98}
+.lf .rl-row.done .rl-mark{color:#2a78d6; font-weight:700}
+.lf .rl-name{flex:none; font-weight:700; min-width:5.4em}
+.lf .rl-cond{margin-left:auto; text-align:right; color:#66707f; font-size:10.5px}
+.lf .rl-row.now{background:#cde2fb; outline:1px solid #2a78d6}
+.lf .rl-badge{flex:none; font-size:9.5px; font-weight:700; background:#2a78d6; color:#fff;
+  border-radius:999px; padding:1px 7px}
+.lf .rl-badge.prev{background:transparent; color:#8a8f98; padding:1px 3px}
+.lf .rl-note{font-size:10.5px; color:#8a8f98; margin-top:9px; line-height:1.6}
+.lf .tiles{display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-bottom:11px}
+.lf .tile{background:#fff; border:1px solid #e2e7ee; border-radius:12px; padding:11px 12px}
+.lf .tile .k{font-size:10.5px; color:#66707f}
+.lf .tile .v{font-size:18px; font-weight:700; line-height:1.4}
+.lf .tile .u{font-size:11px; font-weight:500; color:#66707f}
+.lf .chart-head{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:9px}
+.lf .tabs2{display:flex; gap:4px; margin-left:auto}
+.lf .tabs2 button{
+  font-size:11px; padding:4px 10px; border-radius:999px; border:1px solid #e2e7ee;
+  background:#fff; color:#66707f; font-family:inherit; cursor:pointer;
+}
+.lf .tabs2 button.active{background:#2a78d6; border-color:#2a78d6; color:#fff; font-weight:600}
+.lf table{width:100%; border-collapse:collapse; font-size:11.5px; margin-top:8px}
+.lf table th, .lf table td{padding:5px 6px; border-bottom:1px solid #eef1f5; text-align:right}
+.lf table th:first-child, .lf table td:first-child{text-align:left; color:#66707f}
+
+/* 配信メモ */
+.lf .date{font-size:11.5px; color:#66707f; margin:0 0 11px}
+.lf .days{display:flex; gap:6px; overflow-x:auto; padding-bottom:4px}
+.lf .days::-webkit-scrollbar{height:0}
+.lf .day{
+  flex:none; min-width:62px; text-align:center; border:1px solid #e2e7ee; border-radius:9px;
+  background:#fff; padding:6px 8px; font-size:11.5px; cursor:pointer; line-height:1.5;
+}
+.lf .day.on{border-color:#2f66d0; background:#e8effc; color:#2554b4; font-weight:700}
+.lf .day .t{display:block; font-size:9.5px; color:#8a8f98; font-weight:400}
+.lf .day.done .t{color:#199b6e}
+.lf .days-note{font-size:10.5px; color:#8a8f98; margin:6px 0 12px}
+.lf .opt{
+  border:1.6px solid #e2e7ee; border-radius:11px; background:#fff; padding:12px 13px;
+  margin-bottom:9px; cursor:pointer; font-size:14px; font-weight:700;
+}
+.lf .opt .s{display:block; font-size:11px; color:#66707f; font-weight:400; margin-top:2px}
+.lf .opt.selected{border-color:#2f66d0; background:#e8effc}
+.lf .details{display:none; margin-top:4px}
+.lf .details.show{display:block}
+.lf .sess{border:1px solid #e2e7ee; border-radius:11px; padding:11px; margin-bottom:9px; background:#fff}
+.lf .sess-head{display:flex; font-size:11.5px; font-weight:700; margin-bottom:7px}
+.lf .sess-head .rm{margin-left:auto; color:#d6455d; font-weight:400; cursor:pointer}
+.lf label{display:block; font-size:11.5px; font-weight:700; margin:9px 0 4px}
+.lf .r2{display:flex; gap:8px}
+.lf .r2 > div{flex:1; min-width:0}
+.lf input, .lf select, .lf textarea{
+  width:100%; padding:8px 10px; font-size:13px; color:#141c2b; background:#f4f6f9;
+  border:1px solid #e2e7ee; border-radius:8px; font-family:inherit;
+}
+.lf textarea{min-height:66px; resize:vertical}
+.lf .add{
+  width:100%; padding:9px; border:1.4px dashed #cbd4e0; border-radius:10px; background:transparent;
+  color:#2f66d0; font-size:12.5px; font-weight:700; font-family:inherit; cursor:pointer;
+}
+.lf .done{text-align:center; padding:28px 8px 10px}
+.lf .done .big{font-size:40px; line-height:1.2}
+.lf .done h1{font-size:16px; margin:10px 0 4px}
+.lf .banner{background:#e8effc; color:#2554b4; border-radius:9px; padding:9px 11px;
+  font-size:11.5px; margin-bottom:10px; line-height:1.65}
+
+/* コラボ */
+.lf .tabs3{display:flex; gap:7px; margin-bottom:12px}
+.lf .tabs3 button{
+  flex:1; padding:8px 4px; border-radius:10px; border:1px solid #e2e7ee; background:#fff;
+  color:#66707f; font-size:12.5px; font-weight:700; font-family:inherit; cursor:pointer;
+}
+.lf .tabs3 button.active{background:#2f66d0; border-color:#2f66d0; color:#fff}
+.lf .name{font-weight:700; font-size:14px}
+.lf .badge{display:inline-block; font-size:9.5px; font-weight:700; background:#7a5bd6; color:#fff;
+  border-radius:999px; padding:1px 8px; margin-left:6px; vertical-align:2px}
+.lf .link{display:block; font-size:11.5px; color:#2f66d0; margin:6px 0 2px}
+.lf .back{font-size:12px; color:#66707f; cursor:pointer; display:inline-block; margin-bottom:9px}
+.lf .sum{width:100%; font-size:12px}
+.lf .sum td{padding:4px 2px; border-bottom:1px solid #eef1f5; text-align:left}
+.lf .sum td:first-child{color:#66707f; width:6.4em}
+
+/* ai-bo通話 */
+.lf .meter{height:8px; background:#e2e7ee; border-radius:99px; overflow:hidden; margin:7px 0 5px}
+.lf .meter i{display:block; height:100%; background:#2f66d0; border-radius:99px}
+.lf .opts{display:grid; grid-template-columns:1fr 1fr; gap:7px}
+.lf .vopt{
+  border:1px solid #e2e7ee; border-radius:10px; background:#f4f6f9; padding:8px 9px;
+  font-size:12px; font-weight:700; cursor:pointer; font-family:inherit; text-align:left; color:#141c2b;
+}
+.lf .vopt small{display:block; font-size:10px; color:#66707f; font-weight:400; margin-top:2px; line-height:1.5}
+.lf .vopt.on{border-color:#2f66d0; background:#e8effc; color:#2554b4}
+.lf .vopt.on small{color:#2554b4}
+
+/* ── 端末の下の案内 ── */
+.lp-cap{text-align:center; font-size:12.5px; color:var(--sub); margin:16px auto 0; max-width:420px}
+</style>
+</head>
+<body>
+
+<!-- ══ icon sprite ══
+     他のページと同じ定義。CSSと違って静的なので各ページに複製している。
+     触るときは全ページ。正本は assets/_sprite.html。 -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <g id="i-bot" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 8V4.5"/><circle cx="12" cy="3" r="1.4"/>
+    <circle cx="9" cy="13.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="15" cy="13.5" r="1.1" fill="currentColor" stroke="none"/>
+    <path d="M9.5 17h5"/>
+  </g>
+  <g id="i-users" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M16 19v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 4 17.5V19"/><circle cx="10" cy="8" r="3.2"/>
+    <path d="M20 19v-1.5a3.5 3.5 0 0 0-2.6-3.4M15.5 5.2a3.2 3.2 0 0 1 0 5.6"/>
+  </g>
+  <g id="i-clock" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="8.4"/><path d="M12 7.4V12l3 1.8"/>
+  </g>
+  <g id="i-mega" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 10v4a1.5 1.5 0 0 0 1.5 1.5H8l6 4V6l-6 4H5.5A1.5 1.5 0 0 0 4 11.5Z"/><path d="M17.5 9.5a4 4 0 0 1 0 5"/>
+  </g>
+  <g id="i-chat" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 12.5c0 3.9-3.6 7-8 7a9 9 0 0 1-2.6-.4L5 21l1.2-3.3A6.6 6.6 0 0 1 4 12.5c0-3.9 3.6-7 8-7s8 3.1 8 7Z"/>
+  </g>
+  <g id="i-radar" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M19.8 10a8.3 8.3 0 1 0-3.3 8.4"/><path d="M16.6 11.2A4.8 4.8 0 1 0 13 16.6"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/><path d="M12 12l6.5-5.2"/>
+  </g>
+  <g id="i-chart" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 19.5h16"/><path d="M7 16V11"/><path d="M12 16V6.5"/><path d="M17 16v-6.5"/>
+  </g>
+  <g id="i-shield" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3.5l7 2.6v5.2c0 4.3-2.9 7.6-7 9.2-4.1-1.6-7-4.9-7-9.2V6.1Z"/><path d="M9.3 12.2l1.9 1.9 3.6-3.8"/>
+  </g>
+  <g id="i-lock" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="5" y="10.5" width="14" height="9.5" rx="2.4"/><path d="M8.3 10.5V7.8a3.7 3.7 0 1 1 7.4 0v2.7"/>
+  </g>
+  <g id="i-eye" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M2.8 12S6.4 6.2 12 6.2 21.2 12 21.2 12 17.6 17.8 12 17.8 2.8 12 2.8 12Z"/><circle cx="12" cy="12" r="2.7"/>
+  </g>
+  <g id="i-check" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4.5 12.5l5 5 10-11"/>
+  </g>
+  <g id="i-arr" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 12h14"/><path d="M14 7l5 5-5 5"/>
+  </g>
+</defs>
+</svg>
+
+<header>
+  <div class="wrap hd">
+    <a href="index.html" class="logo">
+      <span class="dot"><svg width="16" height="16" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+      ai-bo
+    </a>
+    <nav>
+      <a href="index.html#about" class="nav-link">ai-boとは</a>
+      <a href="philosophy.html" class="nav-link">ai-boの理念</a>
+      <a href="index.html#samples" class="nav-link">届く文面</a>
+      <a href="line-demo.html" class="nav-link">クリエイターからの見え方</a>
+      <a href="index.html#engine" class="nav-link">仕組み</a>
+      <a href="index.html#dashboard" class="nav-link">管理画面</a>
+      <a href="dashboard.html" class="nav-link">ダッシュボードサンプル</a>
+      <a href="index.html#price" class="nav-link">料金</a>
+      <a href="index.html#contact" class="btn btn-primary">相談する</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ══ PAGE HEAD ══ -->
+<section class="pagehead">
+  <div class="wrap">
+    <p class="crumb"><a href="index.html">ai-bo</a>　›　クリエイターからの見え方</p>
+    <span class="eyebrow">公式LINEデモ</span>
+    <h1>クリエイターのLINEには、<br>こう見えています。</h1>
+    <p class="lead">所属クリエイターが見ている画面を、そのまま置きました。下にあるのが、公式LINEに常に出ている「リッチメニュー」です。押すと、本番と同じ画面がそのまま開きます。表示しているクリエイターと数字は、すべて架空のものです。</p>
+  </div>
+</section>
+
+<!-- ══ 端末 ══ -->
+<section>
+  <div class="wrap">
+    <div class="lp-stage">
+
+      <!-- 左の読み物 -->
+      <div class="lp-side">
+        <div class="lp-note">
+          <h3><span class="n">1</span>毎朝、その人だけの声かけ</h3>
+          <p>一斉配信ではありません。前日までの配信データを一人ひとり見て、その人に向けた文面を毎朝お届けします。クリエイター側に日課はありません。</p>
+        </div>
+        <div class="lp-note">
+          <h3><span class="n">2</span>夜は、配信メモの声かけ</h3>
+          <p>23時に、その日の配信メモをうかがいます。ただし<b>全員には送りません</b>。直近10日以内に配信がある方だけです。間が空いている方には、別の（引き戻しの）声かけに切り替わります。</p>
+        </div>
+        <div class="lp-note">
+          <h3><span class="n">3</span>返事は、ふつうのLINEのまま</h3>
+          <p>アプリのインストールも、ログインも要りません。クリエイターにとっては「LINEが1件増えるだけ」です。だから続きます。</p>
+        </div>
+      </div>
+
+      <!-- 中央のスマホ -->
+      <div>
+        <div class="lp-phone">
+          <div class="lp-screen" role="group" aria-label="ai-bo 公式LINEのデモ画面">
+
+            <div class="lp-status">
+              <span>9:41</span>
+              <span class="sig"><span>•ıl</span><span class="bat"></span></span>
+            </div>
+
+            <div class="lp-talkbar">
+              <span class="back">‹</span>
+              <span class="av"><svg width="18" height="18" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+              <span><b>ai-bo</b><span class="st">あなたの伴走者</span></span>
+              <span class="tools"><span>☎</span><span>≡</span></span>
+            </div>
+
+            <!-- トーク。文面は承認済みのものだけを使っている（新規に作文しない） -->
+            <div class="lp-chat" id="chat">
+              <div class="lp-day">昨日</div>
+              <div class="lp-row">
+                <span class="av"><svg width="16" height="16" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+                <div class="lp-flex">
+                  <div class="bd">
+                    <div class="ti">こんばんは、ai-boです🌙</div>
+                    <div class="tx">今日の配信メモがまだのようです。フォームから選ぶだけでOKです。</div>
+                  </div>
+                  <div class="ft"><button type="button" data-open="memo">フォームを開く📝</button></div>
+                </div>
+                <span class="tm">23:00</span>
+              </div>
+
+              <div class="lp-day">今日</div>
+              <div class="lp-row">
+                <span class="av"><svg width="16" height="16" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+                <div class="lp-bub">おはようございます！<br>今月、あと1日配信できたら“配信した日”が7日になります。時間もあと1時間ちょっとです。</div>
+                <span class="tm">9:00</span>
+              </div>
+              <div class="lp-row">
+                <span class="av"><svg width="16" height="16" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+                <div class="lp-bub">今週のどこか、いけそうな日ってありますか？</div>
+                <span class="tm">9:00</span>
+              </div>
+              <div class="lp-row me">
+                <span class="tm">9:14</span>
+                <div class="lp-bub">木曜ならいけそう！</div>
+              </div>
+              <div class="lp-row">
+                <span class="av"><svg width="16" height="16" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+                <div class="lp-bub">いいですね。木曜に1時間いけたら、今月の“配信した日”は7日に届きます。<br>当日の朝にまた声をかけますね。</div>
+                <span class="tm">9:14</span>
+              </div>
+              <div class="lp-qr"><span>配信メモを書く</span><span>コラボを探す</span></div>
+            </div>
+
+            <div class="lp-input">
+              <span class="ic">＋</span>
+              <span class="fld">メッセージを入力</span>
+              <span class="ic">☺</span>
+            </div>
+
+            <!-- chatBarText（本番の設定値は「メニュー」）。押すとリッチメニューが閉じる -->
+            <button class="lp-menutab" id="menuTab" type="button" aria-expanded="true" aria-controls="rich">メニュー　▾</button>
+
+            <div class="lp-rich" id="rich">
+              <button class="lp-cell" type="button" data-open="status"><b>マイステータス</b><span>成長が見える画面</span></button>
+              <button class="lp-cell" type="button" data-open="memo"><b>配信メモ</b><span>ワンタップ記録</span></button>
+              <button class="lp-cell" type="button" data-open="collab"><b>コラボ</b><span>相手探しと日程調整</span></button>
+              <button class="lp-cell" type="button" data-open="call"><b>ai-boと話す</b><span>音声で体験する</span></button>
+            </div>
+
+            <!-- メニューから開く画面（本番はLIFF） -->
+            <div class="lp-liff" id="liff" aria-hidden="true">
+              <div class="lp-liffbar">
+                <button class="x" type="button" id="liffClose" aria-label="閉じる">✕</button>
+                <span class="ttl" id="liffTitle"></span>
+              </div>
+              <div class="lp-liffbody lf" id="liffBody"></div>
+            </div>
+
+          </div>
+        </div>
+        <p class="lp-cap">↑ 画面下の4つが、クリエイターのLINEに常に出ているリッチメニューです。押してみてください。</p>
+      </div>
+
+      <!-- 右の読み物 -->
+      <div class="lp-side r">
+        <div class="lp-note">
+          <h3><span class="n">4</span>マイステータス</h3>
+          <p>独自ランク（全10段階）・今月の実績・成長グラフ。ランクは毎月1日に積み上げ直しになるため、<b>先月のランクを併記</b>します。下がったことは本人に伝えません。</p>
+        </div>
+        <div class="lp-note">
+          <h3><span class="n">5</span>配信メモ</h3>
+          <p>3択を押すだけ。時間とダイヤは任意で、1日に複数回配信した日も分けて残せます。送り忘れた日は、7日前まで後から入力できます。</p>
+        </div>
+        <div class="lp-note">
+          <h3><span class="n">6</span>コラボマッチング</h3>
+          <p>相手探し・日程の打診・成立・前日と開始1時間前のリマインド・実施後の確認まで、ai-boが進めます。48時間返事のない申請は自動で失効します。</p>
+        </div>
+        <div class="lp-note">
+          <h3><span class="n">7</span>ai-boと話す（音声通話）</h3>
+          <p>声・性格・テンションを選んで、ai-boと声で話せます。1回10分・1人あたり月60分まで。文字のチャットと同じ人格と禁則を引き継ぎます。</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ 補足 ══ -->
+<section>
+  <div class="wrap">
+    <h2>運営側で必要な操作は、ありません。</h2>
+    <p class="lead">上の画面はすべて、ai-boが自動で出しています。運営の日課は、データを1回アップロードするだけです。</p>
+    <div class="grid g3">
+      <div class="card">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-eye"/></svg></div>
+        <h3>共有範囲は本人にも伝えます</h3>
+        <p>やりとりの内容が事務所に共有されることは、入口で本人に伝え、「使い方」といつでも読み直せるようにしています。隠して集めることはしません。</p>
+      </div>
+      <div class="card">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-shield"/></svg></div>
+        <h3>デモのデータは架空です</h3>
+        <p>この画面のクリエイター・数字・やりとりは、すべてデモ用に作ったものです。実在する事務所のデータを、個人が分かる形でお見せすることはありません。</p>
+      </div>
+      <div class="card">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-chart"/></svg></div>
+        <h3>運営の画面も見られます</h3>
+        <p>同じデータを運営側からどう見るかは、ダッシュボードのサンプルでご覧いただけます。本番と同じ画面です。</p>
+      </div>
+    </div>
+    <div class="more">
+      <a href="dashboard.html" class="btn-pill">ダッシュボードサンプルを見る<span class="ar"><svg width="16" height="16" viewBox="0 0 24 24"><use href="#i-arr"/></svg></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 締め ══ -->
+<section class="closing">
+  <div class="wrap">
+    <div>
+      <h2 class="ttl">
+        <span>所属クリエイター全員の隣に、</span>
+        <span><em>AIの相棒</em>を。</span>
+      </h2>
+      <p>実際の画面を、御社の運用に合わせてご覧いただくこともできます。<br>まずは ai-bo 自身に、何でも聞いてみてください。</p>
+    </div>
+    <div class="act">
+      <a href="https://lin.ee/x7dkQQq" target="_blank" rel="noopener" class="btn btn-primary btn-lg">LINEで ai-bo と話す</a>
+      <a href="mailto:info@ai-bo-lab.jp" class="btn btn-ghost btn-lg">メールで問い合わせる</a>
+      <p class="note">ai-bo自身が、ai-boについて答えます。</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap fin">
+    <a href="index.html" class="logo" style="font-size:15px">
+      <span class="dot" style="width:22px;height:22px;border-radius:7px"><svg width="14" height="14" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+      ai-bo
+    </a>
+    <a href="philosophy.html">ai-boの理念</a>
+    <a href="problem.html">構造上の問題</a>
+    <a href="service.html">サービス詳細</a>
+    <a href="dashboard.html">ダッシュボード</a>
+    <a href="index.html#price">料金</a>
+    <a href="index.html#company">運営者情報</a>
+    <span class="c">© 2026 ai-bo</span>
+  </div>
+</footer>
+
+<script>
+"use strict";
+/* ══════════════════════════════════════════════════════════════
+   リッチメニュー → LIFF の動き（本番と同じ道筋）
+   本番: リッチメニューのマス = uri アクション → LIFFがトークの上に開く
+         → ✕ で liff.closeWindow() → トークに戻る
+   ここ: 同じ順番で、同じ画面を出す。数字はすべて架空。
+   ══════════════════════════════════════════════════════════════ */
+const fmt = n => Number(n).toLocaleString("ja-JP");
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g,
+  c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+const liffEl = document.getElementById("liff");
+const body   = document.getElementById("liffBody");
+const titleEl = document.getElementById("liffTitle");
+
+const SCREENS = {
+  status: { title: "マイステータス",   render: renderStatus },
+  memo:   { title: "配信メモ",         render: renderMemo },
+  collab: { title: "コラボマッチング", render: renderCollab },
+  call:   { title: "ai-bo通話",        render: renderCall },
+};
+
+function openScreen(key){
+  const s = SCREENS[key];
+  if (!s) return;
+  titleEl.textContent = s.title;
+  s.render();
+  body.scrollTop = 0;
+  liffEl.classList.add("open");
+  liffEl.setAttribute("aria-hidden", "false");
+}
+function closeScreen(){
+  liffEl.classList.remove("open");
+  liffEl.setAttribute("aria-hidden", "true");
+}
+document.getElementById("liffClose").addEventListener("click", closeScreen);
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeScreen(); });
+
+// リッチメニューのマスと、トーク内のボタン（flexメッセージ）の両方から開く
+document.querySelectorAll("[data-open]").forEach(el => {
+  el.addEventListener("click", () => {
+    el.classList.add("tap");
+    setTimeout(() => el.classList.remove("tap"), 150);
+    openScreen(el.dataset.open);
+  });
+});
+
+// chatBarText を押すとリッチメニューが開閉する（本番のLINEと同じ）
+const rich = document.getElementById("rich");
+const menuTab = document.getElementById("menuTab");
+menuTab.addEventListener("click", () => {
+  const hidden = rich.classList.toggle("hide");
+  menuTab.textContent = hidden ? "メニュー　▴" : "メニュー　▾";
+  menuTab.setAttribute("aria-expanded", String(!hidden));
+});
+
+/* ══ 1. マイステータス（server/dashboard/index.html と同じ構成）══ */
+// ai-boランク（server/app/services/aibo/domain_constants.py AIBO_RANKS）
+const RANKS = [
+  [1, "スタート", 0, 0, 0], [2, "アイアン", 1, 1, 0], [3, "ブロンズ", 3, 3, 1000],
+  [4, "シルバー", 8, 25, 10000], [5, "ゴールド", 12, 35, 50000], [6, "プラチナ", 15, 45, 200000],
+  [7, "ダイヤモンド", 18, 70, 500000], [8, "マスター", 20, 90, 1000000],
+  [9, "グランド", 22, 110, 3000000], [10, "レジェンド", 22, 110, 5000000],
+];
+const ME = { num: 5, name: "ゴールド", prev: { num: 6, name: "プラチナ" },
+             days: 12, hours: 35.4, dia: 82400, followers: 148, impressions: 24900 };
+const HISTORY = [
+  { m: "5月",  dia: 21000,  new_followers: 42,  impressions: 9800  },
+  { m: "6月",  dia: 38500,  new_followers: 71,  impressions: 14200 },
+  { m: "7月",  dia: 64200,  new_followers: 96,  impressions: 19600 },
+  { m: "8月",  dia: 118000, new_followers: 187, impressions: 31400 },
+  { m: "9月",  dia: 205600, new_followers: 214, impressions: 38900 },
+  { m: "10月", dia: 82400,  new_followers: 148, impressions: 24900 },
+];
+const METRICS = [
+  { key: "dia",           label: "ダイヤ" },
+  { key: "new_followers", label: "フォロワー" },
+  { key: "impressions",   label: "インプレ" },
+];
+let metricKey = "dia";
+
+function renderStatus(){
+  const nxt = RANKS[ME.num];            // 0始まりなので、ME.num がそのまま「次のランク」
+  const rows = [
+    { k: "配信日数", cur: ME.days,  req: nxt[2], u: "日" },
+    { k: "配信時間", cur: ME.hours, req: nxt[3], u: "h" },
+    { k: "ダイヤ",   cur: ME.dia,   req: nxt[4], u: "" },
+  ];
+  const prog = rows.map(r => {
+    const pct = r.req > 0 ? Math.min(100, r.cur / r.req * 100) : 100;
+    return '<div class="prog">'
+      + '<div class="label"><span>' + r.k + '</span><span>'
+      + fmt(r.cur) + ' / ' + fmt(r.req) + r.u + '</span></div>'
+      + '<div class="bar"><i style="width:' + pct.toFixed(1) + '%"></i></div></div>';
+  }).join("");
+
+  const rankRows = RANKS.map(r => {
+    const num = r[0], name = r[1], days = r[2], hours = r[3], dia = r[4];
+    const isNow = num === ME.num, done = num <= ME.num;
+    const cond = num === 1 ? "所属した全員"
+      : [fmt(days) + "日", fmt(hours) + "h"].concat(dia > 0 ? ["ダイヤ" + fmt(dia)] : []).join(" ／ ");
+    const badge = isNow ? '<span class="rl-badge">いまここ</span>'
+      : (num === ME.prev.num ? '<span class="rl-badge prev">先月</span>' : "");
+    return '<div class="rl-row' + (isNow ? " now" : "") + (done ? " done" : "") + '">'
+      + '<span class="rl-mark">' + (done ? "✓" : num) + '</span>'
+      + '<span class="rl-name">' + name + '</span>' + badge
+      + '<span class="rl-cond">' + cond + '</span></div>';
+  }).join("");
+
+  body.innerHTML = `
+    <h1>マイステータス <span class="sub" style="font-weight:400">@hikari_ch</span></h1>
+    <div class="asof">2026-10-11 時点</div>
+
+    <div class="card">
+      <div class="rank-row">
+        <div class="medal"><span class="r">RANK</span><span class="n">${ME.num}</span></div>
+        <div>
+          <div class="rank-title">${ME.name}</div>
+          <div class="rank-sub">次のランク: R${nxt[0]} ${nxt[1]}</div>
+        </div>
+        <div class="rank-prev">先月<b>${ME.prev.name}</b></div>
+      </div>
+      ${prog}
+      <details>
+        <summary>ランク一覧を見る（全${RANKS.length}段階）</summary>
+        <div style="margin-top:9px">${rankRows}
+          <div class="rl-note">3つの条件をすべて満たすと、そのランクに到達します。<br>
+            ランクはその月の実績で決まります。毎月1日に新しい月がはじまり、先月の到達は上に表示されます。</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="tiles">
+      <div class="tile"><div class="k">今月のダイヤ</div><div class="v">${fmt(ME.dia)}</div></div>
+      <div class="tile"><div class="k">今月の配信</div>
+        <div class="v">${ME.days}<span class="u">日 / </span>${ME.hours}<span class="u">h</span></div></div>
+      <div class="tile"><div class="k">新規フォロワー(今月)</div><div class="v">${fmt(ME.followers)}<span class="u">人</span></div></div>
+      <div class="tile"><div class="k">インプレッション(今月)</div><div class="v">${fmt(ME.impressions)}</div></div>
+    </div>
+
+    <div class="card">
+      <div class="chart-head"><h2 style="margin:0">成長グラフ（月次）</h2>
+        <div class="tabs2" id="chartTabs"></div></div>
+      <div id="chartArea"></div>
+      <details><summary>表で見る</summary><div id="chartTable"></div></details>
+    </div>
+
+    <p class="hint">※ このページのクリエイターと数字は、デモ用の架空のものです。</p>`;
+
+  drawTabs();
+  drawChart();
+}
+
+function drawTabs(){
+  const el = document.getElementById("chartTabs");
+  el.innerHTML = METRICS.map(m =>
+    '<button type="button" data-k="' + m.key + '" class="'
+    + (m.key === metricKey ? "active" : "") + '">' + m.label + '</button>').join("");
+  el.querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
+    metricKey = b.dataset.k; drawTabs(); drawChart();
+  }));
+}
+
+/** 本番と同じ「単一系列の棒グラフ」。SVGを素で書く（ライブラリを足さない）。 */
+function drawChart(){
+  const label = METRICS.find(m => m.key === metricKey).label;
+  const max = Math.max.apply(null, HISTORY.map(h => h[metricKey])) || 1;
+  const W = 400, H = 190, PAD_L = 8, PAD_B = 26, PAD_T = 20;
+  const bw = (W - PAD_L * 2) / HISTORY.length;
+  const bars = HISTORY.map((h, i) => {
+    const v = h[metricKey];
+    const bh = (H - PAD_B - PAD_T) * (v / max);
+    const x = PAD_L + i * bw + bw * 0.18, y = H - PAD_B - bh, w = bw * 0.64;
+    return '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + w.toFixed(1)
+      + '" height="' + Math.max(1, bh).toFixed(1) + '" rx="3" fill="#2a78d6"></rect>'
+      + '<text x="' + (x + w / 2).toFixed(1) + '" y="' + (y - 5).toFixed(1)
+      + '" font-size="10" text-anchor="middle" fill="#66707f">' + fmt(v) + '</text>'
+      + '<text x="' + (x + w / 2).toFixed(1) + '" y="' + (H - 8)
+      + '" font-size="10" text-anchor="middle" fill="#8a8f98">' + h.m + '</text>';
+  }).join("");
+  document.getElementById("chartArea").innerHTML =
+    '<svg viewBox="0 0 ' + W + ' ' + H + '" width="100%" role="img" aria-label="'
+    + label + 'の月次推移">'
+    + '<line x1="' + PAD_L + '" y1="' + (H - PAD_B) + '" x2="' + (W - PAD_L)
+    + '" y2="' + (H - PAD_B) + '" stroke="#e2e7ee"></line>' + bars + '</svg>';
+  document.getElementById("chartTable").innerHTML =
+    '<table><tr><th>月</th><th>' + label + '</th></tr>'
+    + HISTORY.map(h => '<tr><td>' + h.m + '</td><td>' + fmt(h[metricKey]) + '</td></tr>').join("")
+    + '</table>';
+}
+
+/* ══ 2. 配信メモ（server/memo_liff/index.html と同じ流れ）══ */
+// 後から入力できるのは今日を含めて7日（domain_constants の仕様）
+const MEMO_DAYS = [
+  { d: "10-11", label: "10/11(土)", today: true,  submitted: false },
+  { d: "10-10", label: "10/10(金)", today: false, submitted: true  },
+  { d: "10-09", label: "10/9(木)",  today: false, submitted: true  },
+  { d: "10-08", label: "10/8(水)",  today: false, submitted: false },
+  { d: "10-07", label: "10/7(火)",  today: false, submitted: true  },
+  { d: "10-06", label: "10/6(月)",  today: false, submitted: true  },
+  { d: "10-05", label: "10/5(日)",  today: false, submitted: false },
+];
+const DONE_MSG = { streamed: "配信おつかれさまでした！🎉", rest: "了解です、ゆっくり休んでくださいね🌿",
+                   tonight: "今夜の配信、応援しています🔥" };
+let memo = { day: "10-11", selected: null, sessions: [{ start: "", end: "", dia: "" }] };
+
+function timeOpts(sel){
+  let h = '<option value="">--:--</option>';
+  for (let i = 0; i < 48; i++){
+    const v = String(Math.floor(i / 2)).padStart(2, "0") + (i % 2 ? ":30" : ":00");
+    h += '<option' + (v === sel ? " selected" : "") + '>' + v + '</option>';
+  }
+  return h;
+}
+
+function renderMemo(){
+  const cur = MEMO_DAYS.find(x => x.d === memo.day);
+  const chips = MEMO_DAYS.map(x =>
+    '<div class="day' + (x.d === memo.day ? " on" : "") + (x.submitted ? " done" : "")
+    + '" data-day="' + x.d + '">' + (x.today ? "今日" : esc(x.label))
+    + '<span class="t">' + (x.submitted ? "✓ 提出済" : "未提出") + '</span></div>').join("");
+
+  body.innerHTML = `
+    <h1>📝 配信メモ</h1>
+    <div class="date">${esc(cur.label)}${cur.today ? "（今日）" : ""} の分（朝5時で日付が切り替わります）</div>
+    <div class="days">${chips}</div>
+    <p class="days-note">送り忘れた日は、日付を選べばあとから入力できます。</p>
+    ${cur.submitted ? '<div class="banner">' + (cur.today ? "今日は" : "この日は")
+      + 'もう提出済みです。内容の修正もできます👇</div>' : ""}
+
+    <div class="opt" data-pick="streamed">🔥 ${cur.today ? "今日" : "この日"}配信した
+      <span class="s">おつかれさまでした！時間とダイヤも残せます（任意）</span></div>
+    <div class="opt" data-pick="rest">🌿 ${cur.today ? "今日" : "この日"}は配信休み
+      <span class="s">休むのも大事な仕事です</span></div>
+    ${cur.today ? `<div class="opt" data-pick="tonight">🌙 今夜これから配信
+      <span class="s">応援しています！終わったらまた教えてください</span></div>` : ""}
+
+    <div class="details" id="memoDetails">
+      <h2 style="margin-top:14px">配信の実績（任意）</h2>
+      <div class="hint" style="margin:0 0 9px">わからなければ空欄でOK。あとからExcelのデータでも補完されます。<br>
+        複数回配信した日は「＋配信を追加」でぜんぶ記録できます</div>
+      <div id="sessions"></div>
+      <button type="button" class="add" id="addSess">＋ 配信を追加</button>
+    </div>
+
+    <button class="btn" type="button" id="memoSubmit" disabled>${cur.submitted ? "修正して送信" : "送信する"}</button>`;
+
+  body.querySelectorAll("[data-day]").forEach(el => el.addEventListener("click", () => {
+    memo.day = el.dataset.day;
+    memo.selected = null;
+    memo.sessions = [{ start: "", end: "", dia: "" }];
+    renderMemo(); body.scrollTop = 0;
+  }));
+  body.querySelectorAll("[data-pick]").forEach(el => el.addEventListener("click", () => {
+    memo.selected = el.dataset.pick; applyMemo();
+  }));
+  document.getElementById("addSess").addEventListener("click", () => {
+    readSessions();
+    if (memo.sessions.length < 5) memo.sessions.push({ start: "", end: "", dia: "" });
+    drawSessions();
+  });
+  document.getElementById("memoSubmit").addEventListener("click", memoDone);
+  drawSessions();
+  if (memo.selected) applyMemo();
+}
+
+function drawSessions(){
+  const c = document.getElementById("sessions");
+  if (!c) return;
+  c.innerHTML = memo.sessions.map((s, i) =>
+    '<div class="sess">'
+    + '<div class="sess-head"><span>配信' + (i + 1) + '</span>'
+    + (memo.sessions.length > 1 ? '<span class="rm" data-rm="' + i + '">✕ この回を削除</span>' : "")
+    + '</div><div class="r2">'
+    + '<div><label>開始</label><select id="s-start-' + i + '">' + timeOpts(s.start) + '</select></div>'
+    + '<div><label>終了</label><select id="s-end-' + i + '">' + timeOpts(s.end) + '</select></div>'
+    + '</div><label>この回のダイヤ</label>'
+    + '<input type="number" id="s-dia-' + i + '" min="0" placeholder="例: 2500" value="'
+    + esc(s.dia) + '"></div>').join("");
+  const add = document.getElementById("addSess");
+  if (add) add.style.display = memo.sessions.length >= 5 ? "none" : "block";
+  c.querySelectorAll("[data-rm]").forEach(el => el.addEventListener("click", () => {
+    readSessions();
+    memo.sessions.splice(Number(el.dataset.rm), 1);
+    if (!memo.sessions.length) memo.sessions.push({ start: "", end: "", dia: "" });
+    drawSessions();
+  }));
+}
+function readSessions(){
+  memo.sessions = memo.sessions.map((_, i) => ({
+    start: (document.getElementById("s-start-" + i) || {}).value || "",
+    end:   (document.getElementById("s-end-" + i) || {}).value || "",
+    dia:   (document.getElementById("s-dia-" + i) || {}).value || "",
+  }));
+}
+function applyMemo(){
+  body.querySelectorAll("[data-pick]").forEach(el =>
+    el.classList.toggle("selected", el.dataset.pick === memo.selected));
+  document.getElementById("memoDetails").classList.toggle("show", memo.selected === "streamed");
+  document.getElementById("memoSubmit").disabled = !memo.selected;
+}
+function memoDone(){
+  const cur = MEMO_DAYS.find(x => x.d === memo.day);
+  cur.submitted = true;
+  const miss = MEMO_DAYS.filter(x => !x.submitted);
+  body.innerHTML = `
+    <div class="done">
+      <div class="big">✅</div>
+      <h1>${esc(cur.label)} の分を記録しました</h1>
+      <p class="sub">${DONE_MSG[memo.selected] || ""}</p>
+      ${miss.length ? '<p class="sub" style="font-size:12px">まだ出していない日が' + miss.length
+        + '日あります</p><button class="btn ghost small" type="button" id="memoNext">他の日も入力する</button>' : ""}
+      <button class="btn" type="button" style="margin-top:10px" id="memoClose">閉じる</button>
+    </div>
+    <div class="msg info" style="margin-top:18px">
+      本番ではこのあと、ai-boが実績に合わせたひとことをLINEに返します（定型文ではありません）。</div>`;
+  const next = document.getElementById("memoNext");
+  if (next) next.addEventListener("click", () => {
+    const m = MEMO_DAYS.filter(x => !x.submitted);
+    memo.day = m.length ? m[m.length - 1].d : memo.day;   // いちばん古い未提出日
+    memo.selected = null;
+    memo.sessions = [{ start: "", end: "", dia: "" }];
+    renderMemo(); body.scrollTop = 0;
+  });
+  document.getElementById("memoClose").addEventListener("click", closeScreen);
+}
+
+/* ══ 3. コラボマッチング（server/collab_liff/index.html と同じ流れ）══ */
+const CANDIDATES = [
+  { u: "rin_0808",   rank: "ゴールド",  band: "平日 21〜23時" },
+  { u: "miku_live",  rank: "シルバー",  band: "週末の 20〜22時" },
+  { u: "nanase_tv",  rank: "ゴールド",  band: "平日 22〜24時" },
+  { u: "aoi__room",  rank: "ブロンズ",  band: "平日 20〜22時" },
+  { u: "yuki_sings", rank: "プラチナ",  band: "ほぼ毎日 21〜23時" },
+];
+const SLOT_CHOICES = ["10/15(水) 21:00〜22:00", "10/16(木) 22:00〜23:00", "10/18(土) 21:30〜22:30"];
+let collab = { tab: 1, view: "", target: null, slots: [], message: "" };
+
+function renderCollab(){
+  const tabs = '<div class="tabs3">'
+    + '<button type="button" data-tab="1" class="' + (collab.tab === 1 ? "active" : "") + '">相手を探す</button>'
+    + '<button type="button" data-tab="2" class="' + (collab.tab === 2 ? "active" : "") + '">進行中・履歴</button>'
+    + '</div>';
+  let html;
+  if (collab.tab === 2)                    html = collabLists();
+  else if (collab.view === "slots")        html = collabSlots();
+  else if (collab.view === "message")      html = collabMessage();
+  else if (collab.view === "confirm")      html = collabConfirm();
+  else if (collab.view === "done")         html = collabDone();
+  else                                     html = collabCandidates();
+  body.innerHTML = tabs + html;
+
+  body.querySelectorAll("[data-tab]").forEach(el => el.addEventListener("click", () => {
+    collab.tab = Number(el.dataset.tab);
+    if (collab.tab === 1 && collab.view === "done") collab.view = "";
+    renderCollab(); body.scrollTop = 0;
+  }));
+  body.querySelectorAll("[data-pickc]").forEach(el => el.addEventListener("click", () => {
+    collab.target = CANDIDATES[Number(el.dataset.pickc)];
+    collab.slots = []; collab.message = ""; collab.view = "slots";
+    renderCollab(); body.scrollTop = 0;
+  }));
+  body.querySelectorAll("[data-slot]").forEach(el => el.addEventListener("click", () => {
+    const s = el.dataset.slot;
+    const i = collab.slots.indexOf(s);
+    if (i >= 0) collab.slots.splice(i, 1);
+    else if (collab.slots.length < 3) collab.slots.push(s);
+    renderCollab();
+  }));
+  body.querySelectorAll("[data-go]").forEach(el => el.addEventListener("click", () => {
+    const ta = document.getElementById("collabMsg");
+    if (ta) collab.message = ta.value;
+    if (el.dataset.go === "skip"){ collab.message = ""; collab.view = "confirm"; }
+    else collab.view = el.dataset.go;
+    renderCollab(); body.scrollTop = 0;
+  }));
+}
+
+function collabCandidates(){
+  return CANDIDATES.map((c, i) =>
+    '<div class="card">'
+    + '<div class="name">' + esc(c.u) + '<span class="badge">' + esc(c.rank) + '</span></div>'
+    + '<div class="sub" style="margin-top:3px">よく配信する時間: ' + esc(c.band) + '</div>'
+    + '<a class="link" href="javascript:void(0)">▷ TikTokで見る</a>'
+    + '<button class="btn small" type="button" data-pickc="' + i + '">この人に申請する</button>'
+    + '</div>').join("")
+    + '<p class="hint">候補は、よく配信する時間帯などから ai-bo が選んでいます。'
+    + '事務所の中から探すので、知らない人にいきなり声をかける必要がありません。</p>';
+}
+
+function collabSlots(){
+  const chips = SLOT_CHOICES.map(s =>
+    '<span class="chip' + (collab.slots.indexOf(s) >= 0 ? " on" : "")
+    + '" data-slot="' + esc(s) + '">' + esc(s) + '</span>').join("");
+  return '<span class="back" data-go="">← 候補にもどる</span>'
+    + '<div class="card">'
+    + '<div class="name">' + esc(collab.target.u) + ' さんに申請</div>'
+    + '<div class="sub" style="margin-top:5px">候補の日程を1〜3つ選んでください（相手がこの中から選びます）</div>'
+    + '<div class="chips" style="margin-top:11px">' + chips + '</div>'
+    + '<button class="btn small" type="button" data-go="message"'
+    + (collab.slots.length ? "" : " disabled") + '>つぎへ（一言メッセージ）</button></div>';
+}
+
+function collabMessage(){
+  return '<span class="back" data-go="slots">← 日程にもどる</span>'
+    + '<div class="card">'
+    + '<div class="name">' + esc(collab.target.u) + ' さんに一言添えられます（任意）</div>'
+    + '<textarea id="collabMsg" maxlength="100" style="margin-top:9px" '
+    + 'placeholder="はじめまして！よく歌枠をしています。ぜひ一緒にLIVE Matchしませんか？">'
+    + esc(collab.message) + '</textarea>'
+    + '<div class="hint">※ LINE IDやSNSアカウントなど、連絡先の交換につながる内容は送れません。'
+    + '送信の前にAIが確認し、迷ったら止めます。</div>'
+    + '<button class="btn small" type="button" data-go="confirm">確認へ</button>'
+    + '<button class="btn ghost small" type="button" data-go="skip" style="margin-left:6px">スキップ</button>'
+    + '</div>';
+}
+
+function collabConfirm(){
+  return '<span class="back" data-go="message">← 一言にもどる</span>'
+    + '<div class="card"><h2>この内容で申請します</h2><table class="sum">'
+    + '<tr><td>相手</td><td>' + esc(collab.target.u) + '（' + esc(collab.target.rank) + '）</td></tr>'
+    + '<tr><td>日程候補</td><td>' + collab.slots.map(esc).join("<br>") + '</td></tr>'
+    + '<tr><td>ひとこと</td><td>' + (collab.message ? esc(collab.message) : "（なし）") + '</td></tr>'
+    + '</table><button class="btn small" type="button" data-go="done">申請を送る</button></div>';
+}
+
+function collabDone(){
+  return '<div class="done"><div class="big">🤝</div>'
+    + '<h1>' + esc(collab.target.u) + ' さんに申請しました</h1>'
+    + '<p class="sub">相手が日程を選ぶと成立します。48時間返事がなければ自動で失効し、'
+    + 'あなたにもその旨が届きます。</p></div>'
+    + '<div class="msg info">本番ではこのあと、成立・前日・開始1時間前・翌日の確認まで、'
+    + 'ai-boが自動で進めます。15分ごとに期限と締切を見ているので、放置されたまま止まることがありません。</div>'
+    + '<button class="btn ghost" type="button" data-go="" style="margin-top:12px">候補にもどる</button>';
+}
+
+function collabLists(){
+  return '<div class="sub" style="font-weight:700; margin:2px 2px 8px">進行中</div>'
+    + '<div class="card"><div class="name">yuki_sings<span class="badge">プラチナ</span></div>'
+    + '<div class="sub" style="margin-top:4px">📅 10/14(火) 22:00〜23:00 で成立</div>'
+    + '<div class="sub">前日と開始1時間前に、ai-boからリマインドが届きます</div>'
+    + '<button class="btn ghost small" type="button">キャンセルする</button></div>'
+    + '<div class="sub" style="font-weight:700; margin:16px 2px 8px">履歴</div>'
+    + '<div class="card"><div class="name">miku_live<span class="badge">シルバー</span></div>'
+    + '<div class="sub" style="margin-top:4px">10/2(木) 実施できた</div>'
+    + '<button class="btn ghost small" type="button">💬 メッセージ履歴</button></div>'
+    + '<div class="card"><div class="name">aoi__room<span class="badge">ブロンズ</span></div>'
+    + '<div class="sub" style="margin-top:4px">9/26(金) 返事がないまま期限切れで失効</div></div>';
+}
+
+/* ══ 4. ai-bo通話（server/call_liff/index.html ＋ aibo/voice.py のカタログ）══ */
+const VOICES = [
+  { k: "marin",   l: "やわらかい女性",   n: "落ち着いていて聞き取りやすい。迷ったらこれ" },
+  { k: "shimmer", l: "明るい女性",       n: "軽やかで元気な印象" },
+  { k: "sage",    l: "はきはきした女性", n: "テンポが良く前向き" },
+  { k: "coral",   l: "おっとりした女性", n: "ゆっくりめで安心感がある" },
+  { k: "cedar",   l: "落ち着いた男性",   n: "低めで穏やか。相談向き" },
+  { k: "echo",    l: "さわやかな男性",   n: "素直で聞きやすい" },
+  { k: "ash",     l: "力強い男性",       n: "はっきりした発声" },
+  { k: "ballad",  l: "やさしい男性",     n: "ゆったりした語り口" },
+];
+const PERSONALITIES = [
+  { k: "standard", l: "ふつうの相棒" }, { k: "gentle", l: "おっとり" },
+  { k: "cheerful", l: "元気で明るい" }, { k: "sister", l: "頼れるお姉さん・お兄さん" },
+  { k: "junior",   l: "後輩っぽい" },   { k: "calm",   l: "物静か" },
+];
+const TENSIONS = [{ k: "low", l: "控えめ" }, { k: "normal", l: "ふつう" }, { k: "high", l: "高め" }];
+// 上限は config.py の既定値（1人あたり 月60分・1回10分）
+const CALL = { used: 12, limit: 60, perCall: 10 };
+let sel = { voice: "marin", personality: "standard", tension: "normal" };
+
+function renderCall(){
+  const remain = CALL.limit - CALL.used;
+  const pct = Math.min(100, CALL.used / CALL.limit * 100);
+  body.innerHTML = `
+    <h1>ai-bo通話</h1>
+    <div class="lead">ai-boと声で話せます。設定した声と話し方でお話しします。</div>
+
+    <div class="card"><h2>今月の通話時間</h2>
+      <div style="font-size:13px">残り <b style="font-size:16px">${remain}分</b>
+        <span class="sub">／ ${CALL.limit}分</span></div>
+      <div class="meter"><i style="width:${pct}%"></i></div>
+      <div class="hint">1回の通話は最大${CALL.perCall}分です。</div>
+    </div>
+
+    <div class="card"><h2>声を選ぶ</h2>
+      <div class="opts">${VOICES.map(v =>
+        '<button type="button" class="vopt' + (sel.voice === v.k ? " on" : "") + '" data-v="' + v.k + '">'
+        + v.l + '<small>' + v.n + '</small></button>').join("")}</div>
+    </div>
+
+    <div class="card"><h2>性格</h2><div class="chips">${PERSONALITIES.map(p =>
+      '<span class="chip' + (sel.personality === p.k ? " on" : "") + '" data-p="' + p.k + '">'
+      + p.l + '</span>').join("")}</div></div>
+
+    <div class="card"><h2>テンション</h2><div class="chips">${TENSIONS.map(t =>
+      '<span class="chip' + (sel.tension === t.k ? " on" : "") + '" data-t="' + t.k + '">'
+      + t.l + '</span>').join("")}</div>
+      <div class="hint">設定はいつでも変えられます。次の通話から反映されます。</div></div>
+
+    <button class="btn ghost" type="button" id="callSave" style="margin-bottom:10px">この設定を保存する</button>
+    <button class="btn" type="button" id="callStart">通話をはじめる</button>
+    <div class="hint" style="text-align:center">
+      通話はスマホの標準ブラウザで開きます（マイクを使うため）。<br>
+      はじめてのときはマイクの許可を「許可」にしてください。</div>
+    <div id="callMsg"></div>`;
+
+  const keep = kind => el => el.addEventListener("click", () => {
+    sel[kind] = el.dataset[kind === "voice" ? "v" : (kind === "personality" ? "p" : "t")];
+    const top = body.scrollTop;
+    renderCall();
+    body.scrollTop = top;
+  });
+  body.querySelectorAll("[data-v]").forEach(keep("voice"));
+  body.querySelectorAll("[data-p]").forEach(keep("personality"));
+  body.querySelectorAll("[data-t]").forEach(keep("tension"));
+
+  document.getElementById("callSave").addEventListener("click", () => {
+    document.getElementById("callMsg").innerHTML =
+      '<div class="msg ok">設定を保存しました。次の通話から反映されます。</div>';
+  });
+  document.getElementById("callStart").addEventListener("click", () => {
+    const el = document.getElementById("callMsg");
+    el.innerHTML = '<div class="msg info">デモはここまでです。本番ではこのあと、'
+      + 'スマホの標準ブラウザで通話画面が開き、ai-boと声で話せます。<br>'
+      + '通話の内容は、文字のチャットと同じ安全確認にかけたうえで記録されます。</div>';
+    el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  });
+}
+</script>
+</body>
+</html>

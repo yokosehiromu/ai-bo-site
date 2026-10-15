@@ -44,8 +44,11 @@ header{
   display:grid; place-items:center; flex:none;
 }
 nav{margin-left:auto; display:flex; gap:22px; align-items:center}
-nav a{color:var(--sub); font-size:13.5px; font-weight:500}
+nav a{color:var(--sub); font-size:13.5px; font-weight:500; white-space:nowrap}
 nav a:hover{color:var(--text); text-decoration:none}
+/* 項目が8つあるので、横幅が狭くなったら先に間隔と文字を詰める
+   （900px以下では .nav-link ごと隠れる。下の媒体クエリ参照） */
+@media (max-width:1240px){ nav{gap:15px} nav a{font-size:12.8px} }
 .btn{
   display:inline-flex; align-items:center; justify-content:center; gap:8px;
   height:40px; padding:0 20px; border-radius:8px; font-size:14px; font-weight:600;
@@ -253,6 +256,93 @@ h3{font-size:17px; margin:0 0 8px; font-weight:600}
 .qr span{
   font-size:10.5px; border:1px solid var(--accent); color:var(--accent);
   background:var(--surface); border-radius:999px; padding:3px 11px;
+}
+
+/* ── hero showcase ────────────────────── */
+/* 公式LINEデモ（スマホ）と ダッシュボードサンプル（PC）を同じ場所で入れ替える。
+   2枚をグリッドの同じマスに重ねているので、切り替わっても高さが動かない。
+   動きの制御は index.html 末尾の <script>。 */
+.showcase{display:grid; gap:20px; justify-items:center; position:relative; z-index:2}
+.sc-stage{display:grid; width:100%; align-items:center; justify-items:center}
+.sc-shot{
+  grid-area:1 / 1; width:100%; display:flex; justify-content:center;
+  opacity:0; visibility:hidden; transform:translateY(10px) scale(.985);
+  transition:opacity .55s ease, transform .55s ease, visibility 0s linear .55s;
+}
+.sc-shot.on{opacity:1; visibility:visible; transform:none;
+  transition:opacity .55s ease, transform .55s ease}
+@media (prefers-reduced-motion:reduce){
+  .sc-shot{transition:none} .sc-shot:not(.on){transform:none}
+}
+
+/* 画面の名前（＝各ページへの入口。いま出ている方が色づく） */
+.sc-links{display:flex; gap:10px; flex-wrap:wrap; justify-content:center}
+.sc-link{
+  display:inline-flex; align-items:center; gap:8px; height:38px; padding:0 17px;
+  border-radius:999px; border:1px solid var(--border); background:var(--surface);
+  color:var(--sub); font-size:13px; font-weight:600; white-space:nowrap;
+}
+.sc-link:hover{color:var(--text); border-color:var(--accent); text-decoration:none}
+.sc-link .dot{width:7px; height:7px; border-radius:50%; background:var(--border);
+  flex:none; transition:background .35s ease}
+.sc-link.on{color:var(--accent); border-color:var(--accent); background:var(--accent-soft)}
+.sc-link.on .dot{background:var(--accent)}
+
+/* ダッシュボードサンプル側のブラウザ風の枠。中身は dashboard.html の見た目に合わせてある */
+.sc-win{
+  width:100%; max-width:524px; background:var(--surface); border:1px solid var(--border);
+  border-radius:14px; overflow:hidden;
+  box-shadow:0 26px 60px -18px rgba(12,20,38,.42), 0 4px 14px rgba(12,20,38,.14);
+}
+.sc-bbar{display:flex; align-items:center; gap:6px; padding:9px 13px;
+  background:var(--surface2); border-bottom:1px solid var(--border)}
+.sc-bbar i{width:9px; height:9px; border-radius:50%; background:var(--border); flex:none}
+.sc-bbar .u{
+  margin-left:10px; font-size:10.5px; color:var(--sub); background:var(--surface);
+  border:1px solid var(--border); border-radius:999px; padding:2px 14px;
+}
+.sc-body{display:flex; background:var(--bg)}
+.sc-side{
+  width:108px; flex:none; background:var(--surface); border-right:1px solid var(--border);
+  padding:12px 8px; display:grid; gap:2px; align-content:start;
+}
+.sc-side .bd{display:flex; align-items:center; gap:7px; padding:2px 6px 13px;
+  font-size:11.5px; font-weight:700; color:var(--text)}
+.sc-side .bd i{width:19px; height:19px; border-radius:6px; background:var(--accent);
+  display:grid; place-items:center; flex:none}
+.sc-side .it{font-size:11px; color:var(--sub); padding:6px 9px; border-radius:7px}
+.sc-side .it.on{background:var(--accent-soft); color:var(--accent); font-weight:600}
+.sc-main{flex:1; min-width:0; padding:12px; display:grid; gap:9px; align-content:start}
+.sc-kpis, .sc-alerts{display:grid; grid-template-columns:repeat(4,1fr); gap:7px}
+.sc-kpi{background:var(--surface); border:1px solid var(--border); border-radius:9px; padding:8px 9px}
+.sc-kpi .k{font-size:9px; color:var(--sub); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.sc-kpi .v{font-size:15px; font-weight:700; line-height:1.35; letter-spacing:-.01em}
+.sc-kpi .v small{font-size:9.5px; font-weight:500; color:var(--sub)}
+.sc-al{background:var(--surface); border:1px solid var(--border); border-left-width:3px;
+  border-radius:9px; padding:7px 8px}
+.sc-al .t{font-size:9px; font-weight:600; line-height:1.45; color:var(--sub)}
+.sc-al .n{font-size:12.5px; font-weight:700; margin-top:1px}
+.sc-al.red{border-left-color:var(--red)}       .sc-al.red .n{color:var(--red)}
+.sc-al.orange{border-left-color:var(--orange)} .sc-al.orange .n{color:var(--orange)}
+.sc-al.green{border-left-color:var(--green)}   .sc-al.green .n{color:var(--green)}
+.sc-al.purple{border-left-color:var(--purple)} .sc-al.purple .n{color:var(--purple)}
+.sc-chart{background:var(--surface); border:1px solid var(--border); border-radius:9px; padding:10px 11px 9px}
+.sc-chart .h{display:flex; font-size:10px; font-weight:600; margin-bottom:9px}
+.sc-chart .h span{margin-left:auto; color:var(--sub); font-weight:400; font-size:9px}
+/* 棒グラフ。値・棒・月名を縦に積む。棒の高さは .tr（土台）に対する割合なので、
+   文字がはみ出して棒が縮む、ということが起きない。最新の月だけ濃くするのは本番と同じ。 */
+.sc-bars{display:flex; align-items:flex-end; gap:12px}
+.sc-bars > div{flex:1; display:flex; flex-direction:column; align-items:center; gap:4px}
+.sc-bars .tr{width:100%; max-width:34px; height:56px; display:flex; align-items:flex-end}
+.sc-bars i{width:100%; background:var(--accent); border-radius:5px 5px 2px 2px;
+  display:block; opacity:.45}
+.sc-bars b, .sc-bars em{font-size:8.5px; font-style:normal; color:var(--sub); font-weight:500}
+.sc-bars .now i{opacity:1}
+.sc-bars .now b{color:var(--accent); font-weight:700}
+.sc-bars .now em{color:var(--text); font-weight:600}
+@media (max-width:460px){
+  .sc-side{display:none}
+  .sc-kpis, .sc-alerts{grid-template-columns:repeat(2,1fr)}
 }
 
 /* ── sample messages ──────────────────── */

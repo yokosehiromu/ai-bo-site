@@ -3,9 +3,6 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- ⚠ 確認用URL（GitHub Pages）のための一時設定。本番公開の前に必ず消すこと。
-     引き継ぎ書「ホームページと独自ドメイン」§4-5 を参照。 -->
-<meta name="robots" content="noindex, nofollow">
 <title>ai-bo｜TikTok LIVE事務所のためのAI伴走サービス</title>
 <meta name="description" content="所属クリエイター一人ひとりの配信データを見て、その人だけの声かけをLINEで毎朝お届けします。放置をゼロに、辞める前に気づく。TikTok LIVE事務所向けのAI伴走サービス。">
 <meta property="og:title" content="ai-bo｜TikTok LIVE事務所のためのAI伴走サービス">
@@ -87,9 +84,12 @@
     </a>
     <nav>
       <a href="#about" class="nav-link">ai-boとは</a>
+      <a href="philosophy.html" class="nav-link">ai-boの理念</a>
       <a href="#samples" class="nav-link">届く文面</a>
+      <a href="line-demo.html" class="nav-link">クリエイターからの見え方</a>
       <a href="#engine" class="nav-link">仕組み</a>
       <a href="#dashboard" class="nav-link">管理画面</a>
+      <a href="dashboard.html" class="nav-link">ダッシュボードサンプル</a>
       <a href="#price" class="nav-link">料金</a>
       <a href="#contact" class="btn btn-primary">相談する</a>
     </nav>
@@ -130,44 +130,109 @@
   <div class="wrap hero-grid">
     <div class="headline">
       <h1>所属クリエイター全員の隣に、<br>AIの相棒を。</h1>
-      <p class="sub">TikTok LIVE事務所のためのAI伴走サービスです。一人ひとりの配信データを見て、<b>その人だけの声かけ</b>をLINEで毎朝お届けします。配信が止まる兆しに、手遅れになる前に気づきます。</p>
+      <p class="sub">TikTok LIVEエージェンシーのためのAI伴走サービスです。クリエイターには一人ひとりの配信データを見て、<b>その人だけの声かけ</b>をLINEで毎日お届けします。運営側はダッシュボードから“誰が今どんな状況か”を把握し、<b>今日誰に何をすべきか</b>を判断できます。</p>
       <div class="cta">
         <a href="#contact" class="btn btn-primary btn-lg">ai-bo に聞いてみる</a>
         <a href="philosophy.html" class="btn btn-ghost btn-lg">ai-boの理念</a>
+        <a href="line-demo.html" class="btn btn-ghost btn-lg">クリエイターからの見え方</a>
         <a href="dashboard.html" class="btn btn-ghost btn-lg">ダッシュボードサンプルを見る</a>
       </div>
       <p class="note">クリエイターの日課はありません。運営の日課は、データを1回アップロードするだけです。</p>
     </div>
 
-    <div class="phone">
-      <div class="screen">
-        <div class="bar">
-          <span class="av"><svg width="17" height="17" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
-          <span><b>ai-bo</b><div class="st">あなたの伴走者</div></span>
+    <!-- ══ 右側のショーケース ══
+         公式LINEデモ（スマホ）と ダッシュボードサンプル（PC）を3秒ごとに入れ替える。
+         下のリンクは、そのまま各ページへの導線も兼ねている（押さなくても中身が分かる）。
+         ・マウスを載せる／キーボードで触れているあいだは止まる（勝手に変わらないように）
+         ・リンクに触れると、その画面に切り替わる
+         動きの実装は index.html 末尾の <script>。切り替えをやめたいときはそこを消すだけで、
+         最初の1枚（公式LINEデモ）が出たままになる。 -->
+    <div class="showcase">
+      <div class="sc-stage">
+
+      <!-- ① 公式LINEデモ -->
+      <div class="sc-shot on" id="sc-line">
+        <div class="phone">
+          <div class="screen">
+            <div class="bar">
+              <span class="av"><svg width="17" height="17" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+              <span><b>ai-bo</b><div class="st">あなたの伴走者</div></span>
+            </div>
+            <div class="chat">
+              <div class="day">今日 8:59</div>
+              <div class="msg">
+                <span class="av"><svg width="15" height="15" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+                <div class="bub">おはようございます！<br>今月、あと1日配信できたら“配信した日”が7日になります。時間もあと1時間ちょっとです。</div>
+                <span class="tm">9:00</span>
+              </div>
+              <div class="msg">
+                <span class="av"><svg width="15" height="15" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+                <div class="bub">今週のどこか、いけそうな日ってありますか？</div>
+                <span class="tm">9:00</span>
+              </div>
+              <div class="msg me">
+                <span class="tm">9:14</span>
+                <div class="bub">木曜ならいけそう！</div>
+              </div>
+              <div class="msg">
+                <span class="av"><svg width="15" height="15" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+                <div class="bub">いいですね。木曜に1時間いけたら、今月の“配信した日”は7日に届きます。<br>当日の朝にまた声をかけますね。</div>
+                <span class="tm">9:14</span>
+              </div>
+              <div class="qr"><span>配信メモを書く</span><span>コラボを探す</span></div>
+            </div>
+          </div>
         </div>
-        <div class="chat">
-          <div class="day">今日 8:59</div>
-          <div class="msg">
-            <span class="av"><svg width="15" height="15" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
-            <div class="bub">おはようございます！<br>今月、あと1日配信できたら“配信した日”が7日になります。時間もあと1時間ちょっとです。</div>
-            <span class="tm">9:00</span>
+      </div>
+
+      <!-- ② ダッシュボードサンプル。数字は dashboard.html と同じ架空データ
+           （assets/dashboard-demo.js の kpi / alerts / results より） -->
+      <div class="sc-shot" id="sc-dash" aria-hidden="true">
+        <div class="sc-win">
+          <div class="sc-bbar">
+            <i></i><i></i><i></i>
+            <span class="u">ai-bo 運営ダッシュボード</span>
           </div>
-          <div class="msg">
-            <span class="av"><svg width="15" height="15" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
-            <div class="bub">今週のどこか、いけそうな日ってありますか？</div>
-            <span class="tm">9:00</span>
+          <div class="sc-body">
+            <div class="sc-side">
+              <span class="bd"><i><svg width="12" height="12" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></i>ai-bo</span>
+              <span class="it on">ホーム</span>
+              <span class="it">成果・推移</span>
+              <span class="it">クリエイター</span>
+            </div>
+            <div class="sc-main">
+              <div class="sc-kpis">
+                <div class="sc-kpi"><div class="k">今月の総ダイヤ</div><div class="v">832,823</div></div>
+                <div class="sc-kpi"><div class="k">稼働ライバー数</div><div class="v">23<small> / 45名</small></div></div>
+                <div class="sc-kpi"><div class="k">LINE連携者</div><div class="v">27<small> 名</small></div></div>
+                <div class="sc-kpi"><div class="k">先月ライン到達率</div><div class="v">49.8<small>%</small></div></div>
+              </div>
+              <div class="sc-alerts">
+                <div class="sc-al red"><div class="t">要人間対応</div><div class="n">3件</div></div>
+                <div class="sc-al orange"><div class="t">離脱リスク・減速</div><div class="n">7件</div></div>
+                <div class="sc-al green"><div class="t">あと一歩</div><div class="n">6件</div></div>
+                <div class="sc-al purple"><div class="t">前月割れが続く</div><div class="n">3件</div></div>
+              </div>
+              <div class="sc-chart">
+                <div class="h">月別 総ダイヤ<span>単位：M</span></div>
+                <div class="sc-bars">
+                  <div><b>3.56</b><span class="tr"><i style="height:94%"></i></span><em>6月</em></div>
+                  <div><b>3.76</b><span class="tr"><i style="height:99%"></i></span><em>7月</em></div>
+                  <div><b>3.80</b><span class="tr"><i style="height:100%"></i></span><em>8月</em></div>
+                  <div class="now"><b>3.47</b><span class="tr"><i style="height:91%"></i></span><em>9月</em></div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="msg me">
-            <span class="tm">9:14</span>
-            <div class="bub">木曜ならいけそう！</div>
-          </div>
-          <div class="msg">
-            <span class="av"><svg width="15" height="15" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
-            <div class="bub">いいですね。木曜に1時間いけたら、今月の“配信した日”は7日に届きます。<br>当日の朝にまた声をかけますね。</div>
-            <span class="tm">9:14</span>
-          </div>
-          <div class="qr"><span>配信メモを書く</span><span>コラボを探す</span></div>
         </div>
+      </div>
+
+      </div>
+
+      <!-- 画面の名前 ＝ そのままページへの入口 -->
+      <div class="sc-links">
+        <a href="line-demo.html" class="sc-link on" data-shot="0"><span class="dot"></span>公式LINEデモ</a>
+        <a href="dashboard.html" class="sc-link" data-shot="1"><span class="dot"></span>ダッシュボードサンプル</a>
       </div>
     </div>
   </div>
@@ -290,6 +355,9 @@
     <p class="lead" style="margin:26px 0 0; color:var(--text); font-weight:600; font-size:16px">
       この3人に、担当者は何もしていません。ai-boが自動で判断して送っています。
     </p>
+    <div class="more">
+      <a href="line-demo.html" class="btn-pill">クリエイターからの見え方<span class="ar"><svg width="16" height="16" viewBox="0 0 24 24"><use href="#i-arr"/></svg></span></a>
+    </div>
   </div>
 </section>
 
@@ -730,6 +798,7 @@ ai-boがご本人に語るのは、その方自身の成長だけです。</div>
       ai-bo
     </a>
     <a href="philosophy.html">ai-boの理念</a>
+    <a href="line-demo.html">クリエイターからの見え方</a>
     <a href="problem.html">構造上の問題</a>
     <a href="service.html">サービス詳細</a>
     <a href="#price">料金</a>
@@ -738,6 +807,69 @@ ai-boがご本人に語るのは、その方自身の成長だけです。</div>
     <span class="c">© 2026 ai-bo</span>
   </div>
 </footer>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   ヒーローのショーケース：公式LINEデモ ⇄ ダッシュボードサンプル を3秒ごとに入れ替える
+
+   ⚠ 元に戻したいとき は、この <script> を丸ごと消すだけ。
+      最初の1枚（公式LINEデモ）に .on が付いたままなので、動かないだけで表示は崩れない。
+
+   配慮していること
+   - マウスが載っているあいだ／キーボードで触れているあいだは止める
+     （読んでいる最中に勝手に変わると困るため）
+   - 別のタブに移っているあいだも止める（戻ったときに続きから）
+   - 「視差効果を減らす」設定の方には、入れ替え自体を行わない
+   ══════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+  var box = document.querySelector('.showcase');
+  if (!box) return;
+  var shots = [].slice.call(box.querySelectorAll('.sc-shot'));
+  var links = [].slice.call(box.querySelectorAll('.sc-link'));
+  if (shots.length < 2) return;
+
+  var PERIOD = 3000;
+  var i = 0, timer = null;
+
+  function show(n) {
+    i = (n + shots.length) % shots.length;
+    for (var k = 0; k < shots.length; k++) {
+      shots[k].classList.toggle('on', k === i);
+      shots[k].setAttribute('aria-hidden', k === i ? 'false' : 'true');
+    }
+    for (var m = 0; m < links.length; m++) {
+      links[m].classList.toggle('on', Number(links[m].dataset.shot) === i);
+    }
+  }
+  function play() {
+    if (!timer) timer = setInterval(function () { show(i + 1); }, PERIOD);
+  }
+  function pause() { clearInterval(timer); timer = null; }
+
+  // リンクに触れたら、その画面を出す（押さなくても中身を見比べられる）
+  links.forEach(function (a) {
+    var n = Number(a.dataset.shot);
+    a.addEventListener('pointerenter', function () { show(n); });
+    a.addEventListener('focus', function () { show(n); });
+  });
+
+  box.addEventListener('pointerenter', pause);
+  box.addEventListener('pointerleave', play);
+  box.addEventListener('focusin', pause);
+  box.addEventListener('focusout', play);
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) pause(); else play();
+  });
+
+  show(0);
+  try {
+    if (window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  } catch (e) { return; }
+  play();
+})();
+</script>
 
 </body>
 </html>
