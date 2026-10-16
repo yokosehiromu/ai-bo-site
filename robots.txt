@@ -1,0 +1,13 @@
+# ai-bo-lab.jp
+# 検索エンジンへの指示。全ページ読んでよい。
+#
+# ⚠ 公開前は <head> の noindex で検索を止めていた（2026-10-15 に全ページから削除済み）。
+#    もし今後「このページだけ検索に載せたくない」が出たら、ここで Disallow するのではなく、
+#    そのページの <head> に noindex を入れること。
+#    robots.txt の Disallow は「読むな」であって「載せるな」ではないため、
+#    他所からリンクされると URL だけ検索結果に出てしまう。
+
+User-agent: *
+Allow: /
+
+Sitemap: https://ai-bo-lab.jp/sitemap.xml

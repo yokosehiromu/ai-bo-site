@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  検索エンジンに「このサイトにはこのページがあります」と伝える一覧。
+  Google Search Console に登録すると、ここを見て回ってくれる。
+
+  ⚠ ページを増やしたら、ここにも1件足すこと。足さなくても見つけてはもらえるが遅い。
+  ⚠ lastmod は「中身を直した日」。大きく書き換えたときは更新する（毎回でなくてよい）。
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://ai-bo-lab.jp/</loc>
+    <lastmod>2026-10-16</lastmod>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://ai-bo-lab.jp/service.html</loc>
+    <lastmod>2026-10-16</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://ai-bo-lab.jp/problem.html</loc>
+    <lastmod>2026-10-16</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://ai-bo-lab.jp/philosophy.html</loc>
+    <lastmod>2026-10-16</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://ai-bo-lab.jp/line-demo.html</loc>
+    <lastmod>2026-10-16</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://ai-bo-lab.jp/dashboard.html</loc>
+    <lastmod>2026-10-16</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+</urlset>
