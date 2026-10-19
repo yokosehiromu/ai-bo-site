@@ -493,6 +493,11 @@ details .ans{padding:0 20px 19px; color:var(--sub); font-size:14px; white-space:
 }
 .band > *{position:relative}
 .band p{color:var(--sub); margin:0 auto 28px; max-width:34em}
+/* メールのアドレスを必ず文字でも出す。
+   メールソフトが入っていない環境では mailto: のリンクを押しても無反応なので、
+   ボタンだけだと「反応しない」で終わってしまう（2026-10-19 実際に起きた）。 */
+.mailnote{margin:16px auto 0; font-size:13px; color:var(--sub); max-width:34em}
+.mailnote a{color:var(--accent); font-weight:600; word-break:break-all}
 
 footer{border-top:1px solid var(--border); margin-top:88px; padding:30px 0; color:var(--sub); font-size:13px}
 .fin{display:flex; gap:18px; flex-wrap:wrap; align-items:center}
@@ -672,6 +677,8 @@ footer{border-top:1px solid var(--border); margin-top:88px; padding:30px 0; colo
 .closing .act .btn-ghost{background:transparent; color:#fff; border-color:rgba(255,255,255,.34)}
 .closing .act .btn-ghost:hover{background:rgba(255,255,255,.1)}
 .closing .act .note{margin:4px 0 0; font-size:12.5px; color:#8d96a5; max-width:none}
+.closing .act .note a{color:#d4dced; font-weight:600; text-decoration:underline}
+.closing .act .note a:hover{color:#fff}
 @media (max-width:980px){
   .closing .wrap{grid-template-columns:1fr; gap:34px}
   .closing .act{align-items:stretch}
