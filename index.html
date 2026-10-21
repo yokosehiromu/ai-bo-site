@@ -27,10 +27,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=20261019">
+<link rel="stylesheet" href="assets/style.css?v=20261021">
 <!-- ▼ イラストの動き（2026-10-10）。元に戻すにはこの2行を消すだけ。assets/motion.css 参照 -->
-<link rel="stylesheet" href="assets/motion.css?v=20261019">
-<script src="assets/motion.js?v=20261019"></script>
+<link rel="stylesheet" href="assets/motion.css?v=20261021">
+<script src="assets/motion.js?v=20261021"></script>
 <!-- ▲ イラストの動き ここまで -->
 </head>
 <body>
@@ -294,23 +294,6 @@
         <img src="images/01-problem.webp" width="1168" height="880" loading="lazy" decoding="async" alt="大勢の人の中で一人だけが色づいている図。担当者の目が全員には届かないことを表しています">
       </figure>
     </div>
-    <div class="grid g3">
-      <div class="card">
-        <div class="ico red"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-users"/></svg></div>
-        <h3>全員には手が回らない</h3>
-        <p>担当者は、成果の出ている人と、明らかに問題のある人から見ます。その間にいる「静かに止まりかけている人」が、いちばん後回しになります。</p>
-      </div>
-      <div class="card">
-        <div class="ico orange"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-clock"/></svg></div>
-        <h3>気づいたときには、もう遅い</h3>
-        <p>配信が止まってから日が経つほど、戻ってきてもらえる確率は下がります。気づく早さが、そのまま結果に出ます。</p>
-      </div>
-      <div class="card">
-        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-mega"/></svg></div>
-        <h3>一斉配信は読まれない</h3>
-        <p>全員に同じ文面を送っても、自分宛てだと思ってもらえません。だからといって、一人ずつ書く時間はありません。</p>
-      </div>
-    </div>
     <div class="more">
       <a href="problem.html" class="btn-pill">構造上の問題をくわしく見る<span class="ar"><svg width="16" height="16" viewBox="0 0 24 24"><use href="#i-arr"/></svg></span></a>
     </div>
@@ -323,13 +306,147 @@
     <div class="split rev">
       <div class="txt">
       <span class="eyebrow">ai-boとは</span>
-      <h2>全てのクリエイターの隣に立ち、<br>自動で伴走するAIです。</h2>
-      <p class="lead">毎日クリエイターに寄り添い、コミュニケーションを取り続けます。一人一人の配信実績を把握しているため、クリエイターごとに最適化された相棒が生まれます。エージェンシー報酬の各タスク達成に向けて自然な形で配信を促し、配信離脱者を検知します。新しいアプリは不要です。クリエイターはLINEを使うだけで始められます。</p>
+      <h2>クリエイターにとっての相棒であり、<br>マネージャーにとっての相棒です。</h2>
+      <p class="lead">LINEで所属クリエイター全員と毎日コミュニケーションをとります。一人一人の配信実績を把握した上で配信を促し、配信離脱者を検知し、マネージャーに共有します。</p>
       </div>
       <figure class="fig">
         <img src="images/03-about.webp" width="1168" height="880" loading="lazy" decoding="async" alt="人の形をした図形それぞれの隣に、小さなロボットが並んで立っている図">
       </figure>
     </div>
+
+    <!-- ══ クリエイターにとっての相棒 ══
+         端末モックは line-demo.html と同じ部品（CSSは assets/style.css の「公式LINEの端末モック」）。
+         --ph-h:auto にしてあるので、トークの中身ぶんだけ縦に伸びる（途中で切れない）。 -->
+    <div class="split side">
+      <div class="txt">
+        <h3 class="side-h">クリエイターにとっての相棒</h3>
+        <p class="lead">各クリエイターの配信実績をすべて把握しているため、そのクリエイターだけの相棒が生まれます。また、LINE内でai-boの各種機能を利用できます。</p>
+        <div class="more">
+          <a href="line-demo.html" class="btn-pill">公式LINEデモを見る<span class="ar"><svg width="16" height="16" viewBox="0 0 24 24"><use href="#i-arr"/></svg></span></a>
+        </div>
+      </div>
+      <div class="shotbox">
+        <div class="lp-phone" style="--ph-w:352px; --ph-h:auto">
+          <div class="lp-screen">
+
+            <div class="lp-status">
+              <span>9:41</span>
+              <span class="sig"><span>•ıl</span><span class="bat"></span></span>
+            </div>
+
+            <div class="lp-talkbar">
+              <span class="back">‹</span>
+              <span class="av"><svg width="18" height="18" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+              <span><b>ai-bo</b><span class="st">あなたの伴走者</span></span>
+              <span class="tools"><span>☎</span><span>≡</span></span>
+            </div>
+
+            <div class="lp-chat">
+              <div class="lp-row">
+                <span class="av"><svg width="16" height="16" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+                <div class="lp-bub">おはようございます！<br>今月、あと1日配信できたら“配信した日”が7日になります。時間もあと1時間ちょっとです。</div>
+                <span class="tm">9:00</span>
+              </div>
+              <div class="lp-row">
+                <span class="av"><svg width="16" height="16" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+                <div class="lp-bub">今週のどこか、いけそうな日ってありますか？</div>
+                <span class="tm">9:00</span>
+              </div>
+              <div class="lp-row me">
+                <span class="tm">9:14</span>
+                <div class="lp-bub">木曜ならいけそう！</div>
+              </div>
+              <div class="lp-row">
+                <span class="av"><svg width="16" height="16" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+                <div class="lp-bub">いいですね。木曜に1時間いけたら、今月の“配信した日”は7日に届きます。<br>当日の朝にまた声をかけますね。</div>
+                <span class="tm">9:14</span>
+              </div>
+              <div class="lp-qr"><span>配信メモを書く</span><span>コラボを探す</span></div>
+            </div>
+
+            <div class="lp-input">
+              <span class="ic">＋</span>
+              <span class="fld">メッセージを入力</span>
+              <span class="ic">☺</span>
+            </div>
+
+            <div class="lp-menutab" aria-hidden="true">メニュー　▾</div>
+
+            <div class="lp-rich">
+              <a class="lp-cell" href="line-demo.html"><b>マイステータス</b><span>成長が見える画面</span></a>
+              <a class="lp-cell" href="line-demo.html"><b>配信メモ</b><span>ワンタップ記録</span></a>
+              <a class="lp-cell" href="line-demo.html"><b>コラボ</b><span>相手探しと日程調整</span></a>
+              <a class="lp-cell" href="line-demo.html"><b>ai-boと話す</b><span>音声で体験する</span></a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ マネージャーにとっての相棒 ══
+         数字は dashboard.html と同じ架空データ（assets/dashboard-demo.js より）。 -->
+    <div class="split side rev">
+      <div class="txt">
+        <h3 class="side-h">マネージャーにとっての相棒</h3>
+        <p class="lead">管理者用のダッシュボードを提供します。ai-boが担当クリエイター全員の状況を把握し、問題のあるクリエイターや問い合わせ内容をダッシュボードで共有します。</p>
+        <div class="more">
+          <a href="dashboard.html" class="btn-pill">ダッシュボードサンプルを見る<span class="ar"><svg width="16" height="16" viewBox="0 0 24 24"><use href="#i-arr"/></svg></span></a>
+        </div>
+      </div>
+      <div class="shotbox">
+        <div class="sc-win">
+          <div class="sc-bbar">
+            <i></i><i></i><i></i>
+            <span class="u">ai-bo 運営ダッシュボード</span>
+          </div>
+          <div class="sc-body">
+            <div class="sc-side">
+              <span class="bd"><i><svg width="12" height="12" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></i>ai-bo</span>
+              <span class="it on">ホーム</span>
+              <span class="it">成果・推移</span>
+              <span class="it">クリエイター</span>
+            </div>
+            <div class="sc-main">
+              <div class="sc-kpis">
+                <div class="sc-kpi"><div class="k">今月の総ダイヤ</div><div class="v">832,823</div></div>
+                <div class="sc-kpi"><div class="k">稼働ライバー数</div><div class="v">23<small> / 45名</small></div></div>
+                <div class="sc-kpi"><div class="k">LINE連携者</div><div class="v">27<small> 名</small></div></div>
+                <div class="sc-kpi"><div class="k">先月ライン到達率</div><div class="v">49.8<small>%</small></div></div>
+              </div>
+              <div class="sc-alerts">
+                <div class="sc-al red"><div class="t">要人間対応</div><div class="n">3件</div></div>
+                <div class="sc-al orange"><div class="t">離脱リスク・減速</div><div class="n">7件</div></div>
+                <div class="sc-al green"><div class="t">あと一歩</div><div class="n">6件</div></div>
+                <div class="sc-al purple"><div class="t">前月割れが続く</div><div class="n">3件</div></div>
+              </div>
+              <div class="sc-chart">
+                <div class="h">月別 総ダイヤ<span>単位：M</span></div>
+                <div class="sc-bars">
+                  <div><b>3.56</b><span class="tr"><i style="height:94%"></i></span><em>6月</em></div>
+                  <div><b>3.76</b><span class="tr"><i style="height:99%"></i></span><em>7月</em></div>
+                  <div><b>3.80</b><span class="tr"><i style="height:100%"></i></span><em>8月</em></div>
+                  <div class="now"><b>3.47</b><span class="tr"><i style="height:91%"></i></span><em>9月</em></div>
+                </div>
+              </div>
+              <div class="sc-tbl">
+                <div class="h">ライバー一覧<span>45名</span></div>
+                <table>
+                  <thead><tr><th>ライバー</th><th>ダイヤ</th><th>日数</th><th>時間</th></tr></thead>
+                  <tbody>
+                    <tr><td>demo_umi</td><td>321,908</td><td>8日</td><td>31.8h</td></tr>
+                    <tr><td>demo_viola</td><td>219,835</td><td>8日</td><td>33.9h</td></tr>
+                    <tr><td>demo_zen</td><td>74,501</td><td>8日</td><td>26.9h</td></tr>
+                    <tr><td>demo_riko</td><td>58,120</td><td>8日</td><td>26.4h</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="grid g3">
       <div class="card">
         <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-chat"/></svg></div>
@@ -360,7 +477,7 @@
       <div class="txt">
       <span class="eyebrow">実際に届く文面</span>
       <h2>こういう言葉が、毎朝届きます。</h2>
-      <p class="lead">3人とも状況が違うので、文面も違います。テンプレートを差し替えているのではなく、その日のデータを見て、その場で書いています。</p>
+      <p class="lead">クリエイターに、ai-boがこのように声をかけます。</p>
       </div>
       <figure class="fig">
         <img src="images/02-samples.webp" width="1168" height="880" loading="lazy" decoding="async" alt="スマートフォンの上に3つの吹き出しが浮かぶ図。一人ずつ違う文面が届くことを表しています">

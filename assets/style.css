@@ -116,6 +116,24 @@ h3{font-size:17px; margin:0 0 8px; font-weight:600}
   .split .fig, .split.rev .fig{order:2}
 }
 
+/* ── ai-boとは の中の2本（クリエイター側／マネージャー側）──
+   .split と同じ2カラムだが、右（または左）に入るのは画像ではなく
+   端末モック・ダッシュボードモック。だから .fig ではなく .shotbox。
+   2026-10-21 追加。 */
+.split.side{align-items:center; margin:clamp(40px,5vw,72px) 0 0}
+.split.side .txt .lead{margin-bottom:0}
+.split.side .more{margin-top:20px}
+.side-h{
+  font-size:clamp(20px,2.1vw,27px); line-height:1.5; font-weight:700;
+  margin:0 0 14px; letter-spacing:-.01em;
+}
+.shotbox{order:2; display:flex; justify-content:center; min-width:0}
+.split.side.rev .shotbox{order:-1}
+@media (max-width:980px){
+  .split.side{grid-template-columns:1fr; gap:26px}
+  .shotbox, .split.side.rev .shotbox{order:2}
+}
+
 /* icon tile */
 .ico{
   width:42px; height:42px; border-radius:11px; display:grid; place-items:center;
