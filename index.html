@@ -27,10 +27,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=20261021">
+<link rel="stylesheet" href="assets/style.css?v=20261021b">
 <!-- ▼ イラストの動き（2026-10-10）。元に戻すにはこの2行を消すだけ。assets/motion.css 参照 -->
-<link rel="stylesheet" href="assets/motion.css?v=20261021">
-<script src="assets/motion.js?v=20261021"></script>
+<link rel="stylesheet" href="assets/motion.css?v=20261021b">
+<script src="assets/motion.js?v=20261021b"></script>
 <!-- ▲ イラストの動き ここまで -->
 </head>
 <body>
@@ -103,7 +103,7 @@
 <main id="top">
 
 <!-- ══ HERO ══ -->
-<section class="hero">
+<section class="hero hero-band">
 
   <!-- ポスター風コラージュ。文面はすべて既存の承認済みのもの（新規に作文していない）。 -->
   <!-- ai-bo とクリエイターの、架空のやりとり。配信のアドバイス／誉め言葉／モチベーション／
@@ -131,153 +131,47 @@
     <div class="s s20"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>昨日の配信、最後まで残ってくれた人が多かったですね。</p></div></div>
   </div>
 
-  <div class="wrap hero-grid">
-    <div class="headline">
-      <h1>所属クリエイター全員の隣に、<br>AIの相棒を。</h1>
-      <p class="sub">TikTok LIVEエージェンシーのためのAI伴走サービスです。クリエイターには一人ひとりの配信データを見て、<b>その人だけの声かけ</b>をLINEで毎日お届けします。運営側はダッシュボードから“誰が今どんな状況か”を把握し、<b>今日誰に何をすべきか</b>を判断できます。</p>
-      <div class="cta">
-        <a href="#contact" class="btn btn-primary btn-lg">ai-bo に聞いてみる</a>
-        <a href="philosophy.html" class="btn btn-ghost btn-lg">ai-boの理念</a>
-        <a href="line-demo.html" class="btn btn-ghost btn-lg">クリエイターからの見え方</a>
-        <a href="dashboard.html" class="btn btn-ghost btn-lg">ダッシュボードサンプルを見る</a>
-      </div>
-      <p class="note">クリエイターの日課はありません。運営の日課は、データを1回アップロードするだけです。</p>
+  <div class="wrap hero-inner">
+
+    <p class="hero-kicker">TikTok LIVEエージェンシーの事業課題を、LINEで解決するなら</p>
+
+    <h1>所属クリエイター全員の隣に、<br>AIの相棒を。</h1>
+
+    <p class="sub">TikTok LIVEエージェンシーのためのAI伴走サービスです。クリエイターには一人ひとりの配信データを見て、<b>その人だけの声かけ</b>をLINEで毎日お届けします。運営側はダッシュボードから“誰が今どんな状況か”を把握し、<b>今日誰に何をすべきか</b>を判断できます。</p>
+
+    <!-- 対応する課題。すべてページ内で説明している範囲にとどめる（新しい効能を足さない） -->
+    <div class="hero-tags">
+      <span class="ht-lead">様々な事業課題に対応</span>
+      <ul>
+        <li>配信の離脱</li>
+        <li>放置をゼロに</li>
+        <li>新人の定着</li>
+        <li>コラボの調整</li>
+        <li>担当者の工数</li>
+        <li>状況の可視化</li>
+      </ul>
+      <span class="ht-badge">初期費用<b>0円</b></span>
     </div>
 
-    <!-- ══ 右側のショーケース ══
-         公式LINEデモ（スマホ）と ダッシュボードサンプル（PC）を3秒ごとに入れ替える。
-         下のリンクは、そのまま各ページへの導線も兼ねている（押さなくても中身が分かる）。
-         ・マウスを載せる／キーボードで触れているあいだは止まる（勝手に変わらないように）
-         ・リンクに触れると、その画面に切り替わる
-         動きの実装は index.html 末尾の <script>。切り替えをやめたいときはそこを消すだけで、
-         最初の1枚（公式LINEデモ）が出たままになる。 -->
-    <div class="showcase">
-      <div class="sc-stage">
-
-      <!-- ① 公式LINEデモ -->
-      <div class="sc-shot on" id="sc-line">
-        <!-- line-demo.html と同じ端末モック（CSSは assets/style.css の「公式LINEの端末モック」）。
-             メニューから開く画面（LIFF）は付けていない。4マスを押すと公式LINEデモのページへ飛ぶ。
-             トークの文面は承認済みのものだけ（新規に作文していない）。 -->
-        <div class="lp-phone">
-          <div class="lp-screen">
-
-            <div class="lp-status">
-              <span>9:41</span>
-              <span class="sig"><span>•ıl</span><span class="bat"></span></span>
-            </div>
-
-            <div class="lp-talkbar">
-              <span class="back">‹</span>
-              <span class="av"><svg width="18" height="18" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
-              <span><b>ai-bo</b><span class="st">あなたの伴走者</span></span>
-              <span class="tools"><span>☎</span><span>≡</span></span>
-            </div>
-
-            <div class="lp-chat">
-              <div class="lp-row">
-                <span class="av"><svg width="16" height="16" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
-                <div class="lp-bub">おはようございます！<br>今月、あと1日配信できたら“配信した日”が7日になります。時間もあと1時間ちょっとです。</div>
-                <span class="tm">9:00</span>
-              </div>
-              <div class="lp-row">
-                <span class="av"><svg width="16" height="16" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
-                <div class="lp-bub">今週のどこか、いけそうな日ってありますか？</div>
-                <span class="tm">9:00</span>
-              </div>
-              <div class="lp-row me">
-                <span class="tm">9:14</span>
-                <div class="lp-bub">木曜ならいけそう！</div>
-              </div>
-              <div class="lp-row">
-                <span class="av"><svg width="16" height="16" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
-                <div class="lp-bub">いいですね。木曜に1時間いけたら、今月の“配信した日”は7日に届きます。<br>当日の朝にまた声をかけますね。</div>
-                <span class="tm">9:14</span>
-              </div>
-              <div class="lp-qr"><span>配信メモを書く</span><span>コラボを探す</span></div>
-            </div>
-
-            <div class="lp-input">
-              <span class="ic">＋</span>
-              <span class="fld">メッセージを入力</span>
-              <span class="ic">☺</span>
-            </div>
-
-            <div class="lp-menutab" aria-hidden="true">メニュー　▾</div>
-
-            <div class="lp-rich">
-              <a class="lp-cell" href="line-demo.html"><b>マイステータス</b><span>成長が見える画面</span></a>
-              <a class="lp-cell" href="line-demo.html"><b>配信メモ</b><span>ワンタップ記録</span></a>
-              <a class="lp-cell" href="line-demo.html"><b>コラボ</b><span>相手探しと日程調整</span></a>
-              <a class="lp-cell" href="line-demo.html"><b>ai-boと話す</b><span>音声で体験する</span></a>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-      <!-- ② ダッシュボードサンプル。数字は dashboard.html と同じ架空データ
-           （assets/dashboard-demo.js の kpi / alerts / results より） -->
-      <div class="sc-shot" id="sc-dash" aria-hidden="true">
-        <div class="sc-win">
-          <div class="sc-bbar">
-            <i></i><i></i><i></i>
-            <span class="u">ai-bo 運営ダッシュボード</span>
-          </div>
-          <div class="sc-body">
-            <div class="sc-side">
-              <span class="bd"><i><svg width="12" height="12" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></i>ai-bo</span>
-              <span class="it on">ホーム</span>
-              <span class="it">成果・推移</span>
-              <span class="it">クリエイター</span>
-            </div>
-            <div class="sc-main">
-              <div class="sc-kpis">
-                <div class="sc-kpi"><div class="k">今月の総ダイヤ</div><div class="v">832,823</div></div>
-                <div class="sc-kpi"><div class="k">稼働ライバー数</div><div class="v">23<small> / 45名</small></div></div>
-                <div class="sc-kpi"><div class="k">LINE連携者</div><div class="v">27<small> 名</small></div></div>
-                <div class="sc-kpi"><div class="k">先月ライン到達率</div><div class="v">49.8<small>%</small></div></div>
-              </div>
-              <div class="sc-alerts">
-                <div class="sc-al red"><div class="t">要人間対応</div><div class="n">3件</div></div>
-                <div class="sc-al orange"><div class="t">離脱リスク・減速</div><div class="n">7件</div></div>
-                <div class="sc-al green"><div class="t">あと一歩</div><div class="n">6件</div></div>
-                <div class="sc-al purple"><div class="t">前月割れが続く</div><div class="n">3件</div></div>
-              </div>
-              <div class="sc-chart">
-                <div class="h">月別 総ダイヤ<span>単位：M</span></div>
-                <div class="sc-bars">
-                  <div><b>3.56</b><span class="tr"><i style="height:94%"></i></span><em>6月</em></div>
-                  <div><b>3.76</b><span class="tr"><i style="height:99%"></i></span><em>7月</em></div>
-                  <div><b>3.80</b><span class="tr"><i style="height:100%"></i></span><em>8月</em></div>
-                  <div class="now"><b>3.47</b><span class="tr"><i style="height:91%"></i></span><em>9月</em></div>
-                </div>
-              </div>
-              <div class="sc-tbl">
-                <div class="h">ライバー一覧<span>45名</span></div>
-                <table>
-                  <thead><tr><th>ライバー</th><th>ダイヤ</th><th>日数</th><th>時間</th></tr></thead>
-                  <tbody>
-                    <tr><td>demo_umi</td><td>321,908</td><td>8日</td><td>31.8h</td></tr>
-                    <tr><td>demo_viola</td><td>219,835</td><td>8日</td><td>33.9h</td></tr>
-                    <tr><td>demo_zen</td><td>74,501</td><td>8日</td><td>26.9h</td></tr>
-                    <tr><td>demo_riko</td><td>58,120</td><td>8日</td><td>26.4h</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      </div>
-
-      <!-- 画面の名前 ＝ そのままページへの入口 -->
-      <div class="sc-links">
-        <a href="line-demo.html" class="sc-link on" data-shot="0"><span class="dot"></span>公式LINEデモ</a>
-        <a href="dashboard.html" class="sc-link" data-shot="1"><span class="dot"></span>ダッシュボードサンプル</a>
-      </div>
+    <div class="hero-cta">
+      <a href="#contact" class="hero-btn">
+        <span class="rib orange">＼ LINEで、ai-bo自身が答えます ／</span>
+        <span class="lbl">ai-bo に聞いてみる</span>
+      </a>
+      <a href="line-demo.html" class="hero-btn">
+        <span class="rib">＼ 押して試せます ／</span>
+        <span class="lbl">公式LINEデモを見る</span>
+      </a>
     </div>
+
+    <p class="hero-sublinks">
+      <a href="dashboard.html">ダッシュボードサンプル</a>
+      <a href="philosophy.html">ai-boの理念</a>
+      <a href="service.html">サービス詳細</a>
+    </p>
+
+    <p class="note">クリエイターの日課はありません。運営の日課は、データを1回アップロードするだけです。</p>
+
   </div>
 </section>
 
@@ -969,69 +863,6 @@ ai-boがご本人に語るのは、その方自身の成長だけです。</div>
     <span class="c">© 2026 ai-bo</span>
   </div>
 </footer>
-
-<script>
-/* ══════════════════════════════════════════════════════════════
-   ヒーローのショーケース：公式LINEデモ ⇄ ダッシュボードサンプル を3秒ごとに入れ替える
-
-   ⚠ 元に戻したいとき は、この <script> を丸ごと消すだけ。
-      最初の1枚（公式LINEデモ）に .on が付いたままなので、動かないだけで表示は崩れない。
-
-   配慮していること
-   - マウスが載っているあいだ／キーボードで触れているあいだは止める
-     （読んでいる最中に勝手に変わると困るため）
-   - 別のタブに移っているあいだも止める（戻ったときに続きから）
-   - 「視差効果を減らす」設定の方には、入れ替え自体を行わない
-   ══════════════════════════════════════════════════════════════ */
-(function () {
-  'use strict';
-  var box = document.querySelector('.showcase');
-  if (!box) return;
-  var shots = [].slice.call(box.querySelectorAll('.sc-shot'));
-  var links = [].slice.call(box.querySelectorAll('.sc-link'));
-  if (shots.length < 2) return;
-
-  var PERIOD = 3000;
-  var i = 0, timer = null;
-
-  function show(n) {
-    i = (n + shots.length) % shots.length;
-    for (var k = 0; k < shots.length; k++) {
-      shots[k].classList.toggle('on', k === i);
-      shots[k].setAttribute('aria-hidden', k === i ? 'false' : 'true');
-    }
-    for (var m = 0; m < links.length; m++) {
-      links[m].classList.toggle('on', Number(links[m].dataset.shot) === i);
-    }
-  }
-  function play() {
-    if (!timer) timer = setInterval(function () { show(i + 1); }, PERIOD);
-  }
-  function pause() { clearInterval(timer); timer = null; }
-
-  // リンクに触れたら、その画面を出す（押さなくても中身を見比べられる）
-  links.forEach(function (a) {
-    var n = Number(a.dataset.shot);
-    a.addEventListener('pointerenter', function () { show(n); });
-    a.addEventListener('focus', function () { show(n); });
-  });
-
-  box.addEventListener('pointerenter', pause);
-  box.addEventListener('pointerleave', play);
-  box.addEventListener('focusin', pause);
-  box.addEventListener('focusout', play);
-  document.addEventListener('visibilitychange', function () {
-    if (document.hidden) pause(); else play();
-  });
-
-  show(0);
-  try {
-    if (window.matchMedia &&
-        window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  } catch (e) { return; }
-  play();
-})();
-</script>
 
 </body>
 </html>
