@@ -134,6 +134,25 @@ h3{font-size:17px; margin:0 0 8px; font-weight:600}
   .shotbox, .split.side.rev .shotbox{order:2}
 }
 
+/* ── 「クリエイターにとっての相棒」と「マネージャーにとっての相棒」を
+      PCでは横に並べる（2026-10-21）。狭い画面では縦に積む。
+      1本ぶんの中身は 見出し → 本文 → ボタン → モック の縦並び。 */
+.pair{display:grid; grid-template-columns:1fr; gap:clamp(44px,5vw,64px);
+  margin:clamp(40px,5vw,72px) 0 0}
+.pair-col{min-width:0; display:flex; flex-direction:column}
+.pair-col .txt{min-width:0}
+.pair-col .lead{margin-bottom:0; max-width:none}
+.pair-col .more{margin:18px 0 26px}
+/* .shotbox は .split 用に order を持っているので、ここでは無効にする */
+.pair-col .shotbox{order:0; margin-top:0}
+@media (min-width:1000px){
+  .pair{grid-template-columns:1fr 1fr; gap:clamp(28px,3vw,52px); align-items:start}
+}
+/* 1000〜1280px では1本あたりの幅が狭いので、ダッシュボードの中を2列に畳む */
+@media (min-width:1000px) and (max-width:1279px){
+  .pair-col .sc-kpis, .pair-col .sc-alerts{grid-template-columns:repeat(2,1fr)}
+}
+
 /* icon tile */
 .ico{
   width:42px; height:42px; border-radius:11px; display:grid; place-items:center;
