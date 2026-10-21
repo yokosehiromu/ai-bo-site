@@ -988,3 +988,44 @@ div.lp-menutab:hover{background:#fff}
   .hero-cta{width:100%}
   .hero-btn{width:100%}
 }
+
+/* ── ついてくる ai-bo（2026-10-21・試作）────────────────────
+   右下に小さく出て、スクロールに合わせてゆらゆらする。
+   HTMLには何も書いていない。assets/mascot.js が作る。
+   やめるときは各ページの <head> から mascot.js の1行を消すだけ。 */
+.mascot{
+  position:fixed; right:clamp(10px,2vw,26px); bottom:clamp(10px,2vw,24px);
+  z-index:40; width:clamp(76px,9vw,124px); pointer-events:none;
+  opacity:0; transform:translateY(16px) scale(.94);
+  transition:opacity .45s ease, transform .45s cubic-bezier(.22,.61,.36,1);
+}
+.mascot.in{opacity:1; transform:none; pointer-events:auto}
+.mascot-go{display:block; line-height:0; --tilt:0deg}
+.mascot img{
+  width:100%; height:auto;
+  /* 元画像のうっすらした影を目立たせないための、やわらかい光。
+     ダークモードでは「照らされている」ように見える */
+  background:radial-gradient(52% 46% at 50% 56%,
+    rgba(255,255,255,.92) 0%, rgba(255,255,255,.62) 55%, rgba(255,255,255,0) 72%);
+  filter:drop-shadow(0 10px 16px rgba(12,20,38,.22));
+  transform:rotate(var(--tilt,0deg));
+  transition:transform .5s cubic-bezier(.22,.61,.36,1);
+  animation:mascot-walk 3.4s ease-in-out infinite;
+}
+@keyframes mascot-walk{
+  0%,100%{translate:0 0}
+  50%{translate:0 -6px}
+}
+.mascot-close{
+  position:absolute; top:-2px; right:-2px; width:22px; height:22px; padding:0;
+  border-radius:50%; border:1px solid var(--border); background:var(--surface);
+  color:var(--sub); font-size:11px; line-height:1; cursor:pointer;
+  opacity:0; transition:opacity .2s ease; font-family:inherit;
+}
+.mascot:hover .mascot-close, .mascot:focus-within .mascot-close{opacity:1}
+.mascot.still img{animation:none}
+.mascot.still .mascot-go{--tilt:0deg}
+@media (prefers-reduced-motion:reduce){
+  .mascot{transition:opacity .2s ease}
+  .mascot img{animation:none; transition:none}
+}
