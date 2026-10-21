@@ -59,7 +59,45 @@ nav a:hover{color:var(--text); text-decoration:none}
 .btn-ghost{background:var(--surface); color:var(--text); border-color:var(--border)}
 .btn-ghost:hover{background:var(--surface2); text-decoration:none}
 .btn-lg{height:48px; padding:0 26px; font-size:15px}
-@media (max-width:900px){ nav .nav-link{display:none} }
+/* ── スマホのハンバーガーメニュー（2026-10-21）──
+   900px以下でだけ出す。PCの見た目には影響しない。
+   開閉は assets/nav.js。JSが動かなくても閉じた状態で崩れない。 */
+.navtoggle{display:none}
+
+@media (max-width:900px){
+  /* PC用の横並びリンクと「相談する」は、たたんでメニューの中へ入れる */
+  nav .nav-link{display:none}
+
+  .navtoggle{
+    display:flex; flex-direction:column; justify-content:center; gap:5px;
+    margin-left:auto; width:44px; height:44px; padding:0 10px;
+    background:transparent; border:0; cursor:pointer; flex:none;
+  }
+  .navtoggle span{
+    display:block; height:2px; width:100%; border-radius:2px; background:var(--text);
+    transition:transform .22s ease, opacity .18s ease;
+  }
+  .navtoggle.on span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .navtoggle.on span:nth-child(2){opacity:0}
+  .navtoggle.on span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  @media (prefers-reduced-motion:reduce){ .navtoggle span{transition:none} }
+
+  /* 開いたときだけ出る引き出し。ヘッダーの下に重なる */
+  nav{
+    position:absolute; left:0; right:0; top:64px; margin:0;
+    display:none; flex-direction:column; align-items:stretch; gap:0;
+    background:var(--bg); border-bottom:1px solid var(--border);
+    padding:4px 0 16px; box-shadow:0 18px 34px -22px rgba(12,20,38,.5);
+    max-height:calc(100dvh - 64px); overflow-y:auto;
+  }
+  nav.open{display:flex}
+  nav.open .nav-link{
+    display:block; padding:14px clamp(20px,3.2vw,44px);
+    font-size:15px; color:var(--text); border-top:1px solid var(--border);
+  }
+  nav.open .nav-link:first-of-type{border-top:0}
+  nav .btn{margin:14px clamp(20px,3.2vw,44px) 0; height:48px; font-size:15px}
+}
 
 /* ── section ──────────────────────────── */
 section{padding:88px 0}
