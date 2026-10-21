@@ -120,13 +120,13 @@ h3{font-size:17px; margin:0 0 8px; font-weight:600}
    割ることがある。実際に「クリエイターにと／っての相棒であり、」と
    語の途中で折れ、小書きの「っ」が行頭に来た。
    balance を外せば、ブラウザの通常の折り返し（禁則処理つき）に戻る。 */
-@media (max-width:860px){ h2{text-wrap:wrap} }
+@media (max-width:860px){ h2, .pagehead h1{text-wrap:wrap} }
 
 /* 見出しを「意味のまとまり」で区切りたいとき。
    かたまりを inline-block にすると、ブラウザはかたまりとかたまりの間で
    折り返すので、語の途中で切れない。収まるときは1行のままになる。 */
-.h2-chunk{text-wrap:wrap}
-.h2-chunk > span{display:inline-block}
+.chunk{text-wrap:wrap}
+.chunk > span{display:inline-block}
 @media (min-width:1280px){
   section{padding:104px 0}
   h2{font-size:33px}
