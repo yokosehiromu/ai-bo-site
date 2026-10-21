@@ -115,6 +115,18 @@ h3{font-size:17px; margin:0 0 8px; font-weight:600}
 .g3{grid-template-columns:repeat(3,1fr)}
 .g2{grid-template-columns:repeat(2,1fr)}
 @media (max-width:860px){ .g3,.g2{grid-template-columns:1fr} h2{font-size:23px} section{padding:62px 0} }
+/* 狭い画面では text-wrap:balance をやめる（2026-10-21）。
+   balance は「行の長さを揃える」指定だが、日本語では語の切れ目を無視して
+   割ることがある。実際に「クリエイターにと／っての相棒であり、」と
+   語の途中で折れ、小書きの「っ」が行頭に来た。
+   balance を外せば、ブラウザの通常の折り返し（禁則処理つき）に戻る。 */
+@media (max-width:860px){ h2{text-wrap:wrap} }
+
+/* 見出しを「意味のまとまり」で区切りたいとき。
+   かたまりを inline-block にすると、ブラウザはかたまりとかたまりの間で
+   折り返すので、語の途中で切れない。収まるときは1行のままになる。 */
+.h2-chunk{text-wrap:wrap}
+.h2-chunk > span{display:inline-block}
 @media (min-width:1280px){
   section{padding:104px 0}
   h2{font-size:33px}
