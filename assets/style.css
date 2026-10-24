@@ -989,41 +989,38 @@ div.lp-menutab:hover{background:#fff}
   .hero-btn{width:100%}
 }
 
-/* ── サービス詳細の「もくじ」（2026-10-24）────────────────
-   15節への入口を並べたタイル。番号はページ内の見出しと対応させている。
-   節を増やす・並べ替えるときは、service.html のもくじの並びも必ず合わせること。 */
-.toc{padding-top:0}
+/* ── 下層ページの帯ヘッダー ＋ もくじのタイル（2026-10-24）────
+   サービス詳細の最上部。トップのヒーローと同じ青い帯の中に、
+   見出し・説明・15節への入口をまとめている。
+   タイルは帯の上に載るので、白地＋青文字（ヒーローのボタンと同じ考え方）。
+   ⚠ 節を増やす・並べ替えるときは service.html のタイルの並びも合わせること。 */
+.pagehero .crumb{color:#bed3f3; margin-bottom:14px}
+.pagehero .crumb a{color:#fff; font-weight:600}
+.pagehero h1{margin-bottom:18px}
+.pagehero .sub{margin-bottom:26px}
 .toc-lead{
-  margin:0 0 6px; font-size:13.5px; font-weight:700; color:var(--accent);
-  letter-spacing:.02em;
+  margin:0 0 14px; font-size:13px; font-weight:700; color:#cfe0fb; letter-spacing:.02em;
 }
-.toc h2{margin-bottom:12px}
-.toc .lead{margin-bottom:28px}
-.toc-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:12px}
+.toc-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:11px}
 .toc-card{
-  display:flex; flex-direction:column; justify-content:space-between; gap:12px;
-  min-height:104px; padding:15px 16px; border-radius:var(--radius);
-  background:linear-gradient(140deg, #2554b4 0%, #2f66d0 55%, #4278dd 100%);
-  color:#fff; position:relative; overflow:hidden;
-  box-shadow:0 10px 22px -14px rgba(12,20,38,.55);
+  display:flex; flex-direction:column; justify-content:space-between; gap:10px;
+  min-height:96px; padding:14px 15px; border-radius:var(--radius);
+  background:#fff; color:#1e4799; position:relative;
+  box-shadow:0 8px 20px -12px rgba(8,22,56,.5);
   transition:transform .16s ease, box-shadow .16s ease;
 }
-.toc-card::after{
-  content:""; position:absolute; inset:0; pointer-events:none;
-  background:repeating-linear-gradient(115deg, rgba(255,255,255,.05) 0 2px, transparent 2px 12px);
-}
 .toc-card:hover{transform:translateY(-3px); text-decoration:none;
-  box-shadow:0 16px 28px -14px rgba(12,20,38,.6)}
+  box-shadow:0 14px 26px -12px rgba(8,22,56,.55)}
 .toc-card .n{
-  font-size:13px; font-weight:700; letter-spacing:.06em; color:#bed3f3;
+  font-size:12.5px; font-weight:700; letter-spacing:.06em; color:#7d9bd4;
   font-variant-numeric:tabular-nums;
 }
-.toc-card .t{font-size:14.5px; font-weight:700; line-height:1.55; word-break:auto-phrase}
-.toc-card .t::after{content:"　›"; color:#bed3f3; font-weight:400}
+.toc-card .t{font-size:14px; font-weight:700; line-height:1.55; word-break:auto-phrase}
+.toc-card .t::after{content:"　›"; color:#7d9bd4; font-weight:400}
 @media (prefers-reduced-motion:reduce){ .toc-card:hover{transform:none} }
 @media (max-width:1100px){ .toc-grid{grid-template-columns:repeat(3,1fr)} }
 @media (max-width:620px){
-  .toc-grid{grid-template-columns:repeat(2,1fr); gap:10px}
-  .toc-card{min-height:92px; padding:13px 14px}
-  .toc-card .t{font-size:13.5px}
+  .toc-grid{grid-template-columns:repeat(2,1fr); gap:9px}
+  .toc-card{min-height:84px; padding:12px 13px}
+  .toc-card .t{font-size:13px}
 }

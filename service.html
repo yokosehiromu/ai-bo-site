@@ -22,11 +22,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=20261024b">
-<script src="assets/nav.js?v=20261024b" defer></script>
+<link rel="stylesheet" href="assets/style.css?v=20261024c">
+<script src="assets/nav.js?v=20261024c" defer></script>
 <!-- ▼ イラストの動き（2026-10-10）。元に戻すにはこの2行を消すだけ。assets/motion.css 参照 -->
-<link rel="stylesheet" href="assets/motion.css?v=20261024b">
-<script src="assets/motion.js?v=20261024b"></script>
+<link rel="stylesheet" href="assets/motion.css?v=20261024c">
+<script src="assets/motion.js?v=20261024c"></script>
 <!-- ▲ イラストの動き ここまで -->
 </head>
 <body>
@@ -105,47 +105,16 @@
 <main id="top">
 
 <!-- ══ PAGE HEAD ══ -->
-<section class="pagehead">
+<!-- ══ ページ最上部の帯ヘッダー（2026-10-24）══
+     トップページのヒーローと同じ作り。見出し＋説明＋15節への入口をひとまとめにした。
+     もくじのタイルは、押すとその節へ飛ぶ。
+     ⚠ 節を増やす・並べ替えるときは、ここの並びも必ず合わせること。 -->
+<section class="hero hero-band pagehero">
   <div class="wrap">
     <p class="crumb"><a href="index.html">ai-bo</a>　›　サービス詳細</p>
-    <span class="eyebrow">サービス詳細</span>
     <h1 class="chunk"><span>ai-boは、</span><span>こういうサービスです。</span></h1>
-    <p class="lead">クリエイターが使うのはLINEだけ。運営の方が使うのは、ブラウザで開く管理画面だけです。運営の日課は、日次データを1回アップロードすることだけ。ここでは、ai-boが実際に何をするのかを具体的にご説明します。</p>
-  </div>
-</section>
-
-<!-- ══ 全体像 ══ -->
-<section>
-  <div class="wrap">
-    <div class="grid g3">
-      <div class="card">
-        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-chat"/></svg></div>
-        <h3>クリエイター側</h3>
-        <p>LINEで、毎日その人だけの声かけが届きます。こちらから話しかければ、いつでも相談にのります。アプリのインストールは不要です。</p>
-      </div>
-      <div class="card">
-        <div class="ico green"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-chart"/></svg></div>
-        <h3>運営側</h3>
-        <p>管理画面を開くと「今日、誰に何をすべきか」が分かります。一人ずつ確認して回る必要はありません。</p>
-      </div>
-      <div class="card">
-        <div class="ico purple"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-check"/></svg></div>
-        <h3>日課</h3>
-        <p>運営の方が日次データを1回アップロードするだけです。シナリオを書いて仕込む作業も、対象者リストを作る作業もありません。</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ もくじ（2026-10-24）══
-     15節への入口。番号はページ内の見出しと一致させてある。
-     節を増やす・並べ替えるときは、ここの並びも必ず合わせること。
-     ⚠ 番号を振らない節（ページ見出し・お問い合わせ）はここに載せない。 -->
-<section class="toc">
-  <div class="wrap">
-    <p class="toc-lead">ai-boが実際に何をするのか</p>
-    <h2>このページでわかること</h2>
-    <p class="lead">クリエイター側と運営側、それぞれの画面と動きを15項目に分けて説明します。気になるところから読めます。</p>
+    <p class="sub">クリエイターが使うのはLINEだけ。運営の方が使うのは、ブラウザで開く管理画面だけです。運営の日課は、日次データを1回アップロードすることだけ。ここでは、ai-boが実際に何をするのかを具体的にご説明します。</p>
+    <p class="toc-lead">気になるところから読めます</p>
     <div class="toc-grid">
       <a class="toc-card" href="#samples"><span class="n">01</span><span class="t">毎朝の声かけ</span></a>
       <a class="toc-card" href="#target"><span class="n">02</span><span class="t">声をかける相手</span></a>
