@@ -438,7 +438,7 @@
 </section>
 
 <!-- ══ ⑨ 管理画面 ══ -->
-<section>
+<section id="dashboard">
   <div class="wrap">
     <div class="split rev">
       <div class="txt">
@@ -471,21 +471,46 @@
       </div>
     </div>
 
-    <p class="sec-sub">管理画面のページ</p>
-    <div class="tblwrap">
-      <table>
-        <thead><tr><th style="width:26%">ページ</th><th style="width:74%">見られるもの</th></tr></thead>
-        <tbody>
-          <tr><td><b>ホーム</b></td><td>要対応者の4分類、主要な指標、クリエイター一覧</td></tr>
-          <tr><td><b>成果・推移</b></td><td>見込みと月次の推移、復帰率の比較</td></tr>
-          <tr><td><b>クリエイター</b></td><td>一覧、ai-boとの会話ログ（全文）、担当者別</td></tr>
-          <tr><td><b>個票</b></td><td>一人ひとりの詳細、時系列のグラフ、ランク</td></tr>
-          <tr><td><b>声かけ配信</b></td><td>対象の自動選定、手動での送信、一斉のお知らせ</td></tr>
-          <tr><td><b>ai-bo稼働</b></td><td>送信ログ、取り次ぎの状況、通話の利用状況</td></tr>
-          <tr><td><b>コラボ</b></td><td>マッチングの進行状況</td></tr>
-          <tr><td><b>データ・設定</b></td><td>日次データの取り込み、基準値の編集、運用ツール</td></tr>
-        </tbody>
-      </table>
+    <!-- 2026-10-24 ページ一覧の表を、ダッシュボードのモック画面に差し替え -->
+    <div class="dash">
+      <div class="top">
+        <i></i><i></i><i></i>
+        <span class="u">ai-bo 運営ダッシュボード ／ ホーム</span>
+      </div>
+      <div class="body">
+        <div class="kpis">
+          <div class="kpi"><div class="l">今月の稼働</div><div class="n">25<small>/ 45名</small></div></div>
+          <div class="kpi"><div class="l">要対応</div><div class="n" style="color:var(--red)">19<small>件</small></div></div>
+          <div class="kpi"><div class="l">今日の送信</div><div class="n">41<small>件</small></div></div>
+          <div class="kpi"><div class="l">返信</div><div class="n" style="color:var(--green)">12<small>件</small></div></div>
+        </div>
+
+        <h4>今日、声をかけたい人</h4>
+        <div class="row">
+          <span class="av r">HK</span>
+          <span><div class="nm">@demo_hikari</div><div class="rs">21日間 配信なし／前回の反応あり</div></span>
+          <span class="bd r">離脱の兆し</span>
+        </div>
+        <div class="row">
+          <span class="av o">NG</span>
+          <span><div class="nm">@demo_nagisa</div><div class="rs">昨日45分／あと15分で“配信した日”に到達</div></span>
+          <span class="bd o">あと一歩</span>
+        </div>
+        <div class="row">
+          <span class="av p">SU</span>
+          <span><div class="nm">@demo_subaru</div><div class="rs">運営への質問が1件、未回答のまま</div></span>
+          <span class="bd r">要人間対応</span>
+        </div>
+        <div class="row">
+          <span class="av g">MK</span>
+          <span><div class="nm">@demo_mikoto</div><div class="rs">先月比 −38%／配信時間が落ちている</div></span>
+          <span class="bd o">前月割れ</span>
+        </div>
+
+        <div class="samplenote">
+          <b>サンプル</b> 画面はデモ環境のものです。表示している45名はすべて架空のデータで、実在のクリエイターは含まれません。
+        </div>
+      </div>
     </div>
     <p class="note-s">すべてのページで<b style="color:var(--text)">表示する月を切り替えられます。</b>　また、インセンティブの基準値は<b style="color:var(--text)">管理画面から担当者ご自身で変更できます。</b>規定が改定されても、その日から正しい判定に切り替わります。過去の月は当時の基準のまま判定されます。</p>
     <div class="more">
@@ -574,64 +599,6 @@
   </div>
 </section>
 
-<!-- ══ DASHBOARD ══ -->
-<section id="dashboard">
-  <div class="wrap">
-    <div class="split rev">
-      <div class="txt">
-      <span class="eyebrow">運営ダッシュボード</span>
-      <h2 class="chunk"><span>開いて最初に出るのは、</span><br><span>「今日、誰に声をかけるか」</span><span>だけです。</span></h2>
-      <p class="lead">数字の一覧ではありません。動くべき相手と、その理由が並びます。理由は一人ずつ違います。</p>
-      </div>
-      <figure class="fig">
-        <img src="images/06-dashboard.webp" width="1168" height="880" loading="lazy" decoding="async" alt="半透明のダッシュボード画面の図。いくつかの行が青く強調されています">
-      </figure>
-    </div>
-    <div class="dash">
-      <div class="top">
-        <i></i><i></i><i></i>
-        <span class="u">ai-bo 運営ダッシュボード ／ ホーム</span>
-      </div>
-      <div class="body">
-        <div class="kpis">
-          <div class="kpi"><div class="l">今月の稼働</div><div class="n">25<small>/ 45名</small></div></div>
-          <div class="kpi"><div class="l">要対応</div><div class="n" style="color:var(--red)">19<small>件</small></div></div>
-          <div class="kpi"><div class="l">今日の送信</div><div class="n">41<small>件</small></div></div>
-          <div class="kpi"><div class="l">返信</div><div class="n" style="color:var(--green)">12<small>件</small></div></div>
-        </div>
-
-        <h4>今日、声をかけたい人</h4>
-        <div class="row">
-          <span class="av r">HK</span>
-          <span><div class="nm">@demo_hikari</div><div class="rs">21日間 配信なし／前回の反応あり</div></span>
-          <span class="bd r">離脱の兆し</span>
-        </div>
-        <div class="row">
-          <span class="av o">NG</span>
-          <span><div class="nm">@demo_nagisa</div><div class="rs">昨日45分／あと15分で“配信した日”に到達</div></span>
-          <span class="bd o">あと一歩</span>
-        </div>
-        <div class="row">
-          <span class="av p">SU</span>
-          <span><div class="nm">@demo_subaru</div><div class="rs">運営への質問が1件、未回答のまま</div></span>
-          <span class="bd r">要人間対応</span>
-        </div>
-        <div class="row">
-          <span class="av g">MK</span>
-          <span><div class="nm">@demo_mikoto</div><div class="rs">先月比 −38%／配信時間が落ちている</div></span>
-          <span class="bd o">前月割れ</span>
-        </div>
-
-        <div class="samplenote">
-          <b>サンプル</b> 画面はデモ環境のものです。表示している45名はすべて架空のデータで、実在のクリエイターは含まれません。
-        </div>
-      </div>
-    </div>
-    <div class="more">
-      <a href="dashboard.html" class="btn-pill">ダッシュボードサンプルを見る<span class="ar"><svg width="16" height="16" viewBox="0 0 24 24"><use href="#i-arr"/></svg></span></a>
-    </div>
-  </div>
-</section>
 
 <!-- ══ STATUS ══ -->
 <section id="status">
