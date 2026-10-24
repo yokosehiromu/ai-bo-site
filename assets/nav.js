@@ -3,15 +3,15 @@
 
    ⚠ 元に戻したいとき は、各ページの <head> からこの1行を消し、
       ヘッダーの <button class="navtoggle"> を消すだけ。
-      CSSは「@media (max-width:1080px)」の中だけで効いているので、
+      CSSは「@media (max-width:900px)」の中だけで効いているので、
       PCの見た目には一切影響しない。
 
    設計
-   - 1080px以下でだけ動く。それより広い画面では何もしない
+   - 900px以下でだけ動く。それより広い画面では何もしない
    - JSが読まれなくても、メニューは「閉じた状態」で表示が壊れない
      （開けないだけ。PCでは元からボタンを出していない）
    - 閉じる操作は3つ: ボタンをもう一度／リンクを押す／Escキー
-   - 画面を広げて1080pxを超えたら自動で閉じる（開いたまま残らないように）
+   - 画面を広げて900pxを超えたら自動で閉じる（開いたまま残らないように）
    ══════════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
@@ -41,7 +41,7 @@
   });
 
   // 画面を広げたら閉じる。開いたまま残ると、PC表示で宙に浮いて見える
-  var mq = window.matchMedia('(min-width:1081px)');
+  var mq = window.matchMedia('(min-width:901px)');
   var onChange = function (e) { if (e.matches) setOpen(false); };
   if (mq.addEventListener) mq.addEventListener('change', onChange);
   else if (mq.addListener) mq.addListener(onChange);   // 古いSafari向け
