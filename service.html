@@ -138,7 +138,7 @@
 </section>
 
 <!-- ══ ① 毎朝の声かけ ══ -->
-<section>
+<section id="samples">
   <div class="wrap">
     <div class="split">
       <div class="txt">
@@ -156,6 +156,44 @@
       <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>全員に毎日送るわけでもありません。</b>　その日に声をかける意味がある方を選んで送ります。毎日全員に送ると、かえって読まれなくなるためです</li>
       <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>所属90日未満の方は、常に対象です。</b>　立ち上がりの時期だけは、選別の対象から外しています</li>
     </ul>
+
+    <!-- 2026-10-24 「実際に届く文面」から移設。見出しブロックは廃止 -->
+    <p class="sec-sub" style="margin-top:34px">実際に届く文面</p>
+    <div class="samples">
+      <div class="sample">
+        <div class="who">
+          <span class="av"><svg width="15" height="15" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+          <span><b>あと一歩の人へ</b><br><span>今月の到達まで、あと1日</span></span>
+        </div>
+        <div class="bub">今月、あと1日配信できたら“配信した日”が7日になります。時間もあと1時間ちょっとです。
+今週のどこか、いけそうな日ってありますか？</div>
+        <span class="tag" style="background:var(--accent-soft); color:var(--accent)">到達が近い</span>
+      </div>
+      <div class="sample">
+        <div class="who">
+          <span class="av"><svg width="15" height="15" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+          <span><b>惜しかった人へ</b><br><span>昨日の配信が45分</span></span>
+        </div>
+        <div class="bub">昨日の配信、45分でしたね。あと15分で“配信した日”に入ってました。惜しい！
+次はキリのいいところで1時間、狙ってみませんか？</div>
+        <span class="tag" style="background:var(--orange-soft); color:var(--orange)">惜しい配信</span>
+      </div>
+      <div class="sample">
+        <div class="who">
+          <span class="av"><svg width="15" height="15" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+          <span><b>間が空いた人へ</b><br><span>しばらく配信がない</span></span>
+        </div>
+        <div class="bub">最近ちょっと間が空きましたね。無理しなくていいので、調子だけ聞かせてください。
+最近どうですか？</div>
+        <span class="tag" style="background:var(--red-soft); color:var(--red)">離脱の兆し</span>
+      </div>
+    </div>
+    <p class="lead" style="margin:26px 0 0; color:var(--text); font-weight:600; font-size:16px">
+      この3人に、担当者は何もしていません。ai-boが自動で判断して送っています。
+    </p>
+    <div class="more">
+      <a href="line-demo.html" class="btn-pill">クリエイターからの見え方<span class="ar"><svg width="16" height="16" viewBox="0 0 24 24"><use href="#i-arr"/></svg></span></a>
+    </div>
   </div>
 </section>
 
@@ -329,10 +367,48 @@
   </div>
 </section>
 
+<!-- ══ ENGINE ══ -->
+<section id="engine">
+  <div class="wrap">
+    <div class="split rev">
+      <div class="txt">
+      <span class="eyebrow">08　仕組み</span>
+      <h2 class="chunk"><span>全員に同じ言葉は送りません。</span><br><span>2つのエンジンが、</span><span>その人に合った</span><span>声かけを組み立てます。</span></h2>
+      <p class="lead">所属クリエイターを自動で仕分けし、それぞれに合ったエンジンへ振り分けます。<b>「対象者リストを作る」という作業自体が、そもそも発生しません。</b></p>
+      </div>
+      <figure class="fig">
+        <img src="images/04-engine.webp" width="1168" height="880" loading="lazy" decoding="async" alt="多数の粒が2つの装置を通り、それぞれ違う吹き出しになって出てくる図">
+      </figure>
+    </div>
+    <div class="flow">
+      <div class="node">
+        <div class="k">INPUT</div>
+        <div class="v">所属クリエイター<br>全員</div>
+      </div>
+      <div class="arr"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-arr"/></svg></div>
+      <div class="mid">
+        <div class="eng">
+          <div class="t">① 90日プログラムエンジン</div>
+          <div class="d">新人の対象者を自動で仕分け。90日以内のプロ昇格に向けて、あと何が足りないかを実績から計算します。</div>
+        </div>
+        <div class="eng b">
+          <div class="t">② 恒常エンジン</div>
+          <div class="d">新人対象外の全員へ。その人にとっての「次の一段」を見つけ、在籍しているあいだ働き続けます。</div>
+        </div>
+      </div>
+      <div class="arr"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-arr"/></svg></div>
+      <div class="node out">
+        <div class="k">OUTPUT</div>
+        <div class="v">その人専用の<br>メッセージ</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ══ ⑧ クリエイターが使える機能 ══ -->
 <section>
   <div class="wrap">
-    <span class="eyebrow">08　できること</span>
+    <span class="eyebrow">09　できること</span>
     <h2>クリエイターが使える機能。</h2>
     <p class="lead">すべてLINEの中で完結します。別のアプリを入れていただく必要はありません。</p>
     <div class="grid g2">
@@ -366,7 +442,7 @@
   <div class="wrap">
     <div class="split rev">
       <div class="txt">
-        <span class="eyebrow">09　運営の管理画面</span>
+        <span class="eyebrow">10　運営の管理画面</span>
         <h2>開いて最初に出るのは、<br>「今日、動くべき相手」です。</h2>
         <p class="lead">ブラウザで開きます。数字の一覧ではなく、動くべき相手と、<b>なぜその人が出ているかの理由が日本語の文章で</b>並びます。対応したら1クリックで消えます。</p>
       </div>
@@ -418,29 +494,6 @@
   </div>
 </section>
 
-<!-- ══ ⑩ 見せないもの ══ -->
-<section>
-  <div class="wrap">
-    <div class="split">
-      <div class="txt">
-        <span class="eyebrow">10　設計で決めていること</span>
-        <h2>本人に見せないものを、<br>あらかじめ決めてあります。</h2>
-        <p class="lead">運用の中で判断するのではなく、設計として固定しています。担当者が気をつけて運用する、というかたちにはしていません。</p>
-      </div>
-      <figure class="fig">
-        <img src="images/09-safety.webp" width="1168" height="880" loading="lazy" decoding="async" alt="鍵穴のついた盾が、すりガラスの向こうのデータを守っている図">
-      </figure>
-    </div>
-    <ul class="plain" style="max-width:var(--measure)">
-      <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>事務所の報酬やインセンティブの仕組みは表示しません。</b>　設計上の禁則です</li>
-      <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>他の人の実績や順位は出しません。</b>　比較は本人に見せません</li>
-      <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>ランクが下がったことは伝えません。</b>　上がったときだけお祝いします</li>
-      <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>共有範囲は本人に明示しています。</b>　「やり取りは所属事務所が確認することもあります」と、利用開始時にお伝えしています</li>
-      <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>深刻な相談は見逃しません。</b>　兆候を検知したら、ご本人の同意を得たうえで運営の方に共有します。音声通話でも同じ確認を行います</li>
-      <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>データは事務所ごとに完全に分離します。</b>　他の事務所と混ざることはありません</li>
-    </ul>
-  </div>
-</section>
 
 <!-- ══ ⑪ できないこと ══ -->
 <section>
@@ -477,94 +530,7 @@
      実際に届く文面／仕組み／できること／運営ダッシュボード／
      クリエイターから見た画面／独自ランク制度／安全性とプライバシー
      ⚠ 上の 08・09・10 と内容が重なる。整理する場合はそちらと見比べること ══ -->
-<!-- ══ SAMPLES ══ -->
-<section id="samples">
-  <div class="wrap">
-    <div class="split">
-      <div class="txt">
-      <span class="eyebrow">実際に届く文面</span>
-      <h2>クリエイターに、ai-boがこのように声をかけます。</h2>
-      <p class="lead">3人とも状況が違うので、文面も違います。テンプレートを差し替えているのではなく、その日のデータを見て、その場で書いています。</p>
-      </div>
-      <figure class="fig">
-        <img src="images/02-samples.webp" width="1168" height="880" loading="lazy" decoding="async" alt="スマートフォンの上に3つの吹き出しが浮かぶ図。一人ずつ違う文面が届くことを表しています">
-      </figure>
-    </div>
-    <div class="samples">
-      <div class="sample">
-        <div class="who">
-          <span class="av"><svg width="15" height="15" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
-          <span><b>あと一歩の人へ</b><br><span>今月の到達まで、あと1日</span></span>
-        </div>
-        <div class="bub">今月、あと1日配信できたら“配信した日”が7日になります。時間もあと1時間ちょっとです。
-今週のどこか、いけそうな日ってありますか？</div>
-        <span class="tag" style="background:var(--accent-soft); color:var(--accent)">到達が近い</span>
-      </div>
-      <div class="sample">
-        <div class="who">
-          <span class="av"><svg width="15" height="15" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
-          <span><b>惜しかった人へ</b><br><span>昨日の配信が45分</span></span>
-        </div>
-        <div class="bub">昨日の配信、45分でしたね。あと15分で“配信した日”に入ってました。惜しい！
-次はキリのいいところで1時間、狙ってみませんか？</div>
-        <span class="tag" style="background:var(--orange-soft); color:var(--orange)">惜しい配信</span>
-      </div>
-      <div class="sample">
-        <div class="who">
-          <span class="av"><svg width="15" height="15" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
-          <span><b>間が空いた人へ</b><br><span>しばらく配信がない</span></span>
-        </div>
-        <div class="bub">最近ちょっと間が空きましたね。無理しなくていいので、調子だけ聞かせてください。
-最近どうですか？</div>
-        <span class="tag" style="background:var(--red-soft); color:var(--red)">離脱の兆し</span>
-      </div>
-    </div>
-    <p class="lead" style="margin:26px 0 0; color:var(--text); font-weight:600; font-size:16px">
-      この3人に、担当者は何もしていません。ai-boが自動で判断して送っています。
-    </p>
-    <div class="more">
-      <a href="line-demo.html" class="btn-pill">クリエイターからの見え方<span class="ar"><svg width="16" height="16" viewBox="0 0 24 24"><use href="#i-arr"/></svg></span></a>
-    </div>
-  </div>
-</section>
 
-<!-- ══ ENGINE ══ -->
-<section id="engine">
-  <div class="wrap">
-    <div class="split rev">
-      <div class="txt">
-      <span class="eyebrow">仕組み</span>
-      <h2 class="chunk"><span>全員に同じ言葉は送りません。</span><br><span>2つのエンジンが、</span><span>その人に合った</span><span>声かけを組み立てます。</span></h2>
-      <p class="lead">所属クリエイターを自動で仕分けし、それぞれに合ったエンジンへ振り分けます。<b>「対象者リストを作る」という作業自体が、そもそも発生しません。</b></p>
-      </div>
-      <figure class="fig">
-        <img src="images/04-engine.webp" width="1168" height="880" loading="lazy" decoding="async" alt="多数の粒が2つの装置を通り、それぞれ違う吹き出しになって出てくる図">
-      </figure>
-    </div>
-    <div class="flow">
-      <div class="node">
-        <div class="k">INPUT</div>
-        <div class="v">所属クリエイター<br>全員</div>
-      </div>
-      <div class="arr"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-arr"/></svg></div>
-      <div class="mid">
-        <div class="eng">
-          <div class="t">① 90日プログラムエンジン</div>
-          <div class="d">新人の対象者を自動で仕分け。90日以内のプロ昇格に向けて、あと何が足りないかを実績から計算します。</div>
-        </div>
-        <div class="eng b">
-          <div class="t">② 恒常エンジン</div>
-          <div class="d">新人対象外の全員へ。その人にとっての「次の一段」を見つけ、在籍しているあいだ働き続けます。</div>
-        </div>
-      </div>
-      <div class="arr"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-arr"/></svg></div>
-      <div class="node out">
-        <div class="k">OUTPUT</div>
-        <div class="v">その人専用の<br>メッセージ</div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ══ FEATURES ══ -->
 <section id="features">
@@ -779,6 +745,15 @@
         <p>事務所ごとに独立した環境をご用意します。他の事務所とデータが混ざることはありません。</p>
       </div>
     </div>
+  <!-- 2026-10-24 「10 設計で決めていること」から移設 -->
+    <ul class="plain" style="max-width:var(--measure)">
+      <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>事務所の報酬やインセンティブの仕組みは表示しません。</b>　設計上の禁則です</li>
+      <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>他の人の実績や順位は出しません。</b>　比較は本人に見せません</li>
+      <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>ランクが下がったことは伝えません。</b>　上がったときだけお祝いします</li>
+      <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>共有範囲は本人に明示しています。</b>　「やり取りは所属事務所が確認することもあります」と、利用開始時にお伝えしています</li>
+      <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>深刻な相談は見逃しません。</b>　兆候を検知したら、ご本人の同意を得たうえで運営の方に共有します。音声通話でも同じ確認を行います</li>
+      <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>データは事務所ごとに完全に分離します。</b>　他の事務所と混ざることはありません</li>
+    </ul>
   </div>
 </section>
 
