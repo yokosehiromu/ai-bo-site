@@ -22,11 +22,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=20261024">
-<script src="assets/nav.js?v=20261024" defer></script>
+<link rel="stylesheet" href="assets/style.css?v=20261024b">
+<script src="assets/nav.js?v=20261024b" defer></script>
 <!-- ▼ イラストの動き（2026-10-10）。元に戻すにはこの2行を消すだけ。assets/motion.css 参照 -->
-<link rel="stylesheet" href="assets/motion.css?v=20261024">
-<script src="assets/motion.js?v=20261024"></script>
+<link rel="stylesheet" href="assets/motion.css?v=20261024b">
+<script src="assets/motion.js?v=20261024b"></script>
 <!-- ▲ イラストの動き ここまで -->
 </head>
 <body>
@@ -137,6 +137,35 @@
   </div>
 </section>
 
+<!-- ══ もくじ（2026-10-24）══
+     15節への入口。番号はページ内の見出しと一致させてある。
+     節を増やす・並べ替えるときは、ここの並びも必ず合わせること。
+     ⚠ 番号を振らない節（ページ見出し・お問い合わせ）はここに載せない。 -->
+<section class="toc">
+  <div class="wrap">
+    <p class="toc-lead">ai-boが実際に何をするのか</p>
+    <h2>このページでわかること</h2>
+    <p class="lead">クリエイター側と運営側、それぞれの画面と動きを15項目に分けて説明します。気になるところから読めます。</p>
+    <div class="toc-grid">
+      <a class="toc-card" href="#samples"><span class="n">01</span><span class="t">毎朝の声かけ</span></a>
+      <a class="toc-card" href="#target"><span class="n">02</span><span class="t">声をかける相手</span></a>
+      <a class="toc-card" href="#relay"><span class="n">03</span><span class="t">取り次ぎ</span></a>
+      <a class="toc-card" href="#collab"><span class="n">04</span><span class="t">コラボ</span></a>
+      <a class="toc-card" href="#flow"><span class="n">05</span><span class="t">1日の流れ</span></a>
+      <a class="toc-card" href="#voice"><span class="n">06</span><span class="t">音声通話</span></a>
+      <a class="toc-card" href="#newbie"><span class="n">07</span><span class="t">新人と、止まった方</span></a>
+      <a class="toc-card" href="#engine"><span class="n">08</span><span class="t">仕組み</span></a>
+      <a class="toc-card" href="#dashboard"><span class="n">09</span><span class="t">運営の管理画面</span></a>
+      <a class="toc-card" href="#features"><span class="n">10</span><span class="t">できること</span></a>
+      <a class="toc-card" href="#limits"><span class="n">11</span><span class="t">できないこと</span></a>
+      <a class="toc-card" href="#status"><span class="n">12</span><span class="t">クリエイターから見た画面</span></a>
+      <a class="toc-card" href="#rank"><span class="n">13</span><span class="t">独自ランク制度</span></a>
+      <a class="toc-card" href="#safety"><span class="n">14</span><span class="t">安全性とプライバシー</span></a>
+      <a class="toc-card" href="#steps"><span class="n">15</span><span class="t">導入と運用</span></a>
+    </div>
+  </div>
+</section>
+
 <!-- ══ ① 毎朝の声かけ ══ -->
 <section id="samples">
   <div class="wrap">
@@ -198,7 +227,7 @@
 </section>
 
 <!-- ══ ② 声をかける相手の決め方 ══ -->
-<section>
+<section id="target">
   <div class="wrap">
     <div class="split rev">
       <div class="txt">
@@ -216,7 +245,7 @@
 </section>
 
 <!-- ══ ③ 取り次ぎ ══ -->
-<section>
+<section id="relay">
   <div class="wrap">
     <div class="split">
       <div class="txt">
@@ -239,7 +268,7 @@
 </section>
 
 <!-- ══ ④ コラボ ══ -->
-<section>
+<section id="collab">
   <div class="wrap">
     <div class="split rev">
       <div class="txt">
@@ -267,7 +296,7 @@
 </section>
 
 <!-- ══ ⑤ 1日の流れ ══ -->
-<section>
+<section id="flow">
   <div class="wrap">
     <div class="split">
       <div class="txt">
@@ -300,7 +329,7 @@
 </section>
 
 <!-- ══ ⑥ 音声通話 ══ -->
-<section>
+<section id="voice">
   <div class="wrap">
     <div class="split rev">
       <div class="txt">
@@ -321,7 +350,7 @@
 </section>
 
 <!-- ══ ⑦ 新人と引き戻し ══ -->
-<section>
+<section id="newbie">
   <div class="wrap">
     <div class="split">
       <div class="txt">
@@ -532,7 +561,7 @@
 </section>
 
 <!-- ══ ⑪ できないこと ══ -->
-<section>
+<section id="limits">
   <div class="wrap">
     <span class="eyebrow">11　できないこと</span>
     <h2>できないことも、先にお伝えします。</h2>
@@ -697,7 +726,7 @@
 </section>
 
 <!-- ══ 導入 ══ -->
-<section>
+<section id="steps">
   <div class="wrap">
     <span class="eyebrow">15　導入と運用</span>
     <h2>最短1週間で始められます。</h2>
