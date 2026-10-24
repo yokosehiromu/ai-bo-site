@@ -64,7 +64,7 @@ nav a:hover{color:var(--text); text-decoration:none}
    開閉は assets/nav.js。JSが動かなくても閉じた状態で崩れない。 */
 .navtoggle{display:none}
 
-@media (max-width:900px){
+@media (max-width:1080px){
   /* PC用の横並びリンクと「相談する」は、たたんでメニューの中へ入れる */
   nav .nav-link{display:none}
 
