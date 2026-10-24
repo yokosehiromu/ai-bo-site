@@ -1017,3 +1017,24 @@ div.lp-menutab:hover{background:#fff}
   .toc-card{min-height:84px; padding:12px 13px}
   .toc-card .t{font-size:13px}
 }
+
+/* ── ロゴのマーク（2026-10-24）────────────────────────────
+   以前は青い丸/四角の中に白いロボットの線画（#i-bot）を入れていた。
+   新ロゴ（青い吹き出し）に差し替えたので、土台は白か透明にして、
+   ロゴそのものが見えるようにする。
+   ⚠ 土台を青のままにすると、青い吹き出しが沈んで見えなくなる。 */
+img.bot{display:block; width:100%; height:auto; object-fit:contain}
+
+/* ヘッダー・フッターのロゴ（文字「ai-bo」は横に残す） */
+.logo .dot{background:transparent; border-radius:0; width:30px; height:30px; padding:0}
+footer .logo .dot{width:24px !important; height:24px !important; border-radius:0 !important}
+
+/* 丸いアイコン（トークの相手・文面サンプル・コラージュ）は白地にする */
+.sample .who .av,
+.lp-talkbar .av,
+.lp-row .av,
+.collage .a{background:#fff; box-shadow:0 1px 2px rgba(12,20,38,.12)}
+.sample .who .av img.bot,
+.lp-talkbar .av img.bot,
+.lp-row .av img.bot,
+.collage .a img.bot{width:84%; height:84%}

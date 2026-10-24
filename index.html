@@ -32,11 +32,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=20261024f">
-<script src="assets/nav.js?v=20261024f" defer></script>
+<link rel="stylesheet" href="assets/style.css?v=20261024g">
+<script src="assets/nav.js?v=20261024g" defer></script>
 <!-- ▼ イラストの動き（2026-10-10）。元に戻すにはこの2行を消すだけ。assets/motion.css 参照 -->
-<link rel="stylesheet" href="assets/motion.css?v=20261024f">
-<script src="assets/motion.js?v=20261024f"></script>
+<link rel="stylesheet" href="assets/motion.css?v=20261024g">
+<script src="assets/motion.js?v=20261024g"></script>
 <!-- ▲ イラストの動き ここまで -->
 </head>
 <body>
@@ -89,7 +89,7 @@
 <header>
   <div class="wrap hd">
     <a href="#top" class="logo">
-      <span class="dot"><svg width="16" height="16" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+      <span class="dot"><img class="bot" src="images/ai-bo-logo.webp" alt="" width="16" height="16" loading="lazy" decoding="async"></span>
       ai-bo
     </a>
     <button class="navtoggle" id="navToggle" type="button"
@@ -117,26 +117,26 @@
   <!-- ai-bo とクリエイターの、架空のやりとり。配信のアドバイス／誉め言葉／モチベーション／
        離脱の引き戻し／雑談 の5種。dialogue.py のシステムプロンプトの規則に沿わせてある。 -->
   <div class="collage" aria-hidden="true">
-    <div class="s s1"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>昨日のコメント、後半から増えていましたね。話題を1つに絞ったのが効いたのかもしれません。</p></div></div>
-    <div class="s s2"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>おめでとうございます！今月、シルバーに届きましたね。</p></div></div>
-    <div class="s s3"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>数字が動かない日でも、来てくれた人にとっては、その日が初めての配信です。</p></div></div>
-    <div class="s s4"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>今日は何か、おいしいもの食べました？</p></div><div class="row me"><p>家系ラーメン！こってり派です</p></div></div>
-    <div class="s s5"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>こってり派なんですね。トッピングは何を乗せますか？</p></div></div>
-    <div class="s s6"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>しばらくぶりですね。何かあったのかなと、少し気になっていました。</p></div><div class="row me"><p>ちょっとバイトが忙しくて…</p></div></div>
-    <div class="s s7"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>次の配信、最初の10分で「今日やること」を先に言ってみませんか。</p></div></div>
-    <div class="s s8"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>先月より配信の時間が伸びていました。コメントしてくれる方も増えています。</p></div><div class="row me"><p>ほんとだ！うれしい</p></div></div>
-    <div class="s s9"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>3ヶ月前のみさきさんなら、今日の配信はできていなかったと思います。</p></div><div class="row me"><p>そう言われると、ちょっと自信出てきた</p></div></div>
-    <div class="s s10"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>戻ってこなくても大丈夫です。元気にしているかだけ、聞かせてください。</p></div></div>
-    <div class="s s11"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>最近ハマっているもの、ありますか？</p></div></div>
-    <div class="s s12"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>時間帯の近い方が何人かいます。コラボ、探してみましょうか。</p></div></div>
-    <div class="s s13"><div class="row me"><p>サウナにハマってる</p></div><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>サウナいいですね。整ったあとは、何をしている時間が好きですか？</p></div></div>
-    <div class="s s14"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>今日は無理に長くしなくて大丈夫です。顔を出すだけでも、待っている人には届きます。</p></div></div>
-    <div class="s s15"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>そうだったんですね。お疲れさまです。無理のないときに、また話しましょう。</p></div></div>
-    <div class="s s16"><div class="row me"><p>最初に言うと、自分も楽かも</p></div><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>そうなんです。途中から来た方も、入りやすくなります。</p></div></div>
-    <div class="s s17"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>新しく来てくれた方が、先月より増えていました。名前を覚えている人も多いですね。</p></div></div>
-    <div class="s s18"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>続けていること自体が、いちばん難しいことなんだと思います。</p></div></div>
+    <div class="s s1"><div class="row"><span class="a"><img class="bot" src="images/ai-bo-logo.webp" alt="" width="13" height="13" loading="lazy" decoding="async"></span><p>昨日のコメント、後半から増えていましたね。話題を1つに絞ったのが効いたのかもしれません。</p></div></div>
+    <div class="s s2"><div class="row"><span class="a"><img class="bot" src="images/ai-bo-logo.webp" alt="" width="13" height="13" loading="lazy" decoding="async"></span><p>おめでとうございます！今月、シルバーに届きましたね。</p></div></div>
+    <div class="s s3"><div class="row"><span class="a"><img class="bot" src="images/ai-bo-logo.webp" alt="" width="13" height="13" loading="lazy" decoding="async"></span><p>数字が動かない日でも、来てくれた人にとっては、その日が初めての配信です。</p></div></div>
+    <div class="s s4"><div class="row"><span class="a"><img class="bot" src="images/ai-bo-logo.webp" alt="" width="13" height="13" loading="lazy" decoding="async"></span><p>今日は何か、おいしいもの食べました？</p></div><div class="row me"><p>家系ラーメン！こってり派です</p></div></div>
+    <div class="s s5"><div class="row"><span class="a"><img class="bot" src="images/ai-bo-logo.webp" alt="" width="13" height="13" loading="lazy" decoding="async"></span><p>こってり派なんですね。トッピングは何を乗せますか？</p></div></div>
+    <div class="s s6"><div class="row"><span class="a"><img class="bot" src="images/ai-bo-logo.webp" alt="" width="13" height="13" loading="lazy" decoding="async"></span><p>しばらくぶりですね。何かあったのかなと、少し気になっていました。</p></div><div class="row me"><p>ちょっとバイトが忙しくて…</p></div></div>
+    <div class="s s7"><div class="row"><span class="a"><img class="bot" src="images/ai-bo-logo.webp" alt="" width="13" height="13" loading="lazy" decoding="async"></span><p>次の配信、最初の10分で「今日やること」を先に言ってみませんか。</p></div></div>
+    <div class="s s8"><div class="row"><span class="a"><img class="bot" src="images/ai-bo-logo.webp" alt="" width="13" height="13" loading="lazy" decoding="async"></span><p>先月より配信の時間が伸びていました。コメントしてくれる方も増えています。</p></div><div class="row me"><p>ほんとだ！うれしい</p></div></div>
+    <div class="s s9"><div class="row"><span class="a"><img class="bot" src="images/ai-bo-logo.webp" alt="" width="13" height="13" loading="lazy" decoding="async"></span><p>3ヶ月前のみさきさんなら、今日の配信はできていなかったと思います。</p></div><div class="row me"><p>そう言われると、ちょっと自信出てきた</p></div></div>
+    <div class="s s10"><div class="row"><span class="a"><img class="bot" src="images/ai-bo-logo.webp" alt="" width="13" height="13" loading="lazy" decoding="async"></span><p>戻ってこなくても大丈夫です。元気にしているかだけ、聞かせてください。</p></div></div>
+    <div class="s s11"><div class="row"><span class="a"><img class="bot" src="images/ai-bo-logo.webp" alt="" width="13" height="13" loading="lazy" decoding="async"></span><p>最近ハマっているもの、ありますか？</p></div></div>
+    <div class="s s12"><div class="row"><span class="a"><img class="bot" src="images/ai-bo-logo.webp" alt="" width="13" height="13" loading="lazy" decoding="async"></span><p>時間帯の近い方が何人かいます。コラボ、探してみましょうか。</p></div></div>
+    <div class="s s13"><div class="row me"><p>サウナにハマってる</p></div><div class="row"><span class="a"><img class="bot" src="images/ai-bo-logo.webp" alt="" width="13" height="13" loading="lazy" decoding="async"></span><p>サウナいいですね。整ったあとは、何をしている時間が好きですか？</p></div></div>
+    <div class="s s14"><div class="row"><span class="a"><img class="bot" src="images/ai-bo-logo.webp" alt="" width="13" height="13" loading="lazy" decoding="async"></span><p>今日は無理に長くしなくて大丈夫です。顔を出すだけでも、待っている人には届きます。</p></div></div>
+    <div class="s s15"><div class="row"><span class="a"><img class="bot" src="images/ai-bo-logo.webp" alt="" width="13" height="13" loading="lazy" decoding="async"></span><p>そうだったんですね。お疲れさまです。無理のないときに、また話しましょう。</p></div></div>
+    <div class="s s16"><div class="row me"><p>最初に言うと、自分も楽かも</p></div><div class="row"><span class="a"><img class="bot" src="images/ai-bo-logo.webp" alt="" width="13" height="13" loading="lazy" decoding="async"></span><p>そうなんです。途中から来た方も、入りやすくなります。</p></div></div>
+    <div class="s s17"><div class="row"><span class="a"><img class="bot" src="images/ai-bo-logo.webp" alt="" width="13" height="13" loading="lazy" decoding="async"></span><p>新しく来てくれた方が、先月より増えていました。名前を覚えている人も多いですね。</p></div></div>
+    <div class="s s18"><div class="row"><span class="a"><img class="bot" src="images/ai-bo-logo.webp" alt="" width="13" height="13" loading="lazy" decoding="async"></span><p>続けていること自体が、いちばん難しいことなんだと思います。</p></div></div>
     <div class="s s19"><div class="row me"><p>今日ちょっと寝坊した</p></div></div>
-    <div class="s s20"><div class="row"><span class="a"><svg width="13" height="13" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span><p>昨日の配信、最後まで残ってくれた人が多かったですね。</p></div></div>
+    <div class="s s20"><div class="row"><span class="a"><img class="bot" src="images/ai-bo-logo.webp" alt="" width="13" height="13" loading="lazy" decoding="async"></span><p>昨日の配信、最後まで残ってくれた人が多かったですね。</p></div></div>
   </div>
 
   <div class="wrap hero-inner">
@@ -244,19 +244,19 @@
 
             <div class="lp-talkbar">
               <span class="back">‹</span>
-              <span class="av"><svg width="18" height="18" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+              <span class="av"><img class="bot" src="images/ai-bo-logo.webp" alt="" width="18" height="18" loading="lazy" decoding="async"></span>
               <span><b>ai-bo</b><span class="st">あなたの伴走者</span></span>
               <span class="tools"><span>☎</span><span>≡</span></span>
             </div>
 
             <div class="lp-chat">
               <div class="lp-row">
-                <span class="av"><svg width="16" height="16" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+                <span class="av"><img class="bot" src="images/ai-bo-logo.webp" alt="" width="16" height="16" loading="lazy" decoding="async"></span>
                 <div class="lp-bub">おはようございます！<br>今月、あと1日配信できたら“配信した日”が7日になります。時間もあと1時間ちょっとです。</div>
                 <span class="tm">9:00</span>
               </div>
               <div class="lp-row">
-                <span class="av"><svg width="16" height="16" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+                <span class="av"><img class="bot" src="images/ai-bo-logo.webp" alt="" width="16" height="16" loading="lazy" decoding="async"></span>
                 <div class="lp-bub">今週のどこか、いけそうな日ってありますか？</div>
                 <span class="tm">9:00</span>
               </div>
@@ -265,7 +265,7 @@
                 <div class="lp-bub">木曜ならいけそう！</div>
               </div>
               <div class="lp-row">
-                <span class="av"><svg width="16" height="16" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+                <span class="av"><img class="bot" src="images/ai-bo-logo.webp" alt="" width="16" height="16" loading="lazy" decoding="async"></span>
                 <div class="lp-bub">いいですね。木曜に1時間いけたら、今月の“配信した日”は7日に届きます。<br>当日の朝にまた声をかけますね。</div>
                 <span class="tm">9:14</span>
               </div>
@@ -310,7 +310,7 @@
           </div>
           <div class="sc-body">
             <div class="sc-side">
-              <span class="bd"><i><svg width="12" height="12" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></i>ai-bo</span>
+              <span class="bd"><i><img class="bot" src="images/ai-bo-logo.webp" alt="" width="12" height="12" loading="lazy" decoding="async"></i>ai-bo</span>
               <span class="it on">ホーム</span>
               <span class="it">成果・推移</span>
               <span class="it">クリエイター</span>
@@ -541,7 +541,7 @@ ai-boがご本人に語るのは、その方自身の成長だけです。</div>
 <footer>
   <div class="wrap fin">
     <a href="#top" class="logo" style="font-size:15px">
-      <span class="dot" style="width:22px;height:22px;border-radius:7px"><svg width="14" height="14" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+      <span class="dot" style="width:22px;height:22px;border-radius:7px"><img class="bot" src="images/ai-bo-logo.webp" alt="" width="14" height="14" loading="lazy" decoding="async"></span>
       ai-bo
     </a>
     <a href="philosophy.html">ai-boの理念</a>
