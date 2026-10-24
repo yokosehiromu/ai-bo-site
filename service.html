@@ -22,11 +22,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=20261021j">
-<script src="assets/nav.js?v=20261021j" defer></script>
+<link rel="stylesheet" href="assets/style.css?v=20261024">
+<script src="assets/nav.js?v=20261024" defer></script>
 <!-- ▼ イラストの動き（2026-10-10）。元に戻すにはこの2行を消すだけ。assets/motion.css 参照 -->
-<link rel="stylesheet" href="assets/motion.css?v=20261021j">
-<script src="assets/motion.js?v=20261021j"></script>
+<link rel="stylesheet" href="assets/motion.css?v=20261024">
+<script src="assets/motion.js?v=20261024"></script>
 <!-- ▲ イラストの動き ここまで -->
 </head>
 <body>
@@ -91,10 +91,10 @@
     <nav id="sitenav">
       <a href="index.html#about" class="nav-link">ai-boとは</a>
       <a href="philosophy.html" class="nav-link">ai-boの理念</a>
-      <a href="index.html#samples" class="nav-link">届く文面</a>
+      <a href="#samples" class="nav-link">届く文面</a>
       <a href="line-demo.html" class="nav-link">クリエイターからの見え方</a>
-      <a href="index.html#engine" class="nav-link">仕組み</a>
-      <a href="index.html#dashboard" class="nav-link">管理画面</a>
+      <a href="#engine" class="nav-link">仕組み</a>
+      <a href="#dashboard" class="nav-link">管理画面</a>
       <a href="dashboard.html" class="nav-link">ダッシュボードサンプル</a>
       <a href="index.html#price" class="nav-link">料金</a>
       <a href="https://lin.ee/x7dkQQq" target="_blank" rel="noopener" class="btn btn-primary">相談する</a>
@@ -468,6 +468,315 @@
       <div class="r">
         <div class="q">クリエイターに報酬額を見せられますか？</div>
         <div class="a"><b>見せません。</b>できないのではなく、<b>やらないと決めています。</b>設計上の禁則です。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ここから下は 2026-10-24 に index.html から移してきた7節 ══
+     実際に届く文面／仕組み／できること／運営ダッシュボード／
+     クリエイターから見た画面／独自ランク制度／安全性とプライバシー
+     ⚠ 上の 08・09・10 と内容が重なる。整理する場合はそちらと見比べること ══ -->
+<!-- ══ SAMPLES ══ -->
+<section id="samples">
+  <div class="wrap">
+    <div class="split">
+      <div class="txt">
+      <span class="eyebrow">実際に届く文面</span>
+      <h2>クリエイターに、ai-boがこのように声をかけます。</h2>
+      <p class="lead">3人とも状況が違うので、文面も違います。テンプレートを差し替えているのではなく、その日のデータを見て、その場で書いています。</p>
+      </div>
+      <figure class="fig">
+        <img src="images/02-samples.webp" width="1168" height="880" loading="lazy" decoding="async" alt="スマートフォンの上に3つの吹き出しが浮かぶ図。一人ずつ違う文面が届くことを表しています">
+      </figure>
+    </div>
+    <div class="samples">
+      <div class="sample">
+        <div class="who">
+          <span class="av"><svg width="15" height="15" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+          <span><b>あと一歩の人へ</b><br><span>今月の到達まで、あと1日</span></span>
+        </div>
+        <div class="bub">今月、あと1日配信できたら“配信した日”が7日になります。時間もあと1時間ちょっとです。
+今週のどこか、いけそうな日ってありますか？</div>
+        <span class="tag" style="background:var(--accent-soft); color:var(--accent)">到達が近い</span>
+      </div>
+      <div class="sample">
+        <div class="who">
+          <span class="av"><svg width="15" height="15" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+          <span><b>惜しかった人へ</b><br><span>昨日の配信が45分</span></span>
+        </div>
+        <div class="bub">昨日の配信、45分でしたね。あと15分で“配信した日”に入ってました。惜しい！
+次はキリのいいところで1時間、狙ってみませんか？</div>
+        <span class="tag" style="background:var(--orange-soft); color:var(--orange)">惜しい配信</span>
+      </div>
+      <div class="sample">
+        <div class="who">
+          <span class="av"><svg width="15" height="15" viewBox="0 0 24 24" style="color:#fff"><use href="#i-bot"/></svg></span>
+          <span><b>間が空いた人へ</b><br><span>しばらく配信がない</span></span>
+        </div>
+        <div class="bub">最近ちょっと間が空きましたね。無理しなくていいので、調子だけ聞かせてください。
+最近どうですか？</div>
+        <span class="tag" style="background:var(--red-soft); color:var(--red)">離脱の兆し</span>
+      </div>
+    </div>
+    <p class="lead" style="margin:26px 0 0; color:var(--text); font-weight:600; font-size:16px">
+      この3人に、担当者は何もしていません。ai-boが自動で判断して送っています。
+    </p>
+    <div class="more">
+      <a href="line-demo.html" class="btn-pill">クリエイターからの見え方<span class="ar"><svg width="16" height="16" viewBox="0 0 24 24"><use href="#i-arr"/></svg></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ENGINE ══ -->
+<section id="engine">
+  <div class="wrap">
+    <div class="split rev">
+      <div class="txt">
+      <span class="eyebrow">仕組み</span>
+      <h2 class="chunk"><span>全員に同じ言葉は送りません。</span><br><span>2つのエンジンが、</span><span>その人に合った</span><span>声かけを組み立てます。</span></h2>
+      <p class="lead">所属クリエイターを自動で仕分けし、それぞれに合ったエンジンへ振り分けます。<b>「対象者リストを作る」という作業自体が、そもそも発生しません。</b></p>
+      </div>
+      <figure class="fig">
+        <img src="images/04-engine.webp" width="1168" height="880" loading="lazy" decoding="async" alt="多数の粒が2つの装置を通り、それぞれ違う吹き出しになって出てくる図">
+      </figure>
+    </div>
+    <div class="flow">
+      <div class="node">
+        <div class="k">INPUT</div>
+        <div class="v">所属クリエイター<br>全員</div>
+      </div>
+      <div class="arr"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-arr"/></svg></div>
+      <div class="mid">
+        <div class="eng">
+          <div class="t">① 90日プログラムエンジン</div>
+          <div class="d">新人の対象者を自動で仕分け。90日以内のプロ昇格に向けて、あと何が足りないかを実績から計算します。</div>
+        </div>
+        <div class="eng b">
+          <div class="t">② 恒常エンジン</div>
+          <div class="d">新人対象外の全員へ。その人にとっての「次の一段」を見つけ、在籍しているあいだ働き続けます。</div>
+        </div>
+      </div>
+      <div class="arr"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-arr"/></svg></div>
+      <div class="node out">
+        <div class="k">OUTPUT</div>
+        <div class="v">その人専用の<br>メッセージ</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FEATURES ══ -->
+<section id="features">
+  <div class="wrap">
+    <div class="split">
+      <div class="txt">
+      <span class="eyebrow">できること</span>
+      <h2>クリエイターにも、運営にも。</h2>
+      <p class="lead">クリエイターが見る画面と、運営の方が見る画面は別です。それぞれにできることを、1つのサービスでまかないます。</p>
+      </div>
+      <figure class="fig">
+        <img src="images/05-features.webp" width="1168" height="880" loading="lazy" decoding="async" alt="スマートフォンとパソコンが光の弧でつながっている図。クリエイター側と運営側を表しています">
+      </figure>
+    </div>
+    <div class="grid g2">
+      <div class="card">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-chat"/></svg></div>
+        <h3>クリエイターから見たai-bo</h3>
+        <ul class="plain">
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>毎朝の声かけ</b>　その日の状況に合わせた、自分宛ての言葉が届きます</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>24時間の相談対応</b>　いつでも話せます。答えられないことは運営に取り次ぎます</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>配信メモ</b>　その日の配信をふり返って記録できます</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>コラボ相手の紹介</b>　相性のよい相手を見つけて、顔合わせまで橋渡しします</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>事務所への質問の取り次ぎ</b>　聞きづらいことも、ai-bo経由なら聞けます</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>音声通話</b>　声で話せます。声の種類と性格を選べます</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="ico green"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-chart"/></svg></div>
+        <h3>運営から見たai-bo</h3>
+        <ul class="plain">
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>要対応者の抽出</b>　離脱しかけている人、あと一歩の人を自動で並べます</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>成果の推移</b>　稼働率・復帰率・前月比を、月ごとに追えます</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>クリエイター一覧と個票</b>　一人ずつの状況と履歴を確認できます</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>声かけ配信</b>　内容を確認してから送れます</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>稼働状況の確認</b>　ai-boが何を送り、どう反応があったかが見えます</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>コラボの管理</b>　予約バトルの進行状況を把握できます</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DASHBOARD ══ -->
+<section id="dashboard">
+  <div class="wrap">
+    <div class="split rev">
+      <div class="txt">
+      <span class="eyebrow">運営ダッシュボード</span>
+      <h2 class="chunk"><span>開いて最初に出るのは、</span><br><span>「今日、誰に声をかけるか」</span><span>だけです。</span></h2>
+      <p class="lead">数字の一覧ではありません。動くべき相手と、その理由が並びます。理由は一人ずつ違います。</p>
+      </div>
+      <figure class="fig">
+        <img src="images/06-dashboard.webp" width="1168" height="880" loading="lazy" decoding="async" alt="半透明のダッシュボード画面の図。いくつかの行が青く強調されています">
+      </figure>
+    </div>
+    <div class="dash">
+      <div class="top">
+        <i></i><i></i><i></i>
+        <span class="u">ai-bo 運営ダッシュボード ／ ホーム</span>
+      </div>
+      <div class="body">
+        <div class="kpis">
+          <div class="kpi"><div class="l">今月の稼働</div><div class="n">25<small>/ 45名</small></div></div>
+          <div class="kpi"><div class="l">要対応</div><div class="n" style="color:var(--red)">19<small>件</small></div></div>
+          <div class="kpi"><div class="l">今日の送信</div><div class="n">41<small>件</small></div></div>
+          <div class="kpi"><div class="l">返信</div><div class="n" style="color:var(--green)">12<small>件</small></div></div>
+        </div>
+
+        <h4>今日、声をかけたい人</h4>
+        <div class="row">
+          <span class="av r">HK</span>
+          <span><div class="nm">@demo_hikari</div><div class="rs">21日間 配信なし／前回の反応あり</div></span>
+          <span class="bd r">離脱の兆し</span>
+        </div>
+        <div class="row">
+          <span class="av o">NG</span>
+          <span><div class="nm">@demo_nagisa</div><div class="rs">昨日45分／あと15分で“配信した日”に到達</div></span>
+          <span class="bd o">あと一歩</span>
+        </div>
+        <div class="row">
+          <span class="av p">SU</span>
+          <span><div class="nm">@demo_subaru</div><div class="rs">運営への質問が1件、未回答のまま</div></span>
+          <span class="bd r">要人間対応</span>
+        </div>
+        <div class="row">
+          <span class="av g">MK</span>
+          <span><div class="nm">@demo_mikoto</div><div class="rs">先月比 −38%／配信時間が落ちている</div></span>
+          <span class="bd o">前月割れ</span>
+        </div>
+
+        <div class="samplenote">
+          <b>サンプル</b> 画面はデモ環境のものです。表示している45名はすべて架空のデータで、実在のクリエイターは含まれません。
+        </div>
+      </div>
+    </div>
+    <div class="more">
+      <a href="dashboard.html" class="btn-pill">ダッシュボードサンプルを見る<span class="ar"><svg width="16" height="16" viewBox="0 0 24 24"><use href="#i-arr"/></svg></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ STATUS ══ -->
+<section id="status">
+  <div class="wrap">
+    <div class="split">
+      <div class="txt">
+      <span class="eyebrow">クリエイターから見た画面</span>
+      <h2>本人に見えるのは、自分の成長だけ。</h2>
+      <p class="lead">事務所様の報酬やインセンティブの仕組みは、クリエイター側には一切表示されません。ai-boがご本人に語るのは、その方自身の成長だけです。</p>
+      </div>
+      <figure class="fig">
+        <img src="images/07-status.webp" width="1168" height="880" loading="lazy" decoding="async" alt="スマートフォンの画面から階段が伸び、頂上に記章が置かれている図">
+      </figure>
+    </div>
+    <div class="grid g2">
+      <div class="card">
+        <div class="rankcard">
+          <div class="k">今月のあなたのランク</div>
+          <div class="v">シルバー</div>
+          <div class="n">先月はブロンズでした</div>
+        </div>
+        <div class="bars">
+          <div class="barrow">
+            <div class="bl"><span>配信日数</span><span>8 / 8日</span></div>
+            <div class="track"><i class="g" style="width:100%"></i></div>
+          </div>
+          <div class="barrow">
+            <div class="bl"><span>配信時間</span><span>25 / 25時間</span></div>
+            <div class="track"><i class="g" style="width:100%"></i></div>
+          </div>
+          <div class="barrow">
+            <div class="bl"><span>次のゴールドまで</span><span>あと4日</span></div>
+            <div class="track"><i class="o" style="width:66%"></i></div>
+          </div>
+        </div>
+        <p style="margin-top:16px; font-size:13px">マイステータス。今月どこまで来たか、次の段まで何が足りないかが見えます。</p>
+      </div>
+      <div class="card">
+        <div class="ico purple"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-lock"/></svg></div>
+        <h3>見せないものを、決めてあります</h3>
+        <ul class="plain">
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>事務所の報酬は表示しません</b>　インセンティブの仕組みも含め、一切出しません</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>他の人の実績は見えません</b>　順位や比較は本人には出しません</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>ランクが下がったことは伝えません</b>　上がったときだけお祝いします</li>
+          <li><svg width="15" height="15" viewBox="0 0 24 24"><use href="#i-check"/></svg><b>共有範囲は本人に明示しています</b>　「やり取りは事務所が確認することもあります」と利用開始時に伝えます</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ RANK ══ -->
+<section id="rank">
+  <div class="wrap">
+    <div class="split rev">
+      <div class="txt">
+      <span class="eyebrow">独自ランク制度</span>
+      <h2>報酬タスクと連動した<br>独自ランク制度。</h2>
+      <p class="lead">配信日数・配信時間・ダイヤモンド数で実績を評価し、LINEでクリエイターに表示します。クリエイターは常に次のランクを目指し、ランクアップと同時に報酬タスクを満たします。ランクは10段階です。</p>
+      </div>
+      <figure class="fig">
+        <img src="images/12-rank.webp" width="1168" height="880" loading="lazy" decoding="async" alt="カレンダー・時計・宝石の3つの印から光が伸び、何段にも積み上がった塔へ集まっている図。塔の頂上には記章が置かれています">
+      </figure>
+    </div>
+    <div class="rankwrap">
+      <div class="rankchart">
+        <div class="rk" style="--h:8%;  --o:.30"><div class="barbox"><div class="bar"></div></div><div class="nm">スタート</div><div class="v">所属した<br>全員</div></div>
+        <div class="rk" style="--h:16%; --o:.38"><div class="barbox"><div class="bar"></div></div><div class="nm">アイアン</div><div class="v"><b>1</b>日<br><b>1</b>時間<br>—</div></div>
+        <div class="rk" style="--h:25%; --o:.46"><div class="barbox"><div class="bar"></div></div><div class="nm">ブロンズ</div><div class="v"><b>3</b>日<br><b>3</b>時間<br><b>1,000</b></div></div>
+        <div class="rk" style="--h:35%; --o:.54"><div class="barbox"><div class="bar"></div></div><div class="nm">シルバー</div><div class="v"><b>8</b>日<br><b>25</b>時間<br><b>10,000</b></div></div>
+        <div class="rk" style="--h:45%; --o:.62"><div class="barbox"><div class="bar"></div></div><div class="nm">ゴールド</div><div class="v"><b>12</b>日<br><b>35</b>時間<br><b>50,000</b></div></div>
+        <div class="rk" style="--h:56%; --o:.70"><div class="barbox"><div class="bar"></div></div><div class="nm">プラチナ</div><div class="v"><b>15</b>日<br><b>45</b>時間<br><b>200,000</b></div></div>
+        <div class="rk" style="--h:67%; --o:.78"><div class="barbox"><div class="bar"></div></div><div class="nm">ダイヤ<br>モンド</div><div class="v"><b>18</b>日<br><b>70</b>時間<br><b>500,000</b></div></div>
+        <div class="rk" style="--h:79%; --o:.86"><div class="barbox"><div class="bar"></div></div><div class="nm">マスター</div><div class="v"><b>20</b>日<br><b>90</b>時間<br><b>1,000,000</b></div></div>
+        <div class="rk" style="--h:90%; --o:.93"><div class="barbox"><div class="bar"></div></div><div class="nm">グランド</div><div class="v"><b>22</b>日<br><b>110</b>時間<br><b>3,000,000</b></div></div>
+        <div class="rk" style="--h:100%;--o:1"><div class="barbox"><div class="bar"></div></div><div class="nm">レジェンド</div><div class="v"><b>22</b>日<br><b>110</b>時間<br><b>5,000,000</b></div></div>
+      </div>
+    </div>
+    <p class="rankhint">→ 横にスクロールすると、レジェンドまでご覧いただけます。</p>
+    <p class="note-s">数値は上から<b style="color:var(--text)">配信日数／配信時間／ダイヤ</b>。<b style="color:var(--text)">3つすべてを満たした最高位</b>が、その月のランクになります。毎月1日に積み上げ直しとなり、前の月のランクは画面に併記されます。</p>
+  </div>
+</section>
+
+<!-- ══ SAFETY ══ -->
+<section id="safety">
+  <div class="wrap">
+    <div class="split">
+      <div class="txt">
+      <span class="eyebrow">安全性とプライバシー</span>
+      <h2>見守りと、プライバシーの設計。</h2>
+      <p class="lead">AIに任せきりにはしません。人が出るべき場面と、本人に見せないものを、あらかじめ決めてあります。</p>
+      </div>
+      <figure class="fig">
+        <img src="images/09-safety.webp" width="1168" height="880" loading="lazy" decoding="async" alt="鍵穴のついた盾が、すりガラスの向こうのデータを守っている図">
+      </figure>
+    </div>
+    <div class="grid g3">
+      <div class="card">
+        <div class="ico red"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-shield"/></svg></div>
+        <h3>深刻な相談は、見逃しません</h3>
+        <p>AIが深刻な悩みの兆候を検知したら、ご本人の同意を得たうえで運営の方に共有します。音声通話でも同じ確認を行っています。</p>
+      </div>
+      <div class="card">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-eye"/></svg></div>
+        <h3>共有範囲は、本人に伝えています</h3>
+        <p>「やり取りは所属事務所が確認することもあります」と、利用開始時にご本人へ明示しています。隠して集めることはしません。</p>
+      </div>
+      <div class="card">
+        <div class="ico green"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-lock"/></svg></div>
+        <h3>データは事務所ごとに分離</h3>
+        <p>事務所ごとに独立した環境をご用意します。他の事務所とデータが混ざることはありません。</p>
       </div>
     </div>
   </div>
