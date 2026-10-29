@@ -537,6 +537,26 @@ td.hl{color:var(--text); font-weight:600}
 .price .amt{font-size:43px; font-weight:700; letter-spacing:-.02em; line-height:1.2}
 .price .amt small{font-size:16px; font-weight:500; color:var(--sub); margin-left:6px}
 .price .zero{color:var(--green)}
+
+/* 導入時の条件（2026-10-26 追加）。料金カードの直下に出る帯。
+   .card のあとに書いてあるので border-color の上書きが効く。順番を変えないこと。
+   色は変数なので、ダークモードは自動で追従する。 */
+.intro-offer{
+  margin-top:18px; background:var(--accent-soft); border-color:var(--accent); text-align:center;
+}
+.intro-offer .io-badge{
+  display:inline-block; background:var(--accent); color:#fff; font-size:12px; font-weight:700;
+  border-radius:7px; padding:5px 12px; letter-spacing:.02em;
+}
+.intro-offer .io-h{
+  margin:14px 0 9px; font-size:clamp(18px,2.1vw,23px); font-weight:700;
+  color:var(--text); line-height:1.5; letter-spacing:-.01em;
+}
+.intro-offer .io-h b{color:var(--accent); font-weight:700}
+.intro-offer .io-p{margin:0; font-size:14px; color:var(--sub); line-height:1.9}
+/* 本文の中のリンクなので、下線を出して押せると分かるようにする
+   （サイト全体の a は下線なし＝ボタンやカード全体がリンクの前提のため）。 */
+.intro-offer .io-p a{font-weight:600; text-decoration:underline; text-underline-offset:3px}
 .inc{display:grid; gap:11px; text-align:left}
 .inc div{display:flex; gap:11px; align-items:flex-start; font-size:14px; color:var(--sub)}
 .inc b{color:var(--text); font-weight:600}

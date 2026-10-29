@@ -32,11 +32,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=20261024g">
-<script src="assets/nav.js?v=20261024g" defer></script>
+<link rel="stylesheet" href="assets/style.css?v=20261026a">
+<script src="assets/nav.js?v=20261026a" defer></script>
 <!-- ▼ イラストの動き（2026-10-10）。元に戻すにはこの2行を消すだけ。assets/motion.css 参照 -->
-<link rel="stylesheet" href="assets/motion.css?v=20261024g">
-<script src="assets/motion.js?v=20261024g"></script>
+<link rel="stylesheet" href="assets/motion.css?v=20261026a">
+<script src="assets/motion.js?v=20261026a"></script>
 <!-- ▲ イラストの動き ここまで -->
 </head>
 <body>
@@ -410,11 +410,25 @@
         <div class="amt">¥150,000<small>／税別</small></div>
       </div>
     </div>
+
+    <!-- ══ 最初の3か月（2026-10-26 追加）══
+         最低契約期間の3か月ぶんを、1か月分の料金でご利用いただける条件。
+         ⚠ すぐ下の「契約期間　最低3か月」と対になっている。片方だけ直さないこと。
+         ⚠ 金額は上の料金カード、および営業用ai-boの知識（02_想定問答集.md の「4. 料金」）と
+           必ず一致させること。
+         ⚠ 文面のルールは 資料/営業資料/Claudeデザインへの追加指示_料金_2026-08-14.md に従う。
+            取り消し線・「通常価格」「定価」「特別価格」「今なら」は使わない
+            （実際に請求した実績のない価格を並べる二重価格表示を避けるため）。 -->
+    <div class="card intro-offer">
+      <span class="io-badge">最初の3か月</span>
+      <p class="io-h">3か月ぶんを、<b>1か月分の料金</b>でご利用いただけます。</p>
+      <p class="io-p">最低契約期間である最初の3か月は、月額1か月分（¥150,000／税別）です。<a href="philosophy.html#extend">拡張機能</a>の開発まで追加費用なしで承ります。</p>
+    </div>
     <div class="card" style="margin-top:18px">
       <div class="inc">
         <div>
           <span class="mark y"><svg width="11" height="11" viewBox="0 0 24 24"><use href="#i-check"/></svg></span>
-          <span><b>月額に含まれるもの</b>　AIの利用料（対話・音声通話）／サーバー・データベースの費用／日々の運用・保守／全社共通の機能改善</span>
+          <span><b>月額に含まれるもの</b>　AIの利用料／サーバー・データベースの費用／日々の運用・保守／全社共通の機能改善</span>
         </div>
         <div>
           <span class="mark n">!</span>
@@ -497,7 +511,7 @@ ai-boがご本人に語るのは、その方自身の成長だけです。</div>
     </details>
     <details>
       <summary>途中でやめられますか？</summary>
-      <div class="ans">最低3か月、それ以降は1か月単位です。解約は1か月前までにお知らせいただければ結構です。
+      <div class="ans">最低3か月、それ以降は1か月単位です。この最初の3か月は、1か月分の料金（¥150,000／税別）でご利用いただけます。解約は1か月前までにお知らせいただければ結構です。
 途中でおやめになっても、追加のお支払いは発生しません。</div>
     </details>
     </div>

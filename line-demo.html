@@ -27,8 +27,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=20261024g">
-<script src="assets/nav.js?v=20261024g" defer></script>
+<link rel="stylesheet" href="assets/style.css?v=20261026a">
+<script src="assets/nav.js?v=20261026a" defer></script>
 
 <style>
 /* ══════════════════════════════════════════════════════════════
@@ -223,6 +223,19 @@
 
 /* ── 端末の下の案内 ── */
 .lp-cap{text-align:center; font-size:12.5px; color:var(--sub); margin:16px auto 0; max-width:420px}
+
+/* ── ダッシュボードのサンプル画像（2026-10-29 追加）──
+   画像そのものにウィンドウの枠と影が描かれているので、ここでは枠線を足さない。
+   外周は #f3f6f9 で、明るい表示のページ背景（--bg: #f4f6f9）とほぼ同じ色。
+   暗い表示では明るい板に見えるので、角だけ丸めて意図したパネルに見せている。 */
+.dash-peek{margin:30px 0 0; text-align:center}
+/* 横幅は元画像の 703px まで。ここを超えて広げると拡大表示になり、
+   「832,823」「49.8%」のような小さい文字がにじむ。
+   もっと大きく見せたいときは、CSSではなく画像を2倍の大きさで書き出して差し替えること。
+   狭い画面では min() の 100% 側が効くので、スマホの見え方は変わらない。 */
+.dash-peek a{display:inline-block; max-width:min(100%,703px); border-radius:14px; overflow:hidden}
+.dash-peek img{display:block; width:100%; height:auto}
+.dash-peek figcaption{font-size:12px; color:var(--sub); margin-top:11px}
 </style>
 </head>
 <body>
@@ -306,7 +319,7 @@
   <div class="wrap">
     <p class="crumb"><a href="index.html">ai-bo</a>　›　クリエイターからの見え方</p>
     <h1 class="chunk"><span>クリエイターの</span><span>LINEには、</span><br><span>こう見えています。</span></h1>
-    <p class="sub">所属クリエイターが見ている画面を、そのまま置きました。下にあるのが、公式LINEに常に出ている「リッチメニュー」です。押すと、本番と同じ画面がそのまま開きます。表示しているクリエイターと数字は、すべて架空のものです。</p>
+    <p class="sub">所属クリエイターが見ている画面を、そのまま置きました。下にあるのが、公式LINEに常に出ている「リッチメニュー」です。押すと、本番と同じ画面がそのまま開きます。メッセージは全てai-boが自動で送っています。表示しているクリエイターと数字は、すべて架空のものです。</p>
   </div>
 </section>
 
@@ -440,31 +453,29 @@
   </div>
 </section>
 
-<!-- ══ 補足 ══ -->
+<!-- ══ 管理者用ダッシュボード ══ -->
 <section>
   <div class="wrap">
-    <h2>運営側で必要な操作は、ありません。</h2>
-    <p class="lead">上の画面はすべて、ai-boが自動で出しています。運営の日課は、データを1回アップロードするだけです。</p>
-    <div class="grid g3">
-      <div class="card">
-        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-eye"/></svg></div>
-        <h3>共有範囲は本人にも伝えます</h3>
-        <p>やりとりの内容が事務所に共有されることは、入口で本人に伝え、「使い方」といつでも読み直せるようにしています。隠して集めることはしません。</p>
-      </div>
-      <div class="card">
-        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-shield"/></svg></div>
-        <h3>デモのデータは架空です</h3>
-        <p>この画面のクリエイター・数字・やりとりは、すべてデモ用に作ったものです。実在する事務所のデータを、個人が分かる形でお見せすることはありません。</p>
-      </div>
-      <div class="card">
-        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24"><use href="#i-chart"/></svg></div>
-        <h3>運営の画面も見られます</h3>
-        <p>同じデータを運営側からどう見るかは、ダッシュボードのサンプルでご覧いただけます。本番と同じ画面です。</p>
-      </div>
-    </div>
+    <h2>管理者用ダッシュボード</h2>
+    <p class="lead">管理者用のダッシュボードを提供します。ai-boが担当クリエイター全員の状況を把握し、問題のあるクリエイターや問い合わせ内容をダッシュボードで共有します。</p>
     <div class="more">
       <a href="dashboard.html" class="btn-pill">ダッシュボードサンプルを見る<span class="ar"><svg width="16" height="16" viewBox="0 0 24 24"><use href="#i-arr"/></svg></span></a>
     </div>
+
+    <!-- ══ ダッシュボードのサンプル（2026-10-29 追加）══
+         上のボタンで開く dashboard.html の中身を、先に見せておくための画像。
+         画像自体もリンクにしてあるので、ボタンでも画像でも同じ先へ飛ぶ。
+         ⚠ 写っているクリエイター名と数字は、すべてデモ用の架空データ
+           （website/assets/dashboard-demo.js と同じもの）。実データは絶対に載せない。
+         ⚠ 本番のダッシュボードの見た目を変えたら、この画像も撮り直すこと。
+           古いままだと、押した先と違う画面を見せることになる。 -->
+    <figure class="dash-peek">
+      <a href="dashboard.html">
+        <img src="images/dashboard-sample.webp" width="703" height="714" loading="lazy" decoding="async"
+             alt="ai-boの運営ダッシュボードのホーム画面。今月の総ダイヤ、稼働ライバー数、要人間対応や離脱リスクの件数、月別の推移グラフ、クリエイターの一覧が並んでいる">
+      </a>
+      <figcaption>運営ダッシュボードのホーム画面。表示しているクリエイターと数字は、すべて架空のものです。</figcaption>
+    </figure>
   </div>
 </section>
 
